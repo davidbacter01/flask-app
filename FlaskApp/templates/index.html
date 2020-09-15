@@ -1,12 +1,24 @@
 ﻿{% extends "base.html"%}
 {% block content %}
-{% for post in blogs %}
+<form action="/" , method="post">
+    <h3>Add a new blog:</h3>
+    <label for="title">Title:</label><br>
+    <input type="text" id="title" name="title" required placeholder="description"><br>
+    <label for="owner">Owner:</label><br>
+    <input type="text" id="owner" name="owner" required placeholder="user"><br>
+    <label for="content">Content:</label><br>
+    <textarea rows="5" cols="30" required placeholder="Blog content"></textarea><br>
+    <input type="submit">
+</form>
+<hr />
 <div>
-    <h1>{{post.title}}</h1>
-    <small>{{post.id}}</small>
-    <h2>By {{post.owner}}</h2>
-    <small>Published: {{post.created_at}}</small>
-    <p>{{post.contents}}</p>
+    {% for post in blogs %}
+        <h1>{{post.title}}</h1>
+        <small>{{post.id}}</small>
+        <h2>By {{post.owner}}</h2>
+        <small>Published: {{post.created_at}}</small>
+        <p>{{post.contents}}</p>
+        <hr />
+    {% endfor %}
 </div>    
-{% endfor %}
 {% endblock content %}
