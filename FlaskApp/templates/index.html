@@ -1,2 +1,12 @@
 ﻿{% extends "base.html"%}
-{{ super() }}
+{% block content %}
+{% for post in blogs %}
+<div>
+    <h1>{{post.title}}</h1>
+    <small>{{post.id}}</small>
+    <h2>By {{post.owner}}</h2>
+    <small>Published: {{post.created_at}}</small>
+    <p>{{post.contents}}</p>
+</div>    
+{% endfor %}
+{% endblock content %}
