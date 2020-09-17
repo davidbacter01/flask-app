@@ -30,11 +30,20 @@
     <Compile Include="app.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BlogPost.py">
+    <Compile Include="models\BlogPost.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="repository\in_memory_data.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="views\index.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="models\" />
+    <Folder Include="repository\" />
+    <Folder Include="views\" />
     <Folder Include="static\css\" />
     <Folder Include="templates\" />
     <Folder Include="static\" />
@@ -43,6 +52,7 @@
     <Content Include="static\script.js" />
     <Content Include="static\css\style.css" />
     <Content Include="templates\base.html" />
+    <Content Include="templates\blog_form.html" />
     <Content Include="templates\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Web.targets" />

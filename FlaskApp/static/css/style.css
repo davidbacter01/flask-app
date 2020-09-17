@@ -8,6 +8,7 @@
 
 /*------navbar------*/
 .navbar {
+    position: fixed;
     margin-top: -20px;
     padding-top: 20px;
     width: 100%;
@@ -37,8 +38,28 @@ li a{
 
 #content{
     text-align: center;
-    margin:auto;
+    margin: 60px auto;
 }
+
+.button {   
+    display: inline-block;
+    padding: 0.3em 1.2em;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 2em;
+    text-decoration: none;
+    font-family: 'Roboto',sans-serif;
+    font-weight: 300;
+    color: #FFFFFF;
+    background-color: #4eb5f1;
+    text-align: center;
+    transition: all 0.2s;
+    margin: 10px;
+}
+
+.button:hover {
+    background-color: #4095c6;
+}
+
 
 /*----start footer-----------*/
 footer {

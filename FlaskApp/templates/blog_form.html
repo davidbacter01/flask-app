@@ -1,0 +1,13 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<form action="/new_post" , method="post">
+    <h3>Add a new blog:</h3>
+    <label for="title">Title:{{request.form.get(title)}}</label><br>
+    <input type="text" id="title" name="title"  value={{request.form.get(title)}}><br>
+    <label for="owner">Owner:{{request.form.get(title)}}</label><br>
+    <input type="text" id="owner" name="owner"  value={{request.form.get(title)}}><br>
+    <label for="contents">Content:{{request.form.get(title)}}</label><br>
+    <textarea rows="5" cols="30"  name="contents" id="contents" value="{{request.form.get(title)}}"></textarea><br>
+    <input type="submit" class="button">
+</form>
+{% endblock %}
