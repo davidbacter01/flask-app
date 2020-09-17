@@ -56,6 +56,10 @@ li a{
     margin: 10px;
 }
 
+.red{
+    background: red;
+}
+
 .button:hover {
     background-color: #4095c6;
 }

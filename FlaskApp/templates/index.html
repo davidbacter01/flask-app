@@ -8,9 +8,7 @@
     <small>{{post.id}}</small>
     <h2>By {{post.owner}}</h2>
     <small>Published: {{post.created_at}}</small><br>
-    <a href=# class="button" >Edit</a> 
-    <a href=# class="button">Delete</a>
-    <a href=# class="button">View</a>
+    <a href='/view/{{post.id}}' class="button">View</a>
     <hr />
     {% endfor %}
 </div>    

@@ -2,6 +2,14 @@ from flask import Blueprint, render_template, url_for, request, redirect
 from repository.in_memory_data import memory_data, BlogPost, datetime
 #from models.BlogPost import BlogPost
 
+def find_post(id):
+    for blog_post in memory_data:
+        if blog_post.id == id:
+            return blog_post
+
+    return None
+            
+
 index_blueprint = Blueprint('index', __name__)
 
 @index_blueprint.route("/")
@@ -18,4 +26,21 @@ def new_post():
                     request.form.get('contents'), request.form.get('owner'), datetime.now()
                     )
     memory_data.insert(0, post)
+    return redirect('/')
+
+
+@index_blueprint.route("/view/<int:id>")
+def view_post(id):
+    post = find_post(id)
+    return render_template('blog_post.html', post = post)
+
+@index_blueprint.route('/edit/<int:id>')
+def edit_post(id):
+    post = find_post(id)
+    return render_template('blog_form.html', post = post)
+
+@index_blueprint.route('/delete/<int:id>')
+def delete_post(id):
+    post = find_post(id)
+    memory_data.remove(post)
     return redirect('/')

@@ -1,5 +1,5 @@
 class BlogPost:   
-    def __init__(self, id, title, contents, owner, created_at, modified_at = ''):
+    def __init__(self, id: int, title: str, contents: str, owner: str, created_at, modified_at = ''):
         self.id = id
         self.title = title
         self.contents = contents
