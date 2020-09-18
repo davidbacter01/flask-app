@@ -33,10 +33,19 @@
     <Compile Include="models\blog_post.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="repository\in_memory_data.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="repository\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="views\index.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="views\__init__.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
