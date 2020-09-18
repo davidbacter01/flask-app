@@ -1,13 +1,6 @@
 ﻿{% extends "base.html" %}
 {% block content %}
-<!--
-self.id = id
-        self.title = title
-        self.contents = contents
-        self.owner = owner
-        self.created_at = created_at
-        self.modified_at = modified_at
--->
+
 <form action={{url_for('index.edit_post', post_id=post.id)}} method="post" class="edit-form">
     <h1>Edit post:{{post.id}}</h1>
     <div class="edit-title">

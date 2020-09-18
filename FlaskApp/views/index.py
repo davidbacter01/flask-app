@@ -19,12 +19,12 @@ index_blueprint = Blueprint('index', __name__)
 @index_blueprint.route("/")
 @index_blueprint.route('/index')
 def index():
-    return render_template('index.html', blogs = memory_data)
+    return render_template('list_posts.html', blogs = memory_data)
 
 @index_blueprint.route("/new", methods = ['GET', 'POST'])
 def new_post():
     if request.method == 'GET':
-        return render_template("blog_form.html")
+        return render_template("new_post.html")
 
     post = BlogPost(len(memory_data) + 1, request.form.get('title'),
                     request.form.get('contents'), request.form.get('owner')
@@ -37,7 +37,7 @@ def new_post():
 @index_blueprint.route("/view/<int:post_id>")
 def view_post(post_id):
     post = find_post(post_id)
-    return render_template('blog_post.html', post = post)
+    return render_template('view_post.html', post = post)
 
 @index_blueprint.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 def edit_post(post_id):
@@ -50,7 +50,7 @@ def edit_post(post_id):
                 blog_post.modified_at = datetime.now()
                 return redirect('/view/{}'.format(blog_post.id))
 
-    return render_template('edit_form.html', post = blog_post)
+    return render_template('edit_post.html', post = blog_post)
 
 @index_blueprint.route('/delete/<int:post_id>')
 def delete_post(post_id):
