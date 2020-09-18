@@ -8,13 +8,15 @@ self.id = id
         self.created_at = created_at
         self.modified_at = modified_at
 -->
-<form action={{url_for('index.edit_post', id=post.id)}} method="post">
+<form action={{url_for('index.edit_post', id=post.id)}} method="post" class="edit-form">
     <h1>Edit post:{{post.id}}</h1>
-    <label for="title">Title</label>
-    <input name="title" id="title" type="text" value="{{post.title}}"/>
+    <div class="edit-title">
+        <label for="title">Title: </label>
+        <input name="title" id="title" type="text" value="{{post.title}}" />
+    </div>
     <label for="contents">Contents:</label>
-    <textarea name="contents" id="contents">{{post.contents}}</textarea>
-    <input type="submit" class="button"  value="Update" />
+    <textarea cols="10" name="contents" id="contents">{{post.contents}}</textarea>
+    <input type="submit" class="button green" value="Update" />
 </form>
 
 {% endblock %}

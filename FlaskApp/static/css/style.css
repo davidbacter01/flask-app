@@ -60,11 +60,31 @@ li a{
     background: red;
 }
 
+.green{
+    background-color: limegreen;
+}
+
 .button:hover {
     background-color: #4095c6;
 }
 
+/*----------start edit form style------*/
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto 20%;
+}
 
+.edit-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+.edit-title input{
+    width: 80%;
+}
+/*-------end edit form---------*/
 /*----start footer-----------*/
 footer {
     text-align: center;

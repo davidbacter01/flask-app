@@ -3,8 +3,8 @@
 <h1>{{post.title}}</h1>
 <!--id_number is used in js for reseting the delete route-->
 <h2>Post: <em id="id_number">{{post.id}}</em> <em>by </em>{{post.owner}}</h2>
-<em>Added on: {{post.created_at}}</em><br />
-<small>last edited: {{post.modified_at}}</small>
+<em>Added on: {{post.created_at.day}}/{{post.created_at.month}}/{{post.created_at.year}} at <small>{{post.created_at.hour}}:{{post.created_at.minute}}</small></em><br />
+<small>last edited: {{post.modified_at.day}}/{{post.modified_at.month}}/{{post.modified_at.year}}</small>
 <br />
 <p>{{post.contents}}</p>
 <a href="/edit/{{post.id}}" class="button" >Edit</a>

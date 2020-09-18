@@ -30,7 +30,7 @@
     <Compile Include="app.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\BlogPost.py">
+    <Compile Include="models\blog_post.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\in_memory_data.py">

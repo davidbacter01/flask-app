@@ -1,19 +1,21 @@
-from flask import Blueprint, render_template, url_for, request, redirect
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-function-docstring
+from flask import Blueprint, render_template, request, redirect
 from repository.in_memory_data import memory_data, BlogPost, datetime
-#from models.BlogPost import BlogPost
 
-def find_post(id):
+def find_post(post_id):
     for blog_post in memory_data:
-        if blog_post.id == id:
+        if blog_post.id == post_id:
             return blog_post
 
     return None
-            
+
 
 index_blueprint = Blueprint('index', __name__)
 
 @index_blueprint.route("/")
-@index_blueprint.route("/index")
+@index_blueprint.route('/index')
 def index():
     return render_template('index.html', blogs = memory_data)
 
