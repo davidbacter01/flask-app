@@ -45,7 +45,7 @@ def edit_post(id):
                 blog_post.title = request.form['title']
                 blog_post.contents = request.form['contents']
                 blog_post.modified_at = datetime.now()
-                return redirect('/')
+                return redirect('/view/{}'.format(blog_post.id))
 
     return render_template('edit_form.html', post = blog_post)
 
