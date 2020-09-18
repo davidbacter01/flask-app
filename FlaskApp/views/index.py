@@ -29,7 +29,7 @@ def new_post():
     post = BlogPost(len(memory_data) + 1, request.form.get('title'),
                     request.form.get('contents'), request.form.get('owner')
                     )
-    post.created_at = datetime.now()
+    post.created_at = post.modified_at = datetime.now()
     memory_data.insert(0, post)
     return redirect('/')
 
