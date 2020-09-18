@@ -19,7 +19,7 @@ index_blueprint = Blueprint('index', __name__)
 def index():
     return render_template('index.html', blogs = memory_data)
 
-@index_blueprint.route("/new_post", methods = ['GET', 'POST'])
+@index_blueprint.route("/new", methods = ['GET', 'POST'])
 def new_post():
     if request.method == 'GET':
         return render_template("blog_form.html")
