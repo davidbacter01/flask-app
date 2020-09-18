@@ -1,0 +1,20 @@
+﻿{% extends "base.html" %}
+{% block content %}
+<!--
+self.id = id
+        self.title = title
+        self.contents = contents
+        self.owner = owner
+        self.created_at = created_at
+        self.modified_at = modified_at
+-->
+<form action={{url_for('index.edit_post', id=post.id)}} method="post">
+    <h1>Edit post:{{post.id}}</h1>
+    <label for="title">Title</label>
+    <input name="title" id="title" type="text" value="{{post.title}}"/>
+    <label for="contents">Contents:</label>
+    <textarea name="contents" id="contents">{{post.contents}}</textarea>
+    <input type="submit" class="button"  value="Update" />
+</form>
+
+{% endblock %}

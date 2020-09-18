@@ -34,10 +34,18 @@ def view_post(id):
     post = find_post(id)
     return render_template('blog_post.html', post = post)
 
-@index_blueprint.route('/edit/<int:id>')
+@index_blueprint.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_post(id):
-    post = find_post(id)
-    return render_template('blog_form.html', post = post)
+    blog_post = find_post(id)
+    if request.method == 'POST':
+        for blog_post in memory_data:
+            if blog_post.id == id:
+                blog_post.title = request.form['title']
+                blog_post.contents = request.form['contents']
+                blog_post.modified_at = datetime.now()
+                return redirect('/')
+
+    return render_template('edit_form.html', post = blog_post)
 
 @index_blueprint.route('/delete/<int:id>')
 def delete_post(id):

@@ -1,7 +1,7 @@
 ﻿{% extends "base.html" %}
 {% block content %}
-<!--BlogPost(1,'Red flowers', 'text about red flowers','User1',datetime.now()),-->
 <h1>{{post.title}}</h1>
+<!--id_number is used in js for reseting the delete route-->
 <h2>Post: <em id="id_number">{{post.id}}</em> <em>by </em>{{post.owner}}</h2>
 <em>Added on: {{post.created_at}}</em><br />
 <small>last edited: {{post.modified_at}}</small>
