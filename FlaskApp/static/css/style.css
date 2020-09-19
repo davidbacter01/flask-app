@@ -72,17 +72,25 @@ li a{
 .edit-form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     margin: auto 20%;
 }
 
 .edit-title{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between
+    flex-direction: column;
+    justify-content: stretch;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
-.edit-title input{
-    width: 80%;
+#input {
+    width: 100px !important;
+    text-align:center;
+    margin: auto;
+}
+
+.edit-form textarea{
+    height: 350px;
 }
 /*-------end edit form---------*/
 /*----start footer-----------*/

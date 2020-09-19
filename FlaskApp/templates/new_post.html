@@ -1,6 +1,6 @@
 ﻿{% extends 'base.html' %}
 {% block content %}
-<form action={{url_for('index.new_post')}} , method="post">
+<form action={{url_for('post_views.new_post')}} , method="post">
     <h3>Add a new blog:</h3>
     <label for="title">Title:</label><br>
     <input type="text" id="title" name="title" }}><br>
