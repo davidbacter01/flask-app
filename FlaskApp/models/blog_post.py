@@ -13,5 +13,4 @@ class BlogPost:
         self.title = title
         self.contents = contents
         self.owner = owner
-        self.created_at = datetime.now()
-        self.modified_at = None
+        self.created_at = self.modified_at = datetime.now()
