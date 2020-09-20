@@ -20,6 +20,8 @@ class PostsRepository:
             if post.id == post_id:
                 return post
 
+        return None
+
 
     def get_posts(self):
         return self.__posts
@@ -39,9 +41,4 @@ class PostsRepository:
                 blog_post = post
 
 
-    
 posts = PostsRepository()
-
-
-
-
