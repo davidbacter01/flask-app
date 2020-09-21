@@ -10,9 +10,9 @@ posts_views_blueprint = Blueprint('post_views', __name__)
 @posts_views_blueprint.route("/")
 @posts_views_blueprint.route('/index')
 def index():
-    return render_template('list_posts.html', blogs = posts.get_posts())
+    return render_template('list_posts.html', blogs=posts.get_posts())
 
-@posts_views_blueprint.route("/new", methods = ['GET', 'POST'])
+@posts_views_blueprint.route("/new", methods=['GET', 'POST'])
 def new_post():
     if request.method == 'GET':
         return render_template("new_post.html")
@@ -27,7 +27,7 @@ def new_post():
 @posts_views_blueprint.route("/view/<int:post_id>")
 def view_post(post_id):
     post = posts.get_post_by_id(post_id)
-    return render_template('view_post.html', post = post)
+    return render_template('view_post.html', post=post)
 
 @posts_views_blueprint.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 def edit_post(post_id):
@@ -39,7 +39,7 @@ def edit_post(post_id):
         posts.edit_post(blog_post)
         return redirect('/view/{}'.format(blog_post.id))
 
-    return render_template('edit_post.html', post = blog_post)
+    return render_template('edit_post.html', post=blog_post)
 
 @posts_views_blueprint.route('/delete/<int:post_id>')
 def delete_post(post_id):

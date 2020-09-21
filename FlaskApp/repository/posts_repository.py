@@ -9,9 +9,9 @@ class PostsRepository:
     """implements CRUD operations"""
     def __init__(self):
         self.__posts = [
-                BlogPost(1,'Red flowers', 'text about red flowers','User1'),
-                BlogPost(2,'Yellow flowers', 'text about yellow flowers','User2'),
-                BlogPost(3,'Blue flowers', 'text about blue flowers','User3')
+                BlogPost(1,'Red flowers', 'text about red flowers', 'User1'),
+                BlogPost(2,'Yellow flowers', 'text about yellow flowers', 'User2'),
+                BlogPost(3,'Blue flowers', 'text about blue flowers', 'User3')
                 ]
 
 
