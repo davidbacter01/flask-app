@@ -4,6 +4,6 @@ from repository.posts_repository import PostsRepository
 
 def repository_factory(production_condition) ->PostsRepositoryInterface:
     if production_condition:
-        return DatabasePostsRepository("dbname=posts user=postgres password=postgres")
+        return DatabasePostsRepository("dbname=flask-app user=postgres password=postgres")
 
     return PostsRepository()

@@ -11,20 +11,21 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         self.credentials = credentials
 
 
-    def __extract_post_from_query_result__(post_data):
+    def __extract_post_from_query_result__(self, post_data):
         ''' parses a table line to a BlogPost object '''
-        resulted_post = BlogPost(post_data['ID'], post_data['TITLE'], post_data['CONTENTS'], post_data['OWNER'])
-        resulted_post.created_at = post_data['CREATED_AT']
-        resulted_post.modified_at = post_data['MODIFIED_AT']
+
+        resulted_post = BlogPost(post_data[0], post_data[1], post_data[3], post_data[2])
+        resulted_post.created_at = post_data[4]
+        resulted_post.modified_at = post_data[5]
         return resulted_post
 
 
     def add_post(self, post):
         '''adds a post to posts table in database'''
 
-        conn = psycopg2.connect(credentials)
+        conn = psycopg2.connect(self.credentials)
         cursor = conn.cursor()
-        SQL = '''INSERT INTO posts (ID, TITLE, OWNER, CONTENTS, CREATED_AT,
+        SQL = '''INSERT INTO posts (id, TITLE, OWNER, CONTENTS, CREATED_AT,
                 MODIFIED_AT) VALUES (%s, %s, %s, %s, %s, %s)'''
         data = (
             post.id,
@@ -44,7 +45,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         old_post = self.get_post_by_id(post.id)
         if post.title == old_post.title and post.contents == old_post.contents: return
 
-        conn = psycopg2.connect(credentials)
+        conn = psycopg2.connect(self.credentials)
         cursor = conn.cursor()
         cursor.execute('UPDATE posts SET MODIFIED_AT = %s WHERE ID = %s',
                        (post.modified_at, post.id))
@@ -64,11 +65,12 @@ class DatabasePostsRepository(PostsRepositoryInterface):
     def get_post_by_id(self, post_id):
         '''returns a post based on the id provided'''
 
-        conn = psycopg2.connect(credentials)
+        conn = psycopg2.connect(self.credentials)
         cursor = conn.cursor()
         query = '''SELECT * FROM posts WHERE ID = %s'''
         cursor.execute(query, (post_id,))
-        resulted_post = self.__extract_post_from_query_result__(cursor.fetchone())        
+        data = cursor.fetchone()
+        resulted_post = self.__extract_post_from_query_result__(data)        
         conn.commit()
         cursor.close()
         conn.close()
@@ -76,14 +78,14 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
 
     def get_posts(self):
-        conn = psycopg2.connect(credentials)
+        conn = psycopg2.connect(self.credentials)
         cursor = conn.cursor()
         query = '''SELECT * FROM posts'''
         posts = []
         cursor.execute(query)
         entries = cursor.fetchall()
         for line in entries:
-            posts.append(__extract_post_from_query_result__(line))
+            posts.insert(0, self.__extract_post_from_query_result__(line))
 
         conn.commit()
         cursor.close()
@@ -92,7 +94,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
 
     def remove_post(self, post_id):
-        conn = psycopg2.connect(credentials)
+        conn = psycopg2.connect(self.credentials)
         cursor = conn.cursor()
         query = '''DELETE FROM posts WHERE ID = %s'''
         cursor.execute(query, (post_id, ))

@@ -1,8 +1,11 @@
 from datetime import datetime
 from flask import Blueprint, render_template, request, redirect
-from repository.posts_repository import posts, BlogPost
+from models.blog_post import BlogPost
+from repository.repository_factory import repository_factory
 
 posts_views_blueprint = Blueprint('post_views', __name__)
+
+posts = repository_factory(True)
 
 @posts_views_blueprint.route("/")
 @posts_views_blueprint.route('/index')

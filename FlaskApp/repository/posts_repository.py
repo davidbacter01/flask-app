@@ -37,4 +37,4 @@ class PostsRepository(PostsRepositoryInterface):
                 blog_post = post
 
 
-posts = PostsRepository()
+#posts = PostsRepository()
