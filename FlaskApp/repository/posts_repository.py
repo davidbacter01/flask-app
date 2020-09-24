@@ -1,6 +1,7 @@
 from models.blog_post import BlogPost
+from repository.repository_interface import PostsRepositoryInterface
 
-class PostsRepository:
+class PostsRepository(PostsRepositoryInterface):
     """implements CRUD operations"""
     def __init__(self):
         self.__posts = [

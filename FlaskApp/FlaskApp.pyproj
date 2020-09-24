@@ -36,7 +36,13 @@
     <Compile Include="models\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="repository\database_posts_repository.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="repository\posts_repository.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="repository\repository_interface.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\__init__.py">
@@ -51,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="models\" />
+    <Folder Include="tests\" />
     <Folder Include="repository\" />
     <Folder Include="views\" />
     <Folder Include="static\css\" />
