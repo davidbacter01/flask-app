@@ -39,16 +39,19 @@
     <Compile Include="repository\database_posts_repository.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="repository\posts_repository.py">
+    <Compile Include="repository\inmemory_posts_repository.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="repository\repository_factory.py">
+    <Compile Include="repository\posts_repository_factory.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="repository\repository_interface.py">
+    <Compile Include="repository\posts_repository_interface.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests\test_views.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\posts_views.py">

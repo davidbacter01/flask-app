@@ -1,7 +1,7 @@
 from models.blog_post import BlogPost
-from repository.repository_interface import PostsRepositoryInterface
+from repository.posts_repository_interface import PostsRepositoryInterface
 
-class PostsRepository(PostsRepositoryInterface):
+class InMemoryPostsRepository(PostsRepositoryInterface):
     """implements CRUD operations"""
     def __init__(self):
         self.__posts = [
@@ -11,7 +11,9 @@ class PostsRepository(PostsRepositoryInterface):
                 ]
 
 
-    def get_post_by_id(self, post_id: int):
+    def get_by_id(self, post_id: int):
+        '''returns a BlogPost object containing the provided post_id'''
+
         for post in self.__posts:
             if post.id == post_id:
                 return post
@@ -19,19 +21,19 @@ class PostsRepository(PostsRepositoryInterface):
         return None
 
 
-    def get_posts(self):
+    def get_all(self):
         return self.__posts
 
 
-    def add_post(self, post):
+    def add(self, post):
         self.__posts.insert(0, post)
 
 
-    def remove_post(self, post_id):
+    def remove(self, post_id):
         self.__posts.remove(self.get_post_by_id(post_id))
 
 
-    def edit_post(self, post):
+    def edit(self, post):
         for blog_post in self.__posts:
             if blog_post.id == post.id:
                 blog_post = post

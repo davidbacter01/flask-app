@@ -20,27 +20,27 @@ class PostsRepositoryInterface(abc.ABC):
 
 
     @abc.abstractmethod
-    def get_post_by_id(self, post_id: int):
+    def get_by_id(self, post_id: int):
         pass
 
 
     @abc.abstractmethod
-    def get_posts(self):
+    def get_all(self):
         pass
 
 
     @abc.abstractmethod
-    def add_post(self, post:BlogPost):
+    def add(self, post:BlogPost):
         pass
 
 
     @abc.abstractmethod
-    def remove_post(self, post_id):
+    def remove(self, post_id):
         pass
 
 
     @abc.abstractmethod
-    def edit_post(self, post:BlogPost):
+    def edit(self, post:BlogPost):
         pass
 
 
