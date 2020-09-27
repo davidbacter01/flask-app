@@ -7,7 +7,7 @@ __pycache__/
 *.suo
 # C extensions
 *.so
-
+TestResults/
 # Distribution / packaging
 .Python
 build/
