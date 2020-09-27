@@ -50,3 +50,8 @@ def test_edit_post(client):
     assert b'yes flowers' in response.data
     assert b'Red flowers' not in response.data
 
+
+def test_delete_post(client):
+    response = client.get('/delete/1')
+    assert b'Red flowers' not in response.data
+
