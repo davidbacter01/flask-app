@@ -30,7 +30,7 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
 
 
     def remove(self, post_id):
-        self.__posts.remove(self.get_post_by_id(post_id))
+        self.__posts.remove(self.get_by_id(post_id))
 
 
     def edit(self, post):

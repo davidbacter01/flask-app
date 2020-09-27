@@ -2,7 +2,6 @@ import psycopg2
 from repository.posts_repository_interface import PostsRepositoryInterface
 from models.blog_post import BlogPost
 
-#conn = psycopg2.connect("dbname=suppliers user=postgres password=postgres")
 
 class DatabasePostsRepository(PostsRepositoryInterface):
     ''' database management '''
@@ -25,7 +24,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
         conn = psycopg2.connect(self.credentials)
         cursor = conn.cursor()
-        SQL = '''INSERT INTO posts (id, TITLE, OWNER, CONTENTS, CREATED_AT,
+        query = '''INSERT INTO posts (id, TITLE, OWNER, CONTENTS, CREATED_AT,
                 MODIFIED_AT) VALUES (%s, %s, %s, %s, %s, %s)'''
         data = (
             post.id,
@@ -35,7 +34,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
             post.created_at,
             post.modified_at
             )
-        cursor.execute(SQL, data)
+        cursor.execute(query, data)
         conn.commit()
         cursor.close()
         conn.close()
@@ -45,7 +44,8 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         ''' updates a post with same id as provided post '''
 
         old_post = self.get_by_id(post.id)
-        if post.title == old_post.title and post.contents == old_post.contents: return
+        if post.title == old_post.title and post.contents == old_post.contents:
+            return
 
         conn = psycopg2.connect(self.credentials)
         cursor = conn.cursor()
@@ -72,7 +72,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         query = '''SELECT * FROM posts WHERE ID = %s'''
         cursor.execute(query, (post_id,))
         data = cursor.fetchone()
-        resulted_post = self.__extract_post_from_query_result__(data)        
+        resulted_post = self.__extract_post_from_query_result__(data)
         conn.commit()
         cursor.close()
         conn.close()

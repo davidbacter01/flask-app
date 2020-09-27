@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite errors="0" failures="1" hostname="DavidWork" name="pytest" skipped="0" tests="1" time="1.300" timestamp="2020-09-26T23:43:56.805630"><testcase classname="tests.test_views" file="tests\test_views.py" line="14" name="test_index_route" time="0.348"><failure message="assert b&apos;Red flowers&apos; in b&apos;\xef\xbb\xbf\xef\xbb\xbf&lt;!DOCTYPE html&gt;\n\n&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;\n&lt;head&gt;\n    \n    ...vidbacter01&quot;&gt;David Bacter&lt;/a&gt;.\n        \n    &lt;/footer&gt;\n    &lt;script src=/static/script.js&gt;&lt;/script&gt;\n&lt;/body&gt;\n&lt;/html&gt;&apos;
+ +  where b&apos;\xef\xbb\xbf\xef\xbb\xbf&lt;!DOCTYPE html&gt;\n\n&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;\n&lt;head&gt;\n    \n    ...vidbacter01&quot;&gt;David Bacter&lt;/a&gt;.\n        \n    &lt;/footer&gt;\n    &lt;script src=/static/script.js&gt;&lt;/script&gt;\n&lt;/body&gt;\n&lt;/html&gt;&apos; = &lt;Response 1406 bytes [200 OK]&gt;.data">client = &lt;FlaskClient &lt;Flask &apos;app&apos;&gt;&gt;
+
+    def test_index_route(client):
+        response = client.get(&apos;/&apos;)
+&gt;       assert b&apos;Red flowers&apos; in response.data
+E       assert b&apos;Red flowers&apos; in b&apos;\xef\xbb\xbf\xef\xbb\xbf&lt;!DOCTYPE html&gt;\n\n&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;\n&lt;head&gt;\n    \n    ...vidbacter01&quot;&gt;David Bacter&lt;/a&gt;.\n        \n    &lt;/footer&gt;\n    &lt;script src=/static/script.js&gt;&lt;/script&gt;\n&lt;/body&gt;\n&lt;/html&gt;&apos;
+E        +  where b&apos;\xef\xbb\xbf\xef\xbb\xbf&lt;!DOCTYPE html&gt;\n\n&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;\n&lt;head&gt;\n    \n    ...vidbacter01&quot;&gt;David Bacter&lt;/a&gt;.\n        \n    &lt;/footer&gt;\n    &lt;script src=/static/script.js&gt;&lt;/script&gt;\n&lt;/body&gt;\n&lt;/html&gt;&apos; = &lt;Response 1406 bytes [200 OK]&gt;.data
+
+tests\test_views.py:17: AssertionError</failure><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+
+</system-err></testcase></testsuite></testsuites>

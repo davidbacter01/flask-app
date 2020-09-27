@@ -5,7 +5,7 @@ from repository.posts_repository_factory import posts_repository_factory
 
 posts_views_blueprint = Blueprint('post_views', __name__)
 
-posts = posts_repository_factory(True)
+posts = posts_repository_factory()
 
 @posts_views_blueprint.route("/")
 @posts_views_blueprint.route('/index')
@@ -17,7 +17,7 @@ def new_post():
     if request.method == 'GET':
         return render_template("new_post.html")
 
-    post = BlogPost(len(posts.get_posts()) + 1, request.form.get('title'),
+    post = BlogPost(len(posts.get_all()) + 1, request.form.get('title'),
                     request.form.get('contents'), request.form.get('owner')
                     )
     posts.add(post)
