@@ -1,13 +1,17 @@
 import psycopg2
 from repository.posts_repository_interface import PostsRepositoryInterface
 from models.blog_post import BlogPost
+from setup.config import config
 
 
 class DatabasePostsRepository(PostsRepositoryInterface):
     ''' database management '''
 
-    def __init__(self, credentials):
-        self.credentials = credentials
+    def __init__(self):
+        try:
+            self.credentials = config()
+        except (Exception) as err:
+            print(err)
 
 
     def __extract_post_from_query_result__(self, post_data):
@@ -22,7 +26,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
     def add(self, post):
         '''adds a post to posts table in database'''
 
-        conn = psycopg2.connect(self.credentials)
+        conn = psycopg2.connect(**self.credentials)
         cursor = conn.cursor()
         query = '''INSERT INTO posts (id, TITLE, OWNER, CONTENTS, CREATED_AT,
                 MODIFIED_AT) VALUES (%s, %s, %s, %s, %s, %s)'''
@@ -47,7 +51,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         if post.title == old_post.title and post.contents == old_post.contents:
             return
 
-        conn = psycopg2.connect(self.credentials)
+        conn = psycopg2.connect(**self.credentials)
         cursor = conn.cursor()
         cursor.execute('UPDATE posts SET MODIFIED_AT = %s WHERE ID = %s',
                        (post.modified_at, post.id))
@@ -67,7 +71,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
     def get_by_id(self, post_id):
         '''returns a post based on the id provided'''
 
-        conn = psycopg2.connect(self.credentials)
+        conn = psycopg2.connect(**self.credentials)
         cursor = conn.cursor()
         query = '''SELECT * FROM posts WHERE ID = %s'''
         cursor.execute(query, (post_id,))
@@ -80,7 +84,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
 
     def get_all(self):
-        conn = psycopg2.connect(self.credentials)
+        conn = psycopg2.connect(**self.credentials)
         cursor = conn.cursor()
         query = '''SELECT * FROM posts'''
         posts = []
@@ -96,7 +100,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
 
     def remove(self, post_id):
-        conn = psycopg2.connect(self.credentials)
+        conn = psycopg2.connect(**self.credentials)
         cursor = conn.cursor()
         query = '''DELETE FROM posts WHERE ID = %s'''
         cursor.execute(query, (post_id, ))
