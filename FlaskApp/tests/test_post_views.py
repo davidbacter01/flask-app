@@ -1,6 +1,9 @@
 ﻿import pytest
 from app import application
+from views.posts_views import testing
 
+
+testing = True
 
 @pytest.fixture
 def client():
@@ -13,7 +16,6 @@ def client():
 def test_index_route(client):
     response = client.get('/')
     assert b'Red flowers' in response.data
-    assert b'Blue flowers' in response.data
 
 
 def test_new_post_get_route(client):

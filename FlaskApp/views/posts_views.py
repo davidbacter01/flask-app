@@ -5,7 +5,8 @@ from repository.posts_repository_factory import posts_repository_factory
 
 posts_views_blueprint = Blueprint('post_views', __name__)
 
-posts = posts_repository_factory()
+testing = False
+posts = posts_repository_factory(testing)
 
 @posts_views_blueprint.route("/")
 @posts_views_blueprint.route('/index')

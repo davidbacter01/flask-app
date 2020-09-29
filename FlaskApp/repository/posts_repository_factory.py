@@ -2,7 +2,7 @@ from repository.database_posts_repository import DatabasePostsRepository, PostsR
 from repository.inmemory_posts_repository import InMemoryPostsRepository
 
 
-def posts_repository_factory(testing_condition=True) ->PostsRepositoryInterface:
+def posts_repository_factory(testing_condition) ->PostsRepositoryInterface:
     if not testing_condition:
         return DatabasePostsRepository("dbname=flask-app user=postgres password=postgres")
 
