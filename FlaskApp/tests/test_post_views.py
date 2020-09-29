@@ -7,14 +7,14 @@ from views import posts_views
 def client():
     application.config['TESTING'] = True
     application.testing = True
-    client = application.test_client()
-    
+    client = application.test_client()    
     yield client
 
 
 def test_index_route(client):
     response = client.get('/')
     assert b'Red flowers' in response.data
+    assert b'Blue flowers' in response.data
 
 
 def test_new_post_get_route(client):
@@ -36,22 +36,19 @@ def test_new_post_post_route(client):
 
 
 def test_view_post(client):
-    assert b'text about red flowers' in client.get('/view/1').data
-    assert b'text about yellow flowers' in client.get('/view/2').data
-    assert b'text about blue flowers' in client.get('/view/3').data
+    assert b'Red flowers' in client.get('/view/1').data
 
 
 def test_edit_post(client):
     response = client.post('/edit/1', data=dict(
-        title='no flowers',
+        title='Red flowers',
         contents='yes flowers'
         ), follow_redirects=True)
-    assert b'no flowers' in response.data
     assert b'yes flowers' in response.data
-    assert b'Red flowers' not in response.data
+    assert b'text about red flowers' not in response.data
 
 
 def test_delete_post(client):
-    response = client.get('/delete/1')
-    assert b'Red flowers' not in response.data
+    response = client.get('/delete/2')
+    assert b'Yellow flowers' not in response.data
 
