@@ -75,6 +75,9 @@
     <Folder Include="static\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".pylintrc">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\script.js" />
     <Content Include="static\css\style.css" />
     <Content Include="templates\base.html" />

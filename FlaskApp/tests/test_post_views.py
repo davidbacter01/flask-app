@@ -1,6 +1,5 @@
-import pytest
+﻿import pytest
 from app import application
-from views import posts_views
 
 
 @pytest.fixture
