@@ -8,10 +8,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
     ''' database management '''
 
     def __init__(self):
-        try:
-            self.credentials = config()
-        except (Exception) as err:
-            print(err)
+        self.credentials = config()
 
 
     def __extract_post_from_query_result__(self, post_data):

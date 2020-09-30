@@ -70,6 +70,14 @@ li a{
 }
 
 /*----------start edit form style------*/
+.db-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 350px;
+    margin: auto;
+    text-align: center;
+}
 .edit-form {
     display: flex;
     flex-direction: column;

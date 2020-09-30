@@ -55,6 +55,9 @@
     <Compile Include="setup\config.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="setup\db_configurator.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\test_post_views.py">
       <SubType>Code</SubType>
     </Compile>
@@ -88,6 +91,7 @@
     <Content Include="static\script.js" />
     <Content Include="static\css\style.css" />
     <Content Include="templates\base.html" />
+    <Content Include="templates\db_setup.html" />
     <Content Include="templates\new_post.html" />
     <Content Include="templates\view_post.html" />
     <Content Include="templates\edit_post.html" />

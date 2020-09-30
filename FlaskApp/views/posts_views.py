@@ -8,9 +8,17 @@ posts_views_blueprint = Blueprint('post_views', __name__)
 testing = False
 posts = posts_repository_factory(testing)
 
+@posts_views_blueprint.route("/setup", methods=['GET', 'POST'])
+def db_setup():
+    if request.method == 'GET':
+        return render_template("db_setup.html")
+
+    return redirect('/')
+
 @posts_views_blueprint.route("/")
 @posts_views_blueprint.route('/index')
 def index():
+    #TODO: try-except redirect to setup if exception raised when trying to read setup
     return render_template('list_posts.html', blogs=posts.get_all())
 
 @posts_views_blueprint.route("/new", methods=['GET', 'POST'])

@@ -7,7 +7,7 @@ testing = True
 
 @pytest.fixture
 def client():
-    application.config['TESTING'] = True
+    application.config['TESTING'] = testing
     application.testing = True
     client = application.test_client()    
     yield client
