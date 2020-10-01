@@ -1,4 +1,3 @@
-import psycopg2
 from repository.posts_repository_interface import PostsRepositoryInterface
 from models.blog_post import BlogPost
 from setup.database import Database

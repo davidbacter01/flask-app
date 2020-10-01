@@ -30,7 +30,10 @@ class Database():
 
 
     def create_db(self):
-        conn = psycopg2.connect(user=self.credentials['user'], password=self.credentials['password'])
+        conn = psycopg2.connect(
+            user=self.credentials['user'],
+            password=self.credentials['password']
+            )
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         curs = conn.cursor()
         curs.execute('''CREATE DATABASE {}'''.format(self.credentials['dbname']))
