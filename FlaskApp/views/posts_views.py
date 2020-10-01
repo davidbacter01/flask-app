@@ -12,8 +12,10 @@ posts = posts_repository_factory(TESTING)
 @posts_views_blueprint.route("/")
 @posts_views_blueprint.route('/index')
 def index():
-    #TODO: try-except redirect to setup if exception raised when trying to read setup
-    return render_template('list_posts.html', blogs=posts.get_all())
+    if posts.config.is_configured:
+        return render_template('list_posts.html', blogs=posts.get_all())
+    else:
+        return redirect('/setup')
 
 @posts_views_blueprint.route("/new", methods=['GET', 'POST'])
 def new_post():

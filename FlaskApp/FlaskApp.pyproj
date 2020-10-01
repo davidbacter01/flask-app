@@ -55,7 +55,7 @@
     <Compile Include="setup\config.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="setup\db_configurator.py">
+    <Compile Include="setup\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tests\test_post_views.py">
@@ -86,9 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".pylintrc">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="setup\database.ini">
       <SubType>Code</SubType>
     </Content>
     <Content Include="static\script.js" />
