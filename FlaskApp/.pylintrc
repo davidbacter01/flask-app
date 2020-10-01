@@ -53,15 +53,9 @@ enable=use-symbolic-message-instead,useless-supression,fixme
 # --disable=W"
 
 disable=
-    attribute-defined-outside-init,
-    duplicate-code,
-    invalid-name,
     missing-docstring,
-    protected-access,
     too-few-public-methods,
-    redefined-outer-name,
-    format,
-    no-self-use
+    redefined-outer-name
 
 
 [REPORTS]

@@ -15,7 +15,7 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
         '''returns a BlogPost object containing the provided post_id'''
 
         for post in self.__posts:
-            if post.id == post_id:
+            if post.blog_id == post_id:
                 return post
 
         return None
@@ -35,7 +35,7 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
 
     def edit(self, post):
         for blog_post in self.__posts:
-            if blog_post.id == post.id:
+            if blog_post.blog_id == post.blog_id:
                 blog_post = post
 
 

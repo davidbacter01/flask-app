@@ -42,5 +42,3 @@ class PostsRepositoryInterface(abc.ABC):
     @abc.abstractmethod
     def edit(self, post:BlogPost):
         pass
-
-

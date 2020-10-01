@@ -11,15 +11,6 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         self.credentials = config()
 
 
-    def __extract_post_from_query_result__(self, post_data):
-        ''' parses a table line to a BlogPost object '''
-
-        resulted_post = BlogPost(post_data[0], post_data[1], post_data[3], post_data[2])
-        resulted_post.created_at = post_data[4]
-        resulted_post.modified_at = post_data[5]
-        return resulted_post
-
-
     def add(self, post):
         '''adds a post to posts table in database'''
 
@@ -28,7 +19,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         query = '''INSERT INTO posts (id, TITLE, OWNER, CONTENTS, CREATED_AT,
                 MODIFIED_AT) VALUES (%s, %s, %s, %s, %s, %s)'''
         data = (
-            post.id,
+            post.blog_id,
             post.title,
             post.owner,
             post.contents,
@@ -44,21 +35,21 @@ class DatabasePostsRepository(PostsRepositoryInterface):
     def edit(self, post):
         ''' updates a post with same id as provided post '''
 
-        old_post = self.get_by_id(post.id)
+        old_post = self.get_by_id(post.blog_id)
         if post.title == old_post.title and post.contents == old_post.contents:
             return
 
         conn = psycopg2.connect(**self.credentials)
         cursor = conn.cursor()
         cursor.execute('UPDATE posts SET MODIFIED_AT = %s WHERE ID = %s',
-                       (post.modified_at, post.id))
+                       (post.modified_at, post.blog_id))
         if post.title != old_post.title:
             cursor.execute('UPDATE posts SET TITLE = %s WHERE ID = %s',
-                           (post.title, post.id))
+                           (post.title, post.blog_id))
 
         if post.contents != old_post.contents:
             cursor.execute('UPDATE posts SET CONTENTS = %s WHERE ID = %s',
-                           (post.contents, post.id))
+                           (post.contents, post.blog_id))
 
         conn.commit()
         cursor.close()
@@ -73,7 +64,9 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         query = '''SELECT * FROM posts WHERE ID = %s'''
         cursor.execute(query, (post_id,))
         data = cursor.fetchone()
-        resulted_post = self.__extract_post_from_query_result__(data)
+        resulted_post = BlogPost(data[0], data[1], data[3], data[2])
+        resulted_post.created_at = data[4]
+        resulted_post.modified_at = data[5]
         conn.commit()
         cursor.close()
         conn.close()
@@ -88,7 +81,10 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         cursor.execute(query)
         entries = cursor.fetchall()
         for line in entries:
-            posts.insert(0, self.__extract_post_from_query_result__(line))
+            resulted_post = BlogPost(line[0], line[1], line[3], line[2])
+            resulted_post.created_at = line[4]
+            resulted_post.modified_at = line[5]
+            posts.insert(0, resulted_post)
 
         conn.commit()
         cursor.close()

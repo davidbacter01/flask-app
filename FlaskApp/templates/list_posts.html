@@ -5,10 +5,10 @@
 <div id="posts_container">
     {% for post in blogs %}
     <h1>{{post.title}}</h1>
-    <small>{{post.id}}</small>
+    <small>{{post.blog_id}}</small>
     <h2>By {{post.owner}}</h2>
     <small>Published: {{post.created_at}}</small><br>
-    <a href='/view/{{post.id}}' class="button">View</a>
+    <a href='/view/{{post.blog_id}}' class="button">View</a>
     <hr />
     {% endfor %}
 </div>    

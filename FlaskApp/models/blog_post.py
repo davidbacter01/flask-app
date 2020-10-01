@@ -4,7 +4,7 @@ from datetime import datetime
 class BlogPost:
     def __init__(self, blog_id: int, title: str, contents: str,
                 owner: str):
-        self.id = blog_id
+        self.blog_id = blog_id
         self.title = title
         self.contents = contents
         self.owner = owner

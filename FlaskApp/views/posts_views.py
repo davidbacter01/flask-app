@@ -5,15 +5,9 @@ from repository.posts_repository_factory import posts_repository_factory
 
 posts_views_blueprint = Blueprint('post_views', __name__)
 
-testing = False
-posts = posts_repository_factory(testing)
+TESTING = False
+posts = posts_repository_factory(TESTING)
 
-@posts_views_blueprint.route("/setup", methods=['GET', 'POST'])
-def db_setup():
-    if request.method == 'GET':
-        return render_template("db_setup.html")
-
-    return redirect('/')
 
 @posts_views_blueprint.route("/")
 @posts_views_blueprint.route('/index')
@@ -46,7 +40,7 @@ def edit_post(post_id):
         blog_post.contents = request.form['contents']
         blog_post.modified_at = datetime.now()
         posts.edit(blog_post)
-        return redirect('/view/{}'.format(blog_post.id))
+        return redirect('/view/{}'.format(blog_post.blog_id))
 
     return render_template('edit_post.html', post=blog_post)
 

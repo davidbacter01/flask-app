@@ -1,15 +1,15 @@
 ﻿import pytest
 from app import application
-from views.posts_views import testing
+from views.posts_views import TESTING
 
 
-testing = True
+TESTING = True
 
 @pytest.fixture
 def client():
-    application.config['TESTING'] = testing
+    application.config['TESTING'] = TESTING
     application.testing = True
-    client = application.test_client()    
+    client = application.test_client()
     yield client
 
 
@@ -52,4 +52,3 @@ def test_edit_post(client):
 def test_delete_post(client):
     response = client.get('/delete/2')
     assert b'Yellow flowers' not in response.data
-
