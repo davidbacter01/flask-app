@@ -12,10 +12,10 @@ posts = posts_repository_factory(TESTING)
 @posts_views_blueprint.route("/")
 @posts_views_blueprint.route('/index')
 def index():
-    if posts.config.is_configured:
+    if posts.database.config.is_configured:
         return render_template('list_posts.html', blogs=posts.get_all())
-    else:
-        return redirect('/setup')
+
+    return redirect('/setup')
 
 @posts_views_blueprint.route("/new", methods=['GET', 'POST'])
 def new_post():

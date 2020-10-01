@@ -55,6 +55,9 @@
     <Compile Include="setup\config.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="setup\database.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="setup\__init__.py">
       <SubType>Code</SubType>
     </Compile>

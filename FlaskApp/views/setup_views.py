@@ -9,5 +9,5 @@ def db_setup():
         return render_template("db_setup.html")
 
     form_data = request.form
-    posts.config.save_configuration(form_data)
+    posts.database.config.save_configuration(form_data)
     return redirect('/')

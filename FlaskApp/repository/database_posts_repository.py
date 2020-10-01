@@ -1,20 +1,19 @@
 import psycopg2
 from repository.posts_repository_interface import PostsRepositoryInterface
 from models.blog_post import BlogPost
-from setup.config import Config
-
+from setup.database import Database
 
 class DatabasePostsRepository(PostsRepositoryInterface):
     ''' database management '''
 
     def __init__(self):
-        self.config = Config()
+        self.database = Database()
 
 
     def add(self, post):
         '''adds a post to posts table in database'''
 
-        conn = psycopg2.connect(**self.config.get_configuration())
+        conn = self.database.connect()
         cursor = conn.cursor()
         query = '''INSERT INTO posts (id, TITLE, OWNER, CONTENTS, CREATED_AT,
                 MODIFIED_AT) VALUES (%s, %s, %s, %s, %s, %s)'''
@@ -39,7 +38,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         if post.title == old_post.title and post.contents == old_post.contents:
             return
 
-        conn = psycopg2.connect(**self.config.get_configuration())
+        conn = self.database.connect()
         cursor = conn.cursor()
         cursor.execute('UPDATE posts SET MODIFIED_AT = %s WHERE ID = %s',
                        (post.modified_at, post.blog_id))
@@ -59,7 +58,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
     def get_by_id(self, post_id):
         '''returns a post based on the id provided'''
 
-        conn = psycopg2.connect(**self.config.get_configuration())
+        conn = self.database.connect()
         cursor = conn.cursor()
         query = '''SELECT * FROM posts WHERE ID = %s'''
         cursor.execute(query, (post_id,))
@@ -74,7 +73,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
 
     def get_all(self):
-        conn = psycopg2.connect(**self.config.get_configuration())
+        conn = self.database.connect()
         cursor = conn.cursor()
         query = '''SELECT * FROM posts'''
         posts = []
@@ -93,7 +92,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
 
     def remove(self, post_id):
-        conn = psycopg2.connect(**self.config.get_configuration())
+        conn = self.database.connect()
         cursor = conn.cursor()
         query = '''DELETE FROM posts WHERE ID = %s'''
         cursor.execute(query, (post_id, ))
