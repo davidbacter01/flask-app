@@ -37,4 +37,3 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
         for blog_post in self.__posts:
             if blog_post.blog_id == post.blog_id:
                 blog_post = post
-
