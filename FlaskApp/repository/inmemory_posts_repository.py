@@ -5,9 +5,9 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
     """implements CRUD operations"""
     def __init__(self):
         self.__posts = [
-                BlogPost(1,'Red flowers', 'text about red flowers', 'User1'),
-                BlogPost(2,'Yellow flowers', 'text about yellow flowers', 'User2'),
-                BlogPost(3,'Blue flowers', 'text about blue flowers', 'User3')
+                BlogPost(1, 'Red flowers', 'text about red flowers', 'User1'),
+                BlogPost(2, 'Yellow flowers', 'text about yellow flowers', 'User2'),
+                BlogPost(3, 'Blue flowers', 'text about blue flowers', 'User3')
                 ]
 
 
@@ -38,5 +38,3 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
             if blog_post.blog_id == post.blog_id:
                 blog_post = post
 
-
-#posts = PostsRepository()

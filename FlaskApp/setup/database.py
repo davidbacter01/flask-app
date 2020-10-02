@@ -6,11 +6,12 @@ class Database():
     """creates a database instance"""
     def __init__(self):
         self.config = Config()
-        self.credentials = self.config.get_configuration()
+        self.credentials = None
 
     def connect(self):
         #credentials = self.config.get_configuration()
         try:
+            self.credentials = self.config.get_configuration()
             conn = psycopg2.connect(**self.credentials)
             return conn
         except psycopg2.DatabaseError:
