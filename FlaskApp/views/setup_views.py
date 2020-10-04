@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, redirect, request
-from views.posts_views import posts
+from views.posts_views import posts, Blueprint, render_template, redirect, request
+
 
 setup_views_blueprint = Blueprint('setup_views', __name__)
 

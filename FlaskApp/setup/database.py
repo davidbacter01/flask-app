@@ -18,7 +18,7 @@ class Database():
             self.create_db()
             conn = psycopg2.connect(**self.credentials)
             conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-            curs=conn.cursor()
+            curs = conn.cursor()
             curs.execute('''CREATE TABLE IF NOT EXISTS posts
                     (id SERIAL PRIMARY KEY UNIQUE NOT NULL,
                     title TEXT NOT NULL,

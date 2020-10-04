@@ -27,9 +27,9 @@ def test_new_post_get_route(client):
 
 def test_new_post_post_route(client):
     response = client.post('/new', data=dict(
-        title= 'test_title',
-        contents= 'test_contents',
-        owner= 'test_owner'
+        title='test_title',
+        contents='test_contents',
+        owner='test_owner'
         ), follow_redirects=True)
 
     assert b'test_title' in response.data

@@ -30,7 +30,7 @@ class PostsRepositoryInterface(abc.ABC):
 
 
     @abc.abstractmethod
-    def add(self, post:BlogPost):
+    def add(self, post: BlogPost):
         pass
 
 
@@ -40,5 +40,5 @@ class PostsRepositoryInterface(abc.ABC):
 
 
     @abc.abstractmethod
-    def edit(self, post:BlogPost):
+    def edit(self, post: BlogPost):
         pass
