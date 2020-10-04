@@ -1,9 +1,13 @@
+from unittest.mock import Mock
 from models.blog_post import BlogPost
 from repository.posts_repository_interface import PostsRepositoryInterface
+
 
 class InMemoryPostsRepository(PostsRepositoryInterface):
     """implements CRUD operations"""
     def __init__(self):
+        self.database = Mock()
+        self.database.config.is_configured = True
         self.__posts = [
             BlogPost(1, 'Red flowers', 'text about red flowers', 'User1'),
             BlogPost(2, 'Yellow flowers', 'text about yellow flowers', 'User2'),

@@ -1,12 +1,11 @@
 from repository.posts_repository_interface import PostsRepositoryInterface
 from models.blog_post import BlogPost
-from setup.database import Database
 
 class DatabasePostsRepository(PostsRepositoryInterface):
     ''' database management '''
 
-    def __init__(self):
-        self.database = Database()
+    def __init__(self, database):
+        self.database = database
 
 
     def add(self, post):

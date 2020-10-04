@@ -43,13 +43,16 @@
     <Compile Include="repository\inmemory_posts_repository.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="repository\posts_repository_factory.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="repository\posts_repository_interface.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="services\services.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="services\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="setup\config.py">
@@ -82,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="models\" />
+    <Folder Include="services\" />
     <Folder Include="setup\" />
     <Folder Include="tests\" />
     <Folder Include="repository\" />

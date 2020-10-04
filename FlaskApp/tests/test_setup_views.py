@@ -1,13 +1,12 @@
 import pytest
 from app import application
-from views.posts_views import TESTING
+from services.services import Services
 
-
-TESTING = True
 
 @pytest.fixture
 def client():
-    application.config['TESTING'] = TESTING
+    Services.TESTING = True
+    application.config['TESTING'] = True
     application.testing = True
     client = application.test_client()
     yield client
