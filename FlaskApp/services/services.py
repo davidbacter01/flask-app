@@ -24,8 +24,8 @@ class Services:
 
 
     @staticmethod
-    def get_services():
+    def get_service(service_name):
         if Services.TESTING:
-            return Services.testing_services
+            return Services.testing_services[service_name]
 
-        return Services.production_services
+        return Services.production_services[service_name]

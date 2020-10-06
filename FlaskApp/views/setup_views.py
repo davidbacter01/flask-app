@@ -7,8 +7,7 @@ setup_views_blueprint = Blueprint('setup_views', __name__)
 
 @setup_views_blueprint.route("/setup", methods=['GET', 'POST'])
 def db_setup():
-    services = Services.get_services()
-    posts = services['posts']
+    posts = Services.get_service('posts')
 
     if request.method == 'GET':
         return render_template("db_setup.html")
