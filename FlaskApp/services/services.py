@@ -6,20 +6,22 @@ from setup.config import Config
 
 
 class Services:
+    posts = 'posts'
+    config = 'config'
     TESTING = False
-    config = Config()
+    configuration = Config()
     db = Database(config)
     test_config = Mock()
     test_config.is_configured = True
 
     testing_services = {
-        'posts':InMemoryPostsRepository(),
-        'config':test_config
+        posts:InMemoryPostsRepository(),
+        config:test_config
         }
 
     production_services = {
-        'posts':DatabasePostsRepository(db),
-        'config':config
+        posts:DatabasePostsRepository(db),
+        config:configuration
         }
 
 
