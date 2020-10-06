@@ -8,15 +8,19 @@ posts_views_blueprint = Blueprint('post_views', __name__)
 POSTS = 'posts'
 CONFIG = 'config'
 
+@posts_views_blueprint.before_request
+def check_setup():
+    config = Services.get_service(CONFIG)
+    if not config.is_configured:
+        return redirect('/setup')
+
+
 @posts_views_blueprint.route("/")
 @posts_views_blueprint.route('/index')
 def index():
     posts = Services.get_service(POSTS)
-    config = Services.get_service(CONFIG)
-    if config.is_configured:
-        return render_template('list_posts.html', blogs=posts.get_all())
+    return render_template('list_posts.html', blogs=posts.get_all())
 
-    return redirect('/setup')
 
 @posts_views_blueprint.route("/new", methods=['GET', 'POST'])
 def new_post():
