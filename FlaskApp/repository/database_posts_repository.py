@@ -13,6 +13,8 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
         conn = self.database.connect()
         cursor = conn.cursor()
+        cursor.execute('''SELECT COUNT(*) FROM posts''')
+        post.blog_id = 1 + int(cursor.fetchone()[0])
         query = '''INSERT INTO posts (id, TITLE, OWNER, CONTENTS, CREATED_AT,
                 MODIFIED_AT) VALUES (%s, %s, %s, %s, %s, %s)'''
         data = (
@@ -61,7 +63,8 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         query = '''SELECT * FROM posts WHERE ID = %s'''
         cursor.execute(query, (post_id,))
         data = cursor.fetchone()
-        resulted_post = BlogPost(data[0], data[1], data[3], data[2])
+        resulted_post = BlogPost(data[1], data[3], data[2])
+        resulted_post.blog_id = data[0]
         resulted_post.created_at = data[4]
         resulted_post.modified_at = data[5]
         conn.commit()
@@ -78,7 +81,8 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         cursor.execute(query)
         entries = cursor.fetchall()
         for line in entries:
-            resulted_post = BlogPost(line[0], line[1], line[3], line[2])
+            resulted_post = BlogPost(line[1], line[3], line[2])
+            resulted_post.blog_id = line[0]
             resulted_post.created_at = line[4]
             resulted_post.modified_at = line[5]
             posts.insert(0, resulted_post)

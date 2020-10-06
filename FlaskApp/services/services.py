@@ -10,7 +10,7 @@ class Services:
     config = 'config'
     TESTING = False
     configuration = Config()
-    db = Database(config)
+    db = Database(configuration)
     test_config = Mock()
     test_config.is_configured = True
 

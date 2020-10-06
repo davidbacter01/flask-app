@@ -24,7 +24,7 @@ def new_post():
         return render_template("new_post.html")
 
     posts = Services.get_service(POSTS)
-    post = BlogPost(len(posts.get_all()) + 1, request.form.get('title'),
+    post = BlogPost(request.form.get('title'),
                     request.form.get('contents'), request.form.get('owner')
                     )
     posts.add(post)
