@@ -13,6 +13,7 @@ def check_setup():
     config = Services.get_service(CONFIG)
     if not config.is_configured:
         return redirect('/setup')
+    return None
 
 
 @posts_views_blueprint.route("/")

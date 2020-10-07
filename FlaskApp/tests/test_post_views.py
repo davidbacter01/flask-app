@@ -8,17 +8,18 @@ def client():
     Services.TESTING = True
     application.config['TESTING'] = True
     application.testing = True
+    Services.get_service(Services.config).is_configured = True
     client = application.test_client()
     yield client
 
 
 def test_index_route(client):
-    response = client.get('/')
+    response = client.get('/', follow_redirects=True)
     assert b'Red flowers' in response.data
 
 
 def test_new_post_get_route(client):
-    response = client.get('/new')
+    response = client.get('/new', follow_redirects=True)
     assert b'Title' in response.data
     assert b'Owner' in response.data
     assert b'Content' in response.data
@@ -36,7 +37,7 @@ def test_new_post_post_route(client):
 
 
 def test_view_post(client):
-    assert b'Red flowers' in client.get('/view/1').data
+    assert b'Red flowers' in client.get('/view/1', follow_redirects=True).data
 
 
 def test_edit_post(client):
@@ -49,7 +50,7 @@ def test_edit_post(client):
 
 
 def test_delete_post(client):
-    response = client.get('/delete/2')
+    response = client.get('/delete/2', follow_redirects=True)
     assert b'Yellow flowers' not in response.data
 
 

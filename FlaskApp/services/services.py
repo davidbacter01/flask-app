@@ -11,12 +11,10 @@ class Services:
     TESTING = False
     configuration = Config()
     db = Database(configuration)
-    test_config = Mock()
-    test_config.is_configured = True
 
     testing_services = {
         posts:InMemoryPostsRepository(),
-        config:test_config
+        config:Mock()
         }
 
     production_services = {
