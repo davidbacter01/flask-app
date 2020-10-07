@@ -9,7 +9,7 @@ __pycache__/
 *.so
 TestResults/
 #Database setup
-database.ini
+*.ini
 # Distribution / packaging
 .Python
 build/
