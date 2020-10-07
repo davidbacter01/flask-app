@@ -5,12 +5,11 @@ from services.services import Services
 
 
 posts_views_blueprint = Blueprint('post_views', __name__)
-POSTS = 'posts'
-CONFIG = 'config'
+
 
 @posts_views_blueprint.before_request
 def check_setup():
-    config = Services.get_service(CONFIG)
+    config = Services.get_service(Services.config)
     if not config.is_configured:
         return redirect('/setup')
     return None
@@ -19,7 +18,7 @@ def check_setup():
 @posts_views_blueprint.route("/")
 @posts_views_blueprint.route('/index')
 def index():
-    posts = Services.get_service(POSTS)
+    posts = Services.get_service(Services.posts)
     return render_template('list_posts.html', blogs=posts.get_all())
 
 
@@ -28,7 +27,7 @@ def new_post():
     if request.method == 'GET':
         return render_template("new_post.html")
 
-    posts = Services.get_service(POSTS)
+    posts = Services.get_service(Services.posts)
     post = BlogPost(request.form.get('title'),
                     request.form.get('contents'), request.form.get('owner')
                     )
@@ -38,14 +37,14 @@ def new_post():
 
 @posts_views_blueprint.route("/view/<int:post_id>")
 def view_post(post_id):
-    posts = Services.get_service(POSTS)
+    posts = Services.get_service(Services.posts)
     post = posts.get_by_id(post_id)
     return render_template('view_post.html', post=post)
 
 
 @posts_views_blueprint.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 def edit_post(post_id):
-    posts = Services.get_service(POSTS)
+    posts = Services.get_service(Services.posts)
     blog_post = posts.get_by_id(post_id)
     if request.method == 'POST':
         blog_post.title = request.form['title']
@@ -59,6 +58,6 @@ def edit_post(post_id):
 
 @posts_views_blueprint.route('/delete/<int:post_id>')
 def delete_post(post_id):
-    posts = Services.get_service(POSTS)
+    posts = Services.get_service(Services.posts)
     posts.remove(post_id)
     return redirect('/')
