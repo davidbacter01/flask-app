@@ -51,3 +51,41 @@ def test_edit_post(client):
 def test_delete_post(client):
     response = client.get('/delete/2')
     assert b'Yellow flowers' not in response.data
+
+
+@pytest.fixture
+def unconfigured_client():
+    Services.TESTING = True
+    Services.get_service(Services.config).is_configured = False
+    application.config['TESTING'] = True
+    application.testing = True
+    client = application.test_client()
+    yield client
+
+
+def test_index_with_setup_not_configured(unconfigured_client):
+    response = unconfigured_client.get('/', follow_redirects=True)
+    assert b'Database Setup' in response.data
+
+
+def test_new_post_get_route_with_unconfigured_client(unconfigured_client):
+    response = unconfigured_client.get('/new', follow_redirects=True)
+    assert b'Database Setup' in response.data
+
+
+def test_view_post_with_unconfigured_client(unconfigured_client):
+    response = unconfigured_client.get('/view/1', follow_redirects=True)
+    assert b'Database Setup' in response.data
+
+
+def test_edit_post_with_unconfigured_client(unconfigured_client):
+    response = unconfigured_client.get('/edit/1', data=dict(
+        title='something',
+        contents='something'
+        ), follow_redirects=True)
+    assert b'Database Setup' in response.data
+
+
+def test_delete_post_with_unconfigured_client(unconfigured_client):
+    response = unconfigured_client.get('/delete/1', follow_redirects=True)
+    assert b'Database Setup' in response.data
