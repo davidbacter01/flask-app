@@ -5,31 +5,30 @@ from os import path
 class Config:
     '''used for managing database.ini file for configuring database'''
 
-    def __init__(self):
+    def __init__(self, file_name):
         self.config = ConfigParser()
-        self.is_configured = path.exists('setup/database.ini')
+        self.file_name = file_name
+        self.is_configured = path.exists(f'setup/{self.file_name}')
 
 
-    def save_configuration(self, config_dict: dict):
+    def save_configuration(self, section_name: str, config_dict: dict):
         '''creates database.ini and saves configuration inside it'''
 
         if not self.is_configured:
-            open('setup/database.ini', 'w+').close()
+            open(f'setup/{self.file_name}', 'w+').close()
 
-        self.config.add_section('postgres')
+        self.config.add_section(section_name)
+        for key in config_dict:
+            self.config[section_name][key] = config_dict[key]
 
-        self.config['postgres']['host'] = config_dict.get('host')
-        self.config['postgres']['dbname'] = config_dict.get('dbname')
-        self.config['postgres']['user'] = config_dict.get('user')
-        self.config['postgres']['password'] = config_dict.get('password')
-        with open('setup/database.ini', 'w') as configfile:
+        with open(f'setup/{self.file_name}', 'w') as configfile:
             self.config.write(configfile)
 
         self.is_configured = True
 
 
-    def get_configuration(self, filename='setup/database.ini', section='postgres'):
-        '''returns a dict with db configuration from .ini file'''
+    def get_configuration(self, filename, section):
+        '''returns a dict with configuration from .ini file'''
 
         self.config.read(filename)
         configuration = {}

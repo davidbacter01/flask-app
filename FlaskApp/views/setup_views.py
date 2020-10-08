@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request
 from services.services import Services
+from models.database_settings import DatabaseSettings
 
 
 
@@ -12,6 +13,7 @@ def db_setup():
         return render_template("db_setup.html")
 
     form_data = request.form
-    posts.database.config.save_configuration(form_data)
+    setup = DatabaseSettings(form_data['dbname'], form_data['user'], form_data['password'])
+    Services.get_service(Services.config).save_from_dbsetup(setup)
     posts.database.setup()
     return redirect('/')

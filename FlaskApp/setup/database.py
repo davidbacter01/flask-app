@@ -9,21 +9,28 @@ class Database():
         self.credentials = None
 
     def connect(self):
-        conn = psycopg2.connect(**self.credentials)
+        self.credentials = self.config.get_configuration()
+        conn = psycopg2.connect(
+            host=self.credentials.host,
+            dbname=self.credentials.db_name,
+            user=self.credentials.user,
+            password=self.credentials.password
+            )
         return conn
 
 
     def create_db(self):
+        self.credentials = self.config.get_configuration()
         conn = psycopg2.connect(
-            user=self.credentials['user'],
-            password=self.credentials['password']
+            user=self.credentials.user,
+            password=self.credentials.password
             )
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         curs = conn.cursor()
         curs.execute("select exists(select * from information_schema.tables where table_name=%s)",
-                     (self.credentials['dbname'],))
+                     (self.credentials.db_name,))
         if not curs.fetchone()[0]:
-            curs.execute('''CREATE DATABASE {}'''.format(self.credentials['dbname']))
+            curs.execute('''CREATE DATABASE {}'''.format(self.credentials.db_name))
 
         curs.close()
         conn.close()
@@ -36,7 +43,11 @@ class Database():
         except psycopg2.DatabaseError:
             pass
 
-        conn = psycopg2.connect(**self.credentials)
+        conn = psycopg2.connect(
+            dbname=self.credentials.db_name,
+            user=self.credentials.user,
+            password=self.credentials.password
+            )
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         curs = conn.cursor()
         curs.execute('''CREATE TABLE IF NOT EXISTS posts

@@ -34,6 +34,9 @@
     <Compile Include="models\blog_post.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\database_settings.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -59,6 +62,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="setup\database.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="setup\dbconfig.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="setup\__init__.py">
