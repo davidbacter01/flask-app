@@ -37,6 +37,9 @@
     <Compile Include="models\database_settings.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\user.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\__init__.py">
       <SubType>Code</SubType>
     </Compile>

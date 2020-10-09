@@ -1,4 +1,4 @@
-class DatabaseSettings():
+class DatabaseSettings:
     """contains configuration details for database"""
 
     def __init__(self, db_name, user, password):
