@@ -14,12 +14,9 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
         conn = self.database.connect()
         cursor = conn.cursor()
-        cursor.execute('''SELECT COUNT(*) FROM posts''')
-        post.blog_id = 1 + int(cursor.fetchone()[0])
-        query = '''INSERT INTO posts (id, TITLE, OWNER, CONTENTS, CREATED_AT,
-                MODIFIED_AT) VALUES (%s, %s, %s, %s, %s, %s)'''
+        query = '''INSERT INTO posts (TITLE, OWNER, CONTENTS, CREATED_AT,
+                MODIFIED_AT) VALUES (%s, %s, %s, %s, %s)'''
         data = (
-            post.blog_id,
             post.title,
             post.owner,
             post.contents,

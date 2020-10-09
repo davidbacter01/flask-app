@@ -20,17 +20,14 @@ class Database():
 
 
     def create_db(self):
-        self.credentials = self.config.get_configuration()
         conn = psycopg2.connect(
             user=self.credentials.user,
             password=self.credentials.password
             )
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         curs = conn.cursor()
-        curs.execute("select exists(select * from information_schema.tables where table_name=%s)",
-                     (self.credentials.db_name,))
-        if not curs.fetchone()[0]:
-            curs.execute('''CREATE DATABASE {}'''.format(self.credentials.db_name))
+
+        curs.execute('''CREATE DATABASE {}'''.format(self.credentials.db_name))
 
         curs.close()
         conn.close()
@@ -40,7 +37,8 @@ class Database():
         self.credentials = self.config.get_configuration()
         try:
             self.create_db()
-        except psycopg2.DatabaseError:
+        except psycopg2.DatabaseError as e:
+            print(e)
             pass
 
         conn = psycopg2.connect(
