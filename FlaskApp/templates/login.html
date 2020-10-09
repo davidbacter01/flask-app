@@ -1,0 +1,12 @@
+﻿{% extends "base.html" %}
+{% block content %}
+
+<form action="/login" method="post" class="db-form">
+    <h1>Login</h1>
+    <input name="name" id="name" type="text" required placeholder="username" /><br />
+    <input name="email" id="email" type="text" required placeholder="email" /><br />
+    <input name="password" id="user" type="password" required placeholder="password" /><br />
+    <input type="submit" value="LOGIN" class="button green" />
+</form>
+
+{% endblock %}

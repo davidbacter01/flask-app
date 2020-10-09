@@ -97,6 +97,9 @@
     <Compile Include="tests\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="views\log_views.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="views\posts_views.py">
       <SubType>Code</SubType>
     </Compile>
@@ -127,6 +130,7 @@
     <Content Include="static\css\style.css" />
     <Content Include="templates\base.html" />
     <Content Include="templates\db_setup.html" />
+    <Content Include="templates\login.html" />
     <Content Include="templates\new_post.html" />
     <Content Include="templates\view_post.html" />
     <Content Include="templates\edit_post.html" />
