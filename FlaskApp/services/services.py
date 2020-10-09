@@ -9,7 +9,7 @@ class Services:
     posts = 'posts'
     config = 'config'
     TESTING = False
-    db = Database(DbConfig())
+    db = Database(DbConfig('postgres'))
 
     testing_services = {
         posts:InMemoryPostsRepository(),
@@ -18,7 +18,7 @@ class Services:
 
     production_services = {
         posts:DatabasePostsRepository(db),
-        config:DbConfig()
+        config:DbConfig('postgres')
         }
 
 

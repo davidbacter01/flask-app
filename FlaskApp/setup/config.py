@@ -5,21 +5,22 @@ from os import path
 class Config:
     '''used for managing database.ini file for configuring database'''
 
-    def __init__(self, file_name):
+    def __init__(self, section: str):
         self.config = ConfigParser()
-        self.file_name = file_name
+        self.file_name = 'config.ini'
+        self.section = section
         self.is_configured = path.exists(f'setup/{self.file_name}')
 
 
-    def save_configuration(self, section_name: str, config_dict: dict):
+    def save_configuration(self, config_dict: dict):
         '''creates database.ini and saves configuration inside it'''
 
         if not self.is_configured:
             open(f'setup/{self.file_name}', 'w+').close()
 
-        self.config.add_section(section_name)
+        self.config.add_section(self.section)
         for key in config_dict:
-            self.config[section_name][key] = config_dict[key]
+            self.config[self.section][key] = config_dict[key]
 
         with open(f'setup/{self.file_name}', 'w') as configfile:
             self.config.write(configfile)
@@ -27,16 +28,16 @@ class Config:
         self.is_configured = True
 
 
-    def get_configuration(self, filename, section):
+    def get_configuration(self):
         '''returns a dict with configuration from .ini file'''
-
+        filename = f'setup/{self.file_name}'
         self.config.read(filename)
         configuration = {}
-        if self.config.has_section(section):
-            params = self.config.items(section)
+        if self.config.has_section(self.section):
+            params = self.config.items(self.section)
             for param in params:
                 configuration[param[0]] = param[1]
         else:
-            raise Exception('Section {0} not found in the {1} file'.format(section, filename))
+            raise Exception('Section {0} not found in the {1} file'.format(self.section, filename))
 
         return configuration
