@@ -1,3 +1,4 @@
+from datetime import datetime
 from repository.posts_repository_interface import PostsRepositoryInterface
 from models.blog_post import BlogPost
 
@@ -31,7 +32,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         conn.close()
 
 
-    def edit(self, post):
+    def edit(self, post: BlogPost):
         ''' updates a post with same id as provided post '''
 
         old_post = self.get_by_id(post.blog_id)
@@ -40,16 +41,9 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
         conn = self.database.connect()
         cursor = conn.cursor()
-        cursor.execute('UPDATE posts SET MODIFIED_AT = %s WHERE ID = %s',
-                       (post.modified_at, post.blog_id))
-        if post.title != old_post.title:
-            cursor.execute('UPDATE posts SET TITLE = %s WHERE ID = %s',
-                           (post.title, post.blog_id))
-
-        if post.contents != old_post.contents:
-            cursor.execute('UPDATE posts SET CONTENTS = %s WHERE ID = %s',
-                           (post.contents, post.blog_id))
-
+        command = "UPDATE posts SET title=%s, contents=%s,modified_at=%s WHERE id=%s"
+        values = (post.title, post.contents, datetime.now().strftime("%c"), post.blog_id)
+        cursor.execute(command, values)
         conn.commit()
         cursor.close()
         conn.close()
