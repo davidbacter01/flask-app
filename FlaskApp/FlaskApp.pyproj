@@ -49,6 +49,9 @@
     <Compile Include="repository\inmemory_posts_repository.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="repository\in_memory_user_repository.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="repository\posts_repository_interface.py">
       <SubType>Code</SubType>
     </Compile>
