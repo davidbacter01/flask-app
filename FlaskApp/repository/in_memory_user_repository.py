@@ -19,9 +19,9 @@ class InMemoryUserRepository(UserRepositoryInterface):
 
 
     def edit(self, user: User):
-        for us in self.users:
-            if us.user_id == user.user_id:
-                us = user
+        for usr in self.users:
+            if usr.user_id == user.user_id:
+                usr = user
 
 
     def get_all(self):
@@ -29,9 +29,9 @@ class InMemoryUserRepository(UserRepositoryInterface):
 
 
     def get_by_id(self, user_id):
-        for us in self.users:
-            if us.user_id == user_id:
-                return us
+        for usr in self.users:
+            if usr.user_id == user_id:
+                return usr
 
         return None
 
@@ -39,4 +39,3 @@ class InMemoryUserRepository(UserRepositoryInterface):
         for user in self.users:
             if user.user_id == user_id:
                 self.users.remove(user)
-

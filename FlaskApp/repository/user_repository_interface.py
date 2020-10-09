@@ -44,5 +44,3 @@ class UserRepositoryInterface(abc.ABC):
     @abc.abstractmethod
     def edit(self, user: User):
         pass
-
-

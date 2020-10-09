@@ -31,6 +31,12 @@
     <Compile Include="app.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="exceptions\exceptions.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="exceptions\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\blog_post.py">
       <SubType>Code</SubType>
     </Compile>
@@ -44,6 +50,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\database_posts_repository.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="repository\database_user_repository.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\inmemory_posts_repository.py">
@@ -100,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="models\" />
+    <Folder Include="exceptions\" />
     <Folder Include="services\" />
     <Folder Include="setup\" />
     <Folder Include="tests\" />

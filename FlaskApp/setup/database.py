@@ -37,8 +37,7 @@ class Database():
         self.credentials = self.config.get_configuration()
         try:
             self.create_db()
-        except psycopg2.DatabaseError as e:
-            print(e)
+        except psycopg2.DatabaseError:
             pass
 
         conn = psycopg2.connect(
