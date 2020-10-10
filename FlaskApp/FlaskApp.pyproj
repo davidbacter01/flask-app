@@ -88,6 +88,9 @@
     <Compile Include="setup\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test_log_views.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\test_post_views.py">
       <SubType>Code</SubType>
     </Compile>
