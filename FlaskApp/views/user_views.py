@@ -64,10 +64,10 @@ def edit_user(user_id):
 
     try:
         users.edit(user)
-    except exceptions.UserExistsError as error:
+    except exceptions.UserExistsError:
         message = 'Duplicate user!'
         return render_template('edit_user.html', user=user, message=message)
-    except exceptions.EmailExistsError as error:
+    except exceptions.EmailExistsError:
         message = 'Duplicate email!'
         return render_template('edit_user.html', user=user, message=message)
 
