@@ -56,3 +56,30 @@ def test_create_user_when_password_and_confirm_dont_match(client):
         confirm_password='pas1234'
         ), follow_redirects=True)
     assert b'Passwords do not match' in response.data
+
+
+def test_edit_user_get_route(client):
+    response = client.get('/edit_user/3')
+    assert b'test_user_2' in response.data
+
+
+def test_edit_user_with_valid_data(client):
+    response = client.post('/edit_user/3', data=dict(
+        user_id='3',
+        name='test_user22',
+        email='test_1@email.com',
+        password='test1',
+        confirm_password='test1'
+        ), follow_redirects=True)
+    assert b'test_user22' in response.data
+
+
+def test_edit_user_with_duplicate_email(client):
+    response = client.post('/edit_user/3', data=dict(
+        user_id='3',
+        name='test_user22',
+        email='admin@email.com',
+        password='test1',
+        confirm_password='test1'
+        ), follow_redirects=True)
+    assert b'Duplicate email!' in response.data

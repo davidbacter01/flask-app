@@ -8,7 +8,7 @@ from models.user import User
 user_views_blueprint = Blueprint('user_views', __name__)
 
 
-@user_views_blueprint.route('/view_users')
+@user_views_blueprint.route('/list_users')
 def list_users():
     if 'username' not in session:
         return redirect('/login')
@@ -26,7 +26,7 @@ def create_user():
     users = Services.get_service(Services.users)
     user_data = request.form
     if user_data.get('password') != user_data.get('confirm_password'):
-        message='Passwords do not match'
+        message = 'Passwords do not match'
         return render_template('create_user.html', message=message)
 
     user = User(
@@ -38,10 +38,37 @@ def create_user():
     try:
         users.add(user)
     except exceptions.UserExistsError:
-        message='Duplicate user name!'
+        message = 'Duplicate user name!'
         return render_template('create_user.html', message=message)
     except exceptions.EmailExistsError:
-        message='Duplicate email!'
+        message = 'Duplicate email!'
         return render_template('create_user.html', message=message)
 
     return render_template('list_users.html', users=users.get_all())
+
+
+@user_views_blueprint.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
+def edit_user(user_id):
+    users = Services.get_service(Services.users)
+    user = users.get_by_id(user_id)
+    if request.method == 'GET':
+        return render_template('edit_user.html', user=user)
+
+    user_data = request.form
+    user = User(
+        user_data.get('user_id'),
+        user_data.get('name'),
+        user_data.get('email'),
+        user_data.get('password')
+        )
+
+    try:
+        users.edit(user)
+    except exceptions.UserExistsError as error:
+        message = 'Duplicate user!'
+        return render_template('edit_user.html', user=user, message=message)
+    except exceptions.EmailExistsError as error:
+        message = 'Duplicate email!'
+        return render_template('edit_user.html', user=user, message=message)
+
+    return redirect('/list_users')

@@ -140,6 +140,7 @@
     <Content Include="templates\base.html" />
     <Content Include="templates\create_user.html" />
     <Content Include="templates\db_setup.html" />
+    <Content Include="templates\edit_user.html" />
     <Content Include="templates\login.html" />
     <Content Include="templates\new_post.html" />
     <Content Include="templates\view_post.html" />

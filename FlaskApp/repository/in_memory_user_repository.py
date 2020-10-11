@@ -15,16 +15,12 @@ class InMemoryUserRepository(UserRepositoryInterface):
 
 
     def add(self, user: User):
-        for usr in self.users:
-            if usr.name == user.name:
-                raise exceptions.UserExistsError
-            if usr.email == user.email:
-                raise exceptions.EmailExistsError
-
+        self.__ensure_unicity(user)
         self.users.insert(0, user)
 
 
     def edit(self, user: User):
+        self.__ensure_unicity(user)
         for usr in self.users:
             if usr.user_id == user.user_id:
                 usr = user
@@ -45,3 +41,11 @@ class InMemoryUserRepository(UserRepositoryInterface):
         for user in self.users:
             if user.user_id == user_id:
                 self.users.remove(user)
+
+
+    def __ensure_unicity(self, user: User):
+        for usr in self.users:
+            if usr.name == user.name and usr.user_id != user.user_id:
+                raise exceptions.UserExistsError
+            if usr.email == user.email and usr.user_id != user.user_id:
+                raise exceptions.EmailExistsError

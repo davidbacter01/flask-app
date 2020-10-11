@@ -30,6 +30,7 @@ class DatabaseUserRepository(UserRepositoryInterface):
 
     def edit(self, user: User):
         '''updates the user in db that has same id as the arg User'''
+        self.__ensure_unicity(user)
         conn = self.database.connect()
         curs = conn.cursor()
         query = '''UPDATE users SET name=%s, password=%s, email=%s, modified_at=%s'''
@@ -90,10 +91,10 @@ class DatabaseUserRepository(UserRepositoryInterface):
     def __ensure_unicity(self, user: User):
         users = self.get_all()
         for usr in users:
-            if usr.name == user.name:
+            if usr.name == user.name and usr.user_id != user.user_id:
                 raise exceptions.UserExistsError('duplicate username')
 
-            if usr.email == user.email:
+            if usr.email == user.email and usr.user_id != user.user_id:
                 raise exceptions.EmailExistsError('duplicate email')
 
         return True

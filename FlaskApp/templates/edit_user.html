@@ -1,0 +1,21 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<form action={{url_for('user_views.edit_user', user_id=user.user_id)}} method="post" class="edit-form">
+    <h1>{{message}}</h1>
+    <input type="text" name="user_id" value={{user.user_id}} readonly />
+    <br />
+    <label for="name">New user name:</label>
+    <input type="text" name="name" id="name" value={{user.name}} />
+    <br />
+    <label for="email">New Email:</label>
+    <input type="email" name="email" id="email" value={{user.email}}/>
+    <br />
+    <label for="password">New password:</label>
+    <input type="password" name="password" id="password" placeholder="new password"/>
+    <br />
+    <label for="confirm_password">Confirm password:</label>
+    <input type="password" name="confirm_password" id="confirm_password" placeholder="new password"/>
+    <br />
+    <input type="submit"  value="Update" class="button green"/>
+</form>
+{% endblock %}
