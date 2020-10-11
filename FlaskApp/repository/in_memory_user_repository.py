@@ -1,3 +1,4 @@
+from exceptions import exceptions
 from repository.user_repository_interface import UserRepositoryInterface
 from models.user import User
 
@@ -13,9 +14,14 @@ class InMemoryUserRepository(UserRepositoryInterface):
             ]
 
 
-    def add(self, user):
-        if user not in self.users:
-            self.users.insert(0, user)
+    def add(self, user: User):
+        for usr in self.users:
+            if usr.name == user.name:
+                raise exceptions.UserExistsError
+            if usr.email == user.email:
+                raise exceptions.EmailExistsError
+
+        self.users.insert(0, user)
 
 
     def edit(self, user: User):

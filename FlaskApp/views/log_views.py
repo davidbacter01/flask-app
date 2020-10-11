@@ -23,7 +23,7 @@ def log_in():
             message = 'Username and email do not exist!'
 
     if user is None:
-        return render_template('login.html', mesaage=message)
+        return render_template('login.html', message=message)
 
     if user.password != request.form.get('password'):
         return render_template('login.html', message='Wrong password!')

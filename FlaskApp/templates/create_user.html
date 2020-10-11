@@ -1,0 +1,14 @@
+﻿{% extends "base.html" %}
+{% block content %}
+
+<form action="/create_user" method="post" class="db-form">
+    <h1>{{message}}</h1>
+    <h1>Create new user:</h1>
+    <input name="name" id="name" type="text" required placeholder="username" /><br />
+    <input name="email" id="email" type="text" required placeholder="email" /><br />
+    <input name="password" id="password" type="password" required placeholder="Password" /><br />
+    <input name="confirm_password" id="confirm_password" type="password" required placeholder="Confirm password" /><br />
+    <input type="submit" value="Register user!" class="button green" />
+</form>
+
+{% endblock %}

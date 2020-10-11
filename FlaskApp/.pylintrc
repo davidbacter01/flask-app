@@ -9,7 +9,7 @@ disable=
 [SIMILARITIES]
 
 # Minimum lines number of a similarity.
-min-similarity-lines=10
+min-similarity-lines=11
 
 # Ignore comments when computing similarities.
 ignore-comments=yes
