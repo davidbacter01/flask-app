@@ -83,3 +83,8 @@ def test_edit_user_with_duplicate_email(client):
         confirm_password='test1'
         ), follow_redirects=True)
     assert b'Duplicate email!' in response.data
+
+
+def test_delete_user(client):
+    response = client.get('/delete_user/4')
+    assert b'deleted' not in response.data

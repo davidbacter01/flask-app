@@ -10,7 +10,8 @@ class InMemoryUserRepository(UserRepositoryInterface):
         self.users = [
             User(1, 'admin', 'admin@email.com', 'secret'),
             User(2, 'test_user_1', 'test_1@email.com', 'test1'),
-            User(3, 'test_user_2', 'test_2@email.com', 'test2')
+            User(3, 'test_user_2', 'test_2@email.com', 'test2'),
+            User(4, 'deleted', 'del@email.com', 'delete')
             ]
 
 

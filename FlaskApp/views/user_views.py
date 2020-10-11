@@ -72,3 +72,9 @@ def edit_user(user_id):
         return render_template('edit_user.html', user=user, message=message)
 
     return redirect('/list_users')
+
+@user_views_blueprint.route('/delete_user/<user_id>')
+def delete_user(user_id):
+    posts = Services.get_service(Services.users)
+    posts.remove(user_id)
+    return redirect('/list_users')
