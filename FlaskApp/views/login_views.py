@@ -25,22 +25,22 @@ def log_in():
         if usr.name == request.form.get('name'):
             user = usr
         elif usr.email == request.form.get('email'):
-            message = 'Wrong username!'
             user = usr
-        else:
-            message = 'Username and email do not exist!'
 
     if user is None:
+        message = 'Invalid credentials!'
         return render_template('login.html', message=message)
 
     if user.password != request.form.get('password'):
-        return render_template('login.html', message='Wrong password!')
+        return render_template('login.html', message=message)
 
     session['username'] = user.name
+    session['user_id'] = user.user_id
     return redirect('/')
 
 
 @login_views_blueprint.route('/logout')
 def log_out():
     session.pop('username', None)
+    session.pop('user_id', None)
     return redirect('/')
