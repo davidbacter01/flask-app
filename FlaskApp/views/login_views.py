@@ -3,9 +3,9 @@ from services.services import Services
 
 
 
-log_views_blueprint = Blueprint('log_views', __name__)
+login_views_blueprint = Blueprint('login_views', __name__)
 
-@log_views_blueprint.route('/login', methods=['GET', 'POST'])
+@login_views_blueprint.route('/login', methods=['GET', 'POST'])
 def log_in():
     if request.method == 'GET':
         return render_template('login.html')
@@ -32,7 +32,7 @@ def log_in():
     return redirect('/')
 
 
-@log_views_blueprint.route('/logout')
+@login_views_blueprint.route('/logout')
 def log_out():
     session.pop('username', None)
     return redirect('/')

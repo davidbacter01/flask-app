@@ -103,7 +103,7 @@
     <Compile Include="tests\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="views\log_views.py">
+    <Compile Include="views\login_views.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\posts_views.py">
