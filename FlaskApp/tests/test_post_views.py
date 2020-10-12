@@ -1,19 +1,4 @@
-﻿import pytest
-from app import application
-from services.services import Services
-
-
-@pytest.fixture
-def client():
-    Services.TESTING = True
-    application.config['TESTING'] = True
-    application.testing = True
-    Services.get_service(Services.config).is_configured = True
-    client = application.test_client()
-    yield client
-
-
-def test_index_route(client):
+﻿def test_index_route(client):
     response = client.get('/', follow_redirects=True)
     assert b'Red flowers' in response.data
 
@@ -52,16 +37,6 @@ def test_edit_post(client):
 def test_delete_post(client):
     response = client.get('/delete/2', follow_redirects=True)
     assert b'Yellow flowers' not in response.data
-
-
-@pytest.fixture
-def unconfigured_client():
-    Services.TESTING = True
-    Services.get_service(Services.config).is_configured = False
-    application.config['TESTING'] = True
-    application.testing = True
-    client = application.test_client()
-    yield client
 
 
 def test_index_with_setup_not_configured(unconfigured_client):

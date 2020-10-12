@@ -1,16 +1,3 @@
-import pytest
-from app import application
-from services.services import Services
-
-
-@pytest.fixture
-def client():
-    Services.TESTING = True
-    Services.get_service(Services.config).is_configured = True
-    application.config['TESTING'] = True
-    application.testing = True
-    client = application.test_client()
-    yield client
 
 
 def test_create_user_get_route(client):
