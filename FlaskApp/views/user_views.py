@@ -7,6 +7,13 @@ from models.user import User
 
 user_views_blueprint = Blueprint('user_views', __name__)
 
+@user_views_blueprint.before_request
+def check_setup():
+    config = Services.get_service(Services.config)
+    if not config.is_configured:
+        return redirect('/setup')
+    return None
+
 
 @user_views_blueprint.route('/list_users')
 def list_users():

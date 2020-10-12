@@ -11,7 +11,7 @@ def client():
     Services.get_service(Services.config).is_configured = True
     client = application.test_client()
     yield client
-    
+
 
 @pytest.fixture
 def unconfigured_client():

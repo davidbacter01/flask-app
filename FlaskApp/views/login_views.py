@@ -5,6 +5,14 @@ from services.services import Services
 
 login_views_blueprint = Blueprint('login_views', __name__)
 
+@login_views_blueprint.before_request
+def check_setup():
+    config = Services.get_service(Services.config)
+    if not config.is_configured:
+        return redirect('/setup')
+    return None
+
+
 @login_views_blueprint.route('/login', methods=['GET', 'POST'])
 def log_in():
     if request.method == 'GET':
