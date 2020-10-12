@@ -1,11 +1,11 @@
 from exceptions import exceptions
-from flask import Blueprint, redirect, render_template, request, session, abort
+from flask import Blueprint, redirect, render_template, request, session, abort, url_for
 from services.services import Services
 from models.user import User
 
 
 
-user_views_blueprint = Blueprint('user_views', __name__)
+user_views_blueprint = Blueprint('user_views', __name__, url_prefix='/users')
 
 @user_views_blueprint.before_request
 def check_setup():
@@ -15,7 +15,7 @@ def check_setup():
     return None
 
 
-@user_views_blueprint.route('/list_users')
+@user_views_blueprint.route('/list')
 def list_users():
     if 'username' not in session:
         return redirect('/login')
@@ -25,7 +25,7 @@ def list_users():
     return render_template('list_users.html', users=users)
 
 
-@user_views_blueprint.route('/create_user', methods=['GET', 'POST'])
+@user_views_blueprint.route('/new', methods=['GET', 'POST'])
 def create_user():
     if request.method == 'GET':
         return render_template('create_user.html')
@@ -54,7 +54,7 @@ def create_user():
     return render_template('list_users.html', users=users.get_all())
 
 
-@user_views_blueprint.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
+@user_views_blueprint.route('/edit/<int:user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
     users = Services.get_service(Services.users)
     user = users.get_by_id(user_id)
@@ -78,10 +78,10 @@ def edit_user(user_id):
         message = 'Duplicate email!'
         return render_template('edit_user.html', user=user, message=message)
 
-    return redirect('/list_users')
+    return redirect(url_for('user_views.list_users'))
 
-@user_views_blueprint.route('/delete_user/<user_id>')
+@user_views_blueprint.route('/delete/<user_id>')
 def delete_user(user_id):
     posts = Services.get_service(Services.users)
     posts.remove(user_id)
-    return redirect('/list_users')
+    return redirect(url_for('user_views.list_users'))
