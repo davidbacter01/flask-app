@@ -16,6 +16,8 @@ class UserRepositoryInterface(abc.ABC):
                 callable(subclass.add_user) and
                 hasattr(subclass, 'remove_user') and
                 callable(subclass.remove_user) and
+                hasattr(subclass, 'get_by_name') and
+                callable(subclass.get_by_name)and
                 hasattr(subclass, 'edit_user') and
                 callable(subclass.edit_user) or
                 NotImplemented)
@@ -23,6 +25,11 @@ class UserRepositoryInterface(abc.ABC):
 
     @abc.abstractmethod
     def get_by_id(self, user_id: int):
+        pass
+
+
+    @abc.abstractmethod
+    def get_by_name(self, name: str):
         pass
 
 

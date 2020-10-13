@@ -20,7 +20,7 @@ def log_in():
 
     users = Services.get_service(Services.users).get_all()
     user = None
-    message = ''
+    message = 'Invalid credentials!'
     for usr in users:
         if usr.name == request.form.get('name'):
             user = usr
@@ -28,7 +28,6 @@ def log_in():
             user = usr
 
     if user is None:
-        message = 'Invalid credentials!'
         return render_template('login.html', message=message)
 
     if user.password != request.form.get('password'):

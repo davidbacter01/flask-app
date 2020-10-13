@@ -77,6 +77,22 @@ class DatabaseUserRepository(UserRepositoryInterface):
         return user
 
 
+    def get_by_name(self, name):
+        conn = self.database.connect()
+        conn.autocommit = True
+        curs = conn.cursor()
+        query = '''SELECT * FROM users WHERE name = %s'''
+        values = (name, )
+        curs.execute(query, values)
+        db_entry = curs.fetchone()
+        user = User(db_entry[0], db_entry[1], db_entry[2], db_entry[3])
+        user.created_at = db_entry[4]
+        user.modified_at = db_entry[5]
+        curs.close()
+        conn.close()
+        return user
+
+
     def remove(self, user_id):
         '''removes from db the user that has the specified id'''
         conn = self.database.connect()

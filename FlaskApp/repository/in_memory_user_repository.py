@@ -35,7 +35,12 @@ class InMemoryUserRepository(UserRepositoryInterface):
         for usr in self.users:
             if usr.user_id == user_id:
                 return usr
+        return None
 
+    def get_by_name(self, name):
+        for usr in self.users:
+            if usr.name == name:
+                return usr
         return None
 
     def remove(self, user_id):

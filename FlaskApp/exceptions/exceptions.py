@@ -4,3 +4,7 @@ class UserExistsError(BaseException):
 
 class EmailExistsError(BaseException):
     pass
+
+
+class InvalidLoginError(BaseException):
+    pass
