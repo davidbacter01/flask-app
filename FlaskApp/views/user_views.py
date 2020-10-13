@@ -2,6 +2,7 @@ from exceptions import exceptions
 from flask import Blueprint, redirect, render_template, request, session, abort, url_for
 from services.services import Services
 from models.user import User
+from passlib.hash import sha256_crypt
 
 
 
@@ -40,7 +41,7 @@ def create_user():
         None,
         user_data.get('name'),
         user_data.get('email'),
-        user_data.get('password')
+        sha256_crypt.hash(user_data.get('password'))
         )
     try:
         users.add(user)

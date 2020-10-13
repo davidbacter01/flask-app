@@ -9,25 +9,28 @@ class Authentification:
 
     def __init__(self, user_repo: UserRepositoryInterface):
         self.users = user_repo
-        self.crypt = sha256_crypt
+        self.crypter = sha256_crypt
 
 
     def login(self, name, email, password):
-        hashed = self.hash(password)
         user = self.users.get_by_name(name)
+        message = 'Invalid username, email or password!'
         if user is None:
-            raise exceptions.InvalidLoginError
-        if user.email == email and user.password == hashed:
+            raise exceptions.InvalidLoginError(message)
+        if not self.password_equality(password, user.password):
+            raise exceptions.InvalidLoginError(message)
+        if user.email == email:
             session['username'] = name
             session['user_id'] = user.user_id
         else:
-            raise exceptions.InvalidLoginError
+            raise exceptions.InvalidLoginError(message)
 
 
     def hash(self, password):
-        password = self.crypt.encrypt("password")
+        password = self.crypter.encrypt("password")
         return password
 
 
-    def check_password_equality(self, password, hashed_password):
-        return self.crypt.verify(password, hashed_password)
+    def password_equality(self, password, hashed_password):
+        x = hashed_password
+        return self.crypter.verify(password, hashed_password)

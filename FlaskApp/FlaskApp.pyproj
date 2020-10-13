@@ -121,6 +121,12 @@
     <Compile Include="views\user_views.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="views\views_decorators\authorization.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="views\views_decorators\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="views\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -136,6 +142,7 @@
     <Folder Include="static\css\" />
     <Folder Include="templates\" />
     <Folder Include="static\" />
+    <Folder Include="views\views_decorators\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".pylintrc">

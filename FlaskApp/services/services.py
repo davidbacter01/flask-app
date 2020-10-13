@@ -5,6 +5,7 @@ from repository.in_memory_user_repository import InMemoryUserRepository
 from repository.database_user_repository import DatabaseUserRepository
 from setup.database import Database
 from setup.dbconfig import DbConfig
+from services.authentification import Authentification
 
 
 class Services:
@@ -31,5 +32,11 @@ class Services:
     def get_service(service_name):
         if Services.TESTING:
             return Services.testing_services[service_name]
-
         return Services.production_services[service_name]
+
+
+    @staticmethod
+    def get_auth_service():
+        if Services.TESTING:
+            return Authentification(Services.testing_services[Services.users])
+        return Authentification(Services.production_services[Services.users])
