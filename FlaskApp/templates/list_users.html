@@ -1,5 +1,6 @@
 ﻿{% extends 'base.html' %}
 {% block content %}
+<a href="/users/new" class="button">Add new user!</a>
 {% for user in users %}
 <div style="border:dashed 1px black;">
     <h3>{{user.name}}</h3>

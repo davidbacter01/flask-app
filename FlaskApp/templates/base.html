@@ -12,8 +12,10 @@
 <body>
     <nav class="navbar">
         <ul class="nav-items">
+            {% if session['username'] == 'admin' %}
+                <li><a href="/users/list">USERS</a></li>
+            {% endif %}
             <li><a href="/">Home</a></li>
-            <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
             {% if 'username' in session %}
                 <li>session['username'] |</li>

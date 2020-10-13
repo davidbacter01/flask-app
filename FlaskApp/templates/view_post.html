@@ -12,8 +12,12 @@
     <div class="post-content">
         <p style="white-space: pre-wrap; margin-bottom: 30px;">{{post.contents}}</p>
         <hr class="style-two" />
-        <a href="/edit/{{post.blog_id}}" class="button">Edit</a>
-        <a href="/delete/{{post.blog_id}}" class="button red" id="delete" onclick="promptUserForDeleteConfirmation()">Delete</a>
+        {% if 'username' in session %}
+            {% if session['username'] == 'admin' or  session['user_id'] == post.owner%}
+                <a href="/edit/{{post.blog_id}}" class="button">Edit</a>
+                <a href="/delete/{{post.blog_id}}" class="button red" id="delete" onclick="promptUserForDeleteConfirmation()">Delete</a>
+            {% endif %}
+        {% endif}
     </div>
     
 </div>
