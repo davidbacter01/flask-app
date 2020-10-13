@@ -1,7 +1,8 @@
 from exceptions import exceptions
+from passlib.hash import sha256_crypt
 from repository.user_repository_interface import UserRepositoryInterface
 from models.user import User
-from passlib.hash import sha256_crypt
+
 
 
 class InMemoryUserRepository(UserRepositoryInterface):

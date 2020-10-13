@@ -1,8 +1,8 @@
 from exceptions import exceptions
-from flask import Blueprint, redirect, render_template, request, session, abort, url_for
+from flask import Blueprint, redirect, render_template, request, url_for
+from passlib.hash import sha256_crypt
 from services.services import Services
 from models.user import User
-from passlib.hash import sha256_crypt
 from views.views_decorators.authorization import admin_required, admin_or_owner_required
 
 

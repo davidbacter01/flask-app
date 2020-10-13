@@ -32,5 +32,4 @@ class Authentification:
 
 
     def password_equality(self, password, hashed_password):
-        x = hashed_password
         return self.crypter.verify(password, hashed_password)

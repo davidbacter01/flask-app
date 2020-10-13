@@ -1,4 +1,3 @@
-from flask import session
 
 
 def login_as_admin(client):
