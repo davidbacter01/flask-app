@@ -1,4 +1,4 @@
-
+from tests.test_user_views import login_as_admin
 
 
 def test_login_route_get_method(client):
@@ -12,12 +12,14 @@ def test_login_route_get_method_unconfigured(unconfigured_client):
 
 
 def test_login_route_post_method(client):
+    login_as_admin(client)
     response = client.post('/users/new', data=dict(
         name='abc',
         email='abc@email.com',
         password='123',
         confirm_password='123'
         ), follow_redirects=True)
+    client.get('/logout')
     response = client.post('/login', data=dict(
         name='abc',
         email='abc@email.com',

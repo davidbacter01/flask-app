@@ -1,6 +1,7 @@
 from exceptions import exceptions
 from repository.user_repository_interface import UserRepositoryInterface
 from models.user import User
+from passlib.hash import sha256_crypt
 
 
 class InMemoryUserRepository(UserRepositoryInterface):
@@ -8,9 +9,9 @@ class InMemoryUserRepository(UserRepositoryInterface):
 
     def __init__(self):
         self.users = [
-            User(1, 'admin', 'admin@email.com', 'secret'),
-            User(2, 'test_user_1', 'test_1@email.com', 'test1'),
-            User(3, 'test_user_2', 'test_2@email.com', 'test2'),
+            User(1, 'admin', 'admin@email.com', sha256_crypt.hash('secret')),
+            User(2, 'test_user_1', 'test_1@email.com', sha256_crypt.hash('test1')),
+            User(3, 'test_user_2', 'test_2@email.com', sha256_crypt.hash('test2')),
             User(4, 'deleted', 'del@email.com', 'delete')
             ]
 

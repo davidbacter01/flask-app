@@ -26,11 +26,11 @@ def admin_required(function):
 
 def admin_or_owner_required(function):
     @wraps(function)
-    def wrapped_function(**keyword):
+    def wrapped_function(**kwargs):
         if 'username' not in session:
             return redirect('/login')
-        if session["username"] != "admin" and int(keyword['user_id']) != session["id"]:
+        if session["username"] != "admin" and int(kwargs['user_id']) != session["id"]:
             return abort(403)
-        return function(**keyword)
+        return function(**kwargs)
 
     return wrapped_function
