@@ -73,6 +73,9 @@
     <Compile Include="services\authentification.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="services\password_manager.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="services\services.py">
       <SubType>Code</SubType>
     </Compile>

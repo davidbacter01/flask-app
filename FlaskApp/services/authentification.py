@@ -1,6 +1,6 @@
 from exceptions import exceptions
 from flask import session
-from passlib.hash import sha256_crypt
+from services.password_manager import PasswordManager
 from repository.users_repository_interface import UsersRepositoryInterface
 
 
@@ -10,7 +10,7 @@ class Authentification:
     def __init__(self, user_repo: UsersRepositoryInterface):
         self.users = user_repo
         self.logged_in = None
-        self.crypter = sha256_crypt
+        self.crypter = PasswordManager
 
 
     def login(self, name, email, password):

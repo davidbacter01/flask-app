@@ -1,6 +1,6 @@
 from exceptions import exceptions
 from flask import Blueprint, redirect, render_template, request, url_for
-from passlib.hash import sha256_crypt
+from services.password_manager import PasswordManager
 from services.services import Services
 from models.user import User
 from views.views_decorators import authorization
@@ -39,12 +39,12 @@ def create_user():
         message = 'Passwords do not match'
         return render_template('create_user.html', message=message)
 
+    password = PasswordManager.hash(user_data.get('password'))
     user = User(
         None,
         user_data.get('name'),
         user_data.get('email'),
-        sha256_crypt.hash(user_data.get('password'))
-        )
+        password)
     try:
         users.add(user)
     except exceptions.UserExistsError:
