@@ -3,13 +3,14 @@ from flask import Blueprint, redirect, render_template, request, url_for
 from passlib.hash import sha256_crypt
 from services.services import Services
 from models.user import User
-from views.views_decorators.authorization import admin_required, admin_or_owner_required
-
+from views.views_decorators import authorization
 
 
 user_views_blueprint = Blueprint('user_views', __name__, url_prefix='/users')
 
+
 @user_views_blueprint.before_request
+@authorization.setup_required
 def check_setup():
     config = Services.get_service(Services.config)
     if not config.is_configured:
@@ -18,14 +19,16 @@ def check_setup():
 
 
 @user_views_blueprint.route('/list')
-@admin_required
+@authorization.setup_required
+@authorization.admin_required
 def list_users():
     users = Services.get_service(Services.users).get_all()
     return render_template('list_users.html', users=users)
 
 
 @user_views_blueprint.route('/new', methods=['GET', 'POST'])
-@admin_required
+@authorization.setup_required
+@authorization.admin_required
 def create_user():
     if request.method == 'GET':
         return render_template('create_user.html')
@@ -55,7 +58,8 @@ def create_user():
 
 
 @user_views_blueprint.route('/edit/<int:user_id>', methods=['GET', 'POST'])
-@admin_or_owner_required
+@authorization.setup_required
+@authorization.admin_or_owner_required
 def edit_user(user_id):
     users = Services.get_service(Services.users)
     user = users.get_by_id(user_id)
@@ -82,7 +86,8 @@ def edit_user(user_id):
     return redirect(url_for('user_views.list_users'))
 
 @user_views_blueprint.route('/delete/<user_id>')
-@admin_required
+@authorization.setup_required
+@authorization.admin_required
 def delete_user(user_id):
     posts = Services.get_service(Services.users)
     posts.remove(user_id)
