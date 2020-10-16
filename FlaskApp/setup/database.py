@@ -12,7 +12,7 @@ class Database():
         self.version = '2'
 
     def connect(self):
-        self.credentials = self.config.get_configuration()
+        self.credentials = self.config.get_database_settings()
         conn = psycopg2.connect(
             host=self.credentials.host,
             dbname=self.credentials.db_name,
@@ -51,7 +51,7 @@ class Database():
 
 
     def setup(self):
-        self.credentials = self.config.get_configuration()
+        self.credentials = self.config.get_database_settings()
         try:
             self.create_db()
         except psycopg2.DatabaseError:

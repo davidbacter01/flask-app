@@ -15,8 +15,8 @@ class DbConfig(Config):
         return super().save_configuration(settings)
 
 
-    def get_configuration(self):
-        credentials_dict = super().get_configuration()
+    def get_database_settings(self):
+        credentials_dict = super().get_database_settings()
         return DatabaseSettings(
             credentials_dict['dbname'],
             credentials_dict['user'],

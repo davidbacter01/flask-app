@@ -28,7 +28,7 @@ class Config:
         self.is_configured = True
 
 
-    def get_configuration(self):
+    def get_database_settings(self):
         '''returns a dict with configuration from .ini file'''
         filename = f'setup/{self.file_name}'
         self.config.read(filename)
