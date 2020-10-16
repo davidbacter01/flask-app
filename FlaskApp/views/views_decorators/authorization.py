@@ -16,7 +16,7 @@ def login_required(function):
     @wraps(function)
     def wrapped_function(**kwargs):
         if 'username' not in session:
-            return redirect('login')
+            return redirect('/login')
         return function(**kwargs)
 
     return wrapped_function
