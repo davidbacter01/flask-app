@@ -52,19 +52,19 @@
     <Compile Include="repository\database_posts_repository.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="repository\database_user_repository.py">
+    <Compile Include="repository\database_users_repository.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\inmemory_posts_repository.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="repository\in_memory_user_repository.py">
+    <Compile Include="repository\in_memory_users_repository.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\posts_repository_interface.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="repository\user_repository_interface.py">
+    <Compile Include="repository\users_repository_interface.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\__init__.py">

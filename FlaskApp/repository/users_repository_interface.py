@@ -2,7 +2,7 @@ import abc
 from models.user import User
 
 
-class UserRepositoryInterface(abc.ABC):
+class UsersRepositoryInterface(abc.ABC):
 
     """interface for user repository"""
 

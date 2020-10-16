@@ -1,13 +1,13 @@
 from exceptions import exceptions
 from flask import session
 from passlib.hash import sha256_crypt
-from repository.user_repository_interface import UserRepositoryInterface
+from repository.users_repository_interface import UsersRepositoryInterface
 
 
 class Authentification:
     """manages login operations"""
 
-    def __init__(self, user_repo: UserRepositoryInterface):
+    def __init__(self, user_repo: UsersRepositoryInterface):
         self.users = user_repo
         self.crypter = sha256_crypt
 

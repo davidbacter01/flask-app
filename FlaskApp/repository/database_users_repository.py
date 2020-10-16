@@ -1,11 +1,11 @@
 from exceptions import exceptions
-from repository.user_repository_interface import UserRepositoryInterface
+from repository.users_repository_interface import UsersRepositoryInterface
 from models.user import User
 from setup.database import Database
 
 
 
-class DatabaseUserRepository(UserRepositoryInterface):
+class DatabaseUsersRepository(UsersRepositoryInterface):
     """class that can access the users table in db"""
 
     def __init__(self, database: Database):

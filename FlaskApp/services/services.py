@@ -1,8 +1,8 @@
 from unittest.mock import Mock
 from repository.database_posts_repository import DatabasePostsRepository
 from repository.inmemory_posts_repository import InMemoryPostsRepository
-from repository.in_memory_user_repository import InMemoryUserRepository
-from repository.database_user_repository import DatabaseUserRepository
+from repository.in_memory_users_repository import InMemoryUsersRepository
+from repository.database_users_repository import DatabaseUsersRepository
 from setup.database import Database
 from setup.dbconfig import DbConfig
 from services.authentification import Authentification
@@ -18,13 +18,13 @@ class Services:
     testing_services = {
         posts:InMemoryPostsRepository(),
         config:Mock(),
-        users:InMemoryUserRepository()
+        users:InMemoryUsersRepository()
         }
 
     production_services = {
         posts:DatabasePostsRepository(db),
         config:DbConfig('postgres'),
-        users:DatabaseUserRepository(db)
+        users:DatabaseUsersRepository(db)
         }
 
 

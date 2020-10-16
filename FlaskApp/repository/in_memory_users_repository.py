@@ -1,11 +1,11 @@
 from exceptions import exceptions
 from passlib.hash import sha256_crypt
-from repository.user_repository_interface import UserRepositoryInterface
+from repository.users_repository_interface import UsersRepositoryInterface
 from models.user import User
 
 
 
-class InMemoryUserRepository(UserRepositoryInterface):
+class InMemoryUsersRepository(UsersRepositoryInterface):
     """class containing users and specific methods"""
 
     def __init__(self):
