@@ -24,7 +24,7 @@ def log_in():
     if request.method == 'GET':
         return render_template('login.html')
 
-    authentificator = Services.get_auth_service()
+    authentificator = Services.get_service(Services.authentification)
     name = request.form.get('name')
     email = request.form.get('email')
     password = request.form.get('password')

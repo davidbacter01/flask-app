@@ -12,19 +12,24 @@ class Services:
     posts = 'posts'
     config = 'config'
     users = 'users'
+    authentification = 'authentification'
     TESTING = False
     db = Database(DbConfig('postgres'))
+    production_users = DatabaseUsersRepository(db)
+    test_users = InMemoryUsersRepository()
 
     testing_services = {
         posts:InMemoryPostsRepository(),
         config:Mock(),
-        users:InMemoryUsersRepository()
+        users:test_users,
+        authentification:Authentification(test_users)
         }
 
     production_services = {
         posts:DatabasePostsRepository(db),
         config:DbConfig('postgres'),
-        users:DatabaseUsersRepository(db)
+        users:production_users,
+        authentification:Authentification(production_users)
         }
 
 
@@ -33,10 +38,3 @@ class Services:
         if Services.TESTING:
             return Services.testing_services[service_name]
         return Services.production_services[service_name]
-
-
-    @staticmethod
-    def get_auth_service():
-        if Services.TESTING:
-            return Authentification(Services.testing_services[Services.users])
-        return Authentification(Services.production_services[Services.users])
