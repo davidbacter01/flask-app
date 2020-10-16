@@ -1,5 +1,5 @@
 from exceptions import exceptions
-from flask import Blueprint, redirect, render_template, request, session
+from flask import Blueprint, redirect, render_template, request
 from services.services import Services
 from views.views_decorators.authorization import login_required, setup_required
 
@@ -39,6 +39,6 @@ def log_in():
 @setup_required
 @login_required
 def log_out():
-    session.pop('username', None)
-    session.pop('user_id', None)
+    authentificator = Services.get_service(Services.authentification)
+    authentificator.logout()
     return redirect('/index')

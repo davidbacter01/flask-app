@@ -9,6 +9,7 @@ class Authentification:
 
     def __init__(self, user_repo: UsersRepositoryInterface):
         self.users = user_repo
+        self.logged_in = None
         self.crypter = sha256_crypt
 
 
@@ -17,19 +18,20 @@ class Authentification:
         message = 'Invalid username, email or password!'
         if user is None:
             raise exceptions.InvalidLoginError(message)
-        if not self.password_equality(password, user.password):
+        if not self.verify(password, user.password):
             raise exceptions.InvalidLoginError(message)
         if user.email == email:
             session['username'] = name
             session['user_id'] = user.user_id
+            self.logged_in = user
         else:
             raise exceptions.InvalidLoginError(message)
 
 
-    def hash(self, password):
-        password = self.crypter.encrypt("password")
-        return password
+    def logout(self):
+        if self.logged_in:
+            session.pop('username', None)
+            session.pop('user_id', None)
 
-
-    def password_equality(self, password, hashed_password):
+    def verify(self, password, hashed_password):
         return self.crypter.verify(password, hashed_password)
