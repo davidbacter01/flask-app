@@ -29,7 +29,7 @@ def log_in():
         authentificator.login(name, email, password)
     except exceptions.InvalidLoginError as error:
         return render_template('login.html', message=error.args)
-    return redirect('/')
+    return redirect('/index')
 
 
 @login_views_blueprint.route('/logout')
@@ -37,4 +37,4 @@ def log_in():
 def log_out():
     session.pop('username', None)
     session.pop('user_id', None)
-    return redirect('/')
+    return redirect('/index')

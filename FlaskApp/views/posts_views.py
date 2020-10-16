@@ -16,6 +16,10 @@ def check_setup():
 
 
 @posts_views_blueprint.route("/")
+def check_updates():
+    return redirect('/setup')
+
+
 @posts_views_blueprint.route('/index')
 def index():
     posts = Services.get_service(Services.posts)
@@ -32,7 +36,7 @@ def new_post():
                     request.form.get('contents'), request.form.get('owner')
                     )
     posts.add(post)
-    return redirect('/')
+    return redirect('/index')
 
 
 @posts_views_blueprint.route("/view/<int:post_id>")
@@ -60,4 +64,4 @@ def edit_post(post_id):
 def delete_post(post_id):
     posts = Services.get_service(Services.posts)
     posts.remove(post_id)
-    return redirect('/')
+    return redirect('/index')

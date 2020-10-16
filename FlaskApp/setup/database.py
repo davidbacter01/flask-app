@@ -1,12 +1,15 @@
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+from setup.dbconfig import DbConfig
+from setup.db_version_2 import updates
 
 
 class Database():
     """creates a database instance"""
-    def __init__(self, config):
+    def __init__(self, config: DbConfig):
         self.config = config
         self.credentials = None
+        self.version = '2'
 
     def connect(self):
         self.credentials = self.config.get_configuration()
@@ -33,6 +36,20 @@ class Database():
         conn.close()
 
 
+    def update(self):
+        current_version = self.config.get_version()
+        if not current_version == self.version:
+            conn = self.connect()
+            conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+            curs = conn.cursor()
+            for query in updates:
+                curs.execute(query)
+            curs.close()
+            conn.close()
+            return True
+        return False
+
+
     def setup(self):
         self.credentials = self.config.get_configuration()
         try:
@@ -56,3 +73,4 @@ class Database():
                 modified_at TIMESTAMP)''')
         curs.close()
         conn.close()
+        self.update()

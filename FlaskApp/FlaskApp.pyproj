@@ -88,6 +88,9 @@
     <Compile Include="setup\dbconfig.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="setup\db_version_2.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="setup\__init__.py">
       <SubType>Code</SubType>
     </Compile>

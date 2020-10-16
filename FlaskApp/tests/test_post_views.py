@@ -1,5 +1,5 @@
 ﻿def test_index_route(client):
-    response = client.get('/', follow_redirects=True)
+    response = client.get('/index', follow_redirects=True)
     assert b'Red flowers' in response.data
 
 
