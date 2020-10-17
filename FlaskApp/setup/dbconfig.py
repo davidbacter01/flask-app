@@ -16,7 +16,7 @@ class DbConfig(Config):
 
 
     def get_database_settings(self):
-        credentials_dict = super().get_database_settings()
+        credentials_dict = super().get_configuration()
         return DatabaseSettings(
             credentials_dict['dbname'],
             credentials_dict['user'],
@@ -24,9 +24,4 @@ class DbConfig(Config):
 
 
     def get_version(self):
-        self.config.read(f'setup/{self.file_name}')
-        if 'version' not in self.config.options('postgres'):
-            self.config['postgres']['version'] = '1'
-            with open('setup/config.ini', 'w') as configfile:
-                self.config.write(configfile)
-        return self.config['postgres']['version']
+        return super().get_configuration()['version']

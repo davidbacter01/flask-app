@@ -10,7 +10,7 @@ class Authentification:
     def __init__(self, user_repo: UsersRepositoryInterface):
         self.users = user_repo
         self.logged_in = None
-        self.crypter = PasswordManager
+        self.password_manager = PasswordManager
 
 
     def login(self, name, email, password):
@@ -18,7 +18,7 @@ class Authentification:
         message = 'Invalid username, email or password!'
         if user is None:
             raise exceptions.InvalidLoginError(message)
-        if not self.verify(password, user.password):
+        if not self.password_manager.verify(password, user.password):
             raise exceptions.InvalidLoginError(message)
         if user.email == email:
             session['username'] = name
@@ -32,6 +32,3 @@ class Authentification:
         if self.logged_in:
             session.pop('username', None)
             session.pop('user_id', None)
-
-    def verify(self, password, hashed_password):
-        return self.crypter.verify(password, hashed_password)

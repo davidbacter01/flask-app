@@ -46,8 +46,6 @@ class Database():
                 curs.execute(query)
             curs.close()
             conn.close()
-            return True
-        return False
 
 
     def setup(self):
