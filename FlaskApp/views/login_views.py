@@ -8,16 +8,6 @@ from views.views_decorators.authorization import login_required, setup_required
 login_views_blueprint = Blueprint('login_views', __name__)
 
 
-@login_views_blueprint.before_request
-@setup_required
-def check_setup():
-    config = Services.get_service(Services.config)
-    if not config.is_configured:
-        return redirect('/setup')
-    return None
-
-
-
 @login_views_blueprint.route('/login', methods=['GET', 'POST'])
 @setup_required
 def log_in():

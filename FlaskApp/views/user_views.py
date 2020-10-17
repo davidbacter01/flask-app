@@ -9,15 +9,6 @@ from views.views_decorators import authorization
 user_views_blueprint = Blueprint('user_views', __name__, url_prefix='/users')
 
 
-@user_views_blueprint.before_request
-@authorization.setup_required
-def check_setup():
-    config = Services.get_service(Services.config)
-    if not config.is_configured:
-        return redirect('/setup')
-    return None
-
-
 @user_views_blueprint.route('/list')
 @authorization.setup_required
 @authorization.admin_required

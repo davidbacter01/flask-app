@@ -31,7 +31,7 @@ def test_new_post_post_route_when_logged(client):
     assert b'test_owner' in response.data
 
 
-def test_new_post_post_route_when_logged(client):
+def test_new_post_post_route_when_not_logged(client):
     response = client.post('/new', data=dict(
         title='test_title',
         contents='test_contents',
