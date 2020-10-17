@@ -1,4 +1,4 @@
-﻿from tests.test_user_views import login_as_admin
+﻿from tests.test_users_views import login_as_admin
 
 
 def test_index_route(client):

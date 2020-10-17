@@ -6,10 +6,17 @@ from models.user import User
 from views.views_decorators import authorization
 
 
-user_views_blueprint = Blueprint('user_views', __name__, url_prefix='/users')
+users_views_blueprint = Blueprint('users_views', __name__, url_prefix='/users')
+
+@users_views_blueprint.route('/view/<int:user_id>')
+@authorization.setup_required
+@authorization.admin_or_owner_required
+def view_user(user_id):
+    user = Services.get_service(Services.users).get_by_id(user_id)
+    return render_template('view_user.html', user=user)
 
 
-@user_views_blueprint.route('/list')
+@users_views_blueprint.route('/list')
 @authorization.setup_required
 @authorization.admin_required
 def list_users():
@@ -17,7 +24,7 @@ def list_users():
     return render_template('list_users.html', users=users)
 
 
-@user_views_blueprint.route('/new', methods=['GET', 'POST'])
+@users_views_blueprint.route('/new', methods=['GET', 'POST'])
 @authorization.setup_required
 @authorization.admin_required
 def create_user():
@@ -48,7 +55,7 @@ def create_user():
     return render_template('list_users.html', users=users.get_all())
 
 
-@user_views_blueprint.route('/edit/<int:user_id>', methods=['GET', 'POST'])
+@users_views_blueprint.route('/edit/<int:user_id>', methods=['GET', 'POST'])
 @authorization.setup_required
 @authorization.admin_or_owner_required
 def edit_user(user_id):
@@ -74,12 +81,12 @@ def edit_user(user_id):
         message = 'Duplicate email!'
         return render_template('edit_user.html', user=user, message=message)
 
-    return redirect(url_for('user_views.list_users'))
+    return redirect(url_for('users_views.list_users'))
 
-@user_views_blueprint.route('/delete/<user_id>')
+@users_views_blueprint.route('/delete/<int:user_id>')
 @authorization.setup_required
 @authorization.admin_required
 def delete_user(user_id):
     posts = Services.get_service(Services.users)
     posts.remove(user_id)
-    return redirect(url_for('user_views.list_users'))
+    return redirect(url_for('users_views.list_users'))

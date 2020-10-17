@@ -58,7 +58,7 @@
     <Compile Include="repository\inmemory_posts_repository.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="repository\in_memory_users_repository.py">
+    <Compile Include="repository\inmemory_users_repository.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\posts_repository_interface.py">
@@ -109,7 +109,7 @@
     <Compile Include="tests\test_setup_views.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tests\test_user_views.py">
+    <Compile Include="tests\test_users_views.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tests\__init__.py">
@@ -124,7 +124,7 @@
     <Compile Include="views\setup_views.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="views\user_views.py">
+    <Compile Include="views\users_views.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\views_decorators\authorization.py">
@@ -166,6 +166,7 @@
     <Content Include="templates\edit_post.html" />
     <Content Include="templates\list_posts.html" />
     <Content Include="templates\list_users.html" />
+    <Content Include="templates\view_user.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Web.targets" />
   <!-- Specify pre- and post-build commands in the BeforeBuild and 

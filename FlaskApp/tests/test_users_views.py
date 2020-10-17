@@ -8,10 +8,47 @@ def login_as_admin(client):
         ), follow_redirects=True)
 
 
+def test_view_user_when_not_logged_in(client):
+    response = client.get('/users/view/3', follow_redirects=True)
+    assert b'Login' in response.data
+
+
+def test_view_user_when_logged_in(client):
+    login_as_admin(client)
+    response = client.get('/users/view/1', follow_redirects=True)
+    assert b'admin' in response.data
+
+
+def test_view_all_users_when_admin_not_logged_in(client):
+    response = client.get('/users/list', follow_redirects=True)
+    assert b'Login' in response.data
+
+
+def test_view_all_users_when_logged_in_as_admin(client):
+    login_as_admin(client)
+    response = client.get('/users/list', follow_redirects=True)
+    assert b'test_user_2' in response.data
+
+
+def test_view_all_users_when_logged_in_as_user(client):
+    client.post('/login', data=dict(
+        name='test_user_2',
+        email='test_2@email.com',
+        password='test2'
+        ), follow_redirects=True)
+    response = client.get('/users/list', follow_redirects=True)
+    assert b'403' in response.data
+
+
 def test_create_user_get_route(client):
     response = login_as_admin(client)
     response = client.get('/users/new')
     assert b'Create new user:' in response.data
+
+
+def test_create_user_when_admin_not_logged(client):
+    response = client.get('/users/new', follow_redirects=True)
+    assert b'Login' in response.data
 
 
 def test_create_user_get_with_unconfigured_client(unconfigured_client):
