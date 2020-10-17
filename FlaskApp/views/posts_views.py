@@ -2,7 +2,8 @@ from datetime import datetime
 from flask import Blueprint, render_template, request, redirect
 from models.blog_post import BlogPost
 from services.services import Services
-from views.views_decorators.authorization import setup_required, login_required
+from views.views_decorators.authorization import login_required
+from views.views_decorators.setup_required import setup_required
 
 posts_views_blueprint = Blueprint('post_views', __name__)
 

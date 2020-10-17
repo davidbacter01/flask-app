@@ -1,8 +1,8 @@
 from exceptions import exceptions
 from flask import Blueprint, redirect, render_template, request
 from services.services import Services
-from views.views_decorators.authorization import login_required, setup_required
-
+from views.views_decorators.authorization import login_required
+from views.views_decorators.setup_required import setup_required
 
 
 login_views_blueprint = Blueprint('login_views', __name__)

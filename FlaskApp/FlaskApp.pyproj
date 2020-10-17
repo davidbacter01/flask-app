@@ -130,6 +130,9 @@
     <Compile Include="views\views_decorators\authorization.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="views\views_decorators\setup_required.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="views\views_decorators\__init__.py">
       <SubType>Code</SubType>
     </Compile>
