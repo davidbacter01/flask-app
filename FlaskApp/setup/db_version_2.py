@@ -1,3 +1,11 @@
+CREATE_TABLE_POSTS = '''CREATE TABLE IF NOT EXISTS posts
+                (id SERIAL PRIMARY KEY UNIQUE NOT NULL,
+                title TEXT NOT NULL,
+                owner TEXT NOT NULL,
+                contents TEXT NOT NULL,
+                created_at TIMESTAMP,
+                modified_at TIMESTAMP)'''
+
 CREATE_TABLE_USERS = '''CREATE TABLE IF NOT EXISTS users
 (
     id SERIAL PRIMARY KEY UNIQUE NOT NULL,
@@ -13,15 +21,17 @@ SELECT DISTINCT owner FROM posts
 WHERE CAST(posts.owner AS TEXT) NOT IN (SELECT CAST(id AS TEXT) FROM users)
 '''
 
+ADD_ADMIN = '''INSERT INTO users(name) VALUES(admin)'''
+
 INSERT_WHITESPACE_FOR_NOT_NULL = '''UPDATE users SET
-email='',
-password=''
+email="",
+password=""
 '''
 
 SET_NOT_NULL_FIELDS_IN_USERS = '''
 ALTER TABLE users
 ALTER COLUMN email SET NOT NULL,
-ALTER COLUMN password SET NOT NULL;
+ALTER COLUMN password SET NOT NULL
 '''
 
 UPDATE_POST_OWNER = '''UPDATE posts
@@ -37,8 +47,10 @@ ADD FOREIGN KEY (owner) REFERENCES users (id)
 '''
 
 updates = [
+    CREATE_TABLE_POSTS,
     CREATE_TABLE_USERS,
     ADD_OWNERS_AS_USERS,
+    ADD_ADMIN,
     INSERT_WHITESPACE_FOR_NOT_NULL,
     SET_NOT_NULL_FIELDS_IN_USERS,
     UPDATE_POST_OWNER,
