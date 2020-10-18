@@ -11,7 +11,7 @@ CREATE_TABLE_USERS = '''CREATE TABLE IF NOT EXISTS users
     id SERIAL PRIMARY KEY UNIQUE NOT NULL,
     name text UNIQUE NOT NULL,
     email text,
-    password VARCHAR(30),
+    password VARCHAR(100),
     created_at timestamp without time zone,
     modified_at timestamp without time zone
 )'''
@@ -24,12 +24,13 @@ ON CONFLICT DO NOTHING
 
 ADD_ADMIN = '''
 INSERT INTO users (name, email, password, created_at, modified_at)
-VALUES ('admin','admin','admin',now()::timestamp(0),now()::timestamp(0))
+VALUES ('admin', 'admin', 'admin', now()::timestamp(0), now()::timestamp(0))
 ON CONFLICT DO NOTHING'''
 
 INSERT_WHITESPACE_FOR_NOT_NULL = '''UPDATE users SET
 email=' ',
 password=' '
+where email=null or password=null
 '''
 
 SET_NOT_NULL_FIELDS_IN_USERS = '''

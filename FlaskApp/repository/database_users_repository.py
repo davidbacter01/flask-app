@@ -1,3 +1,4 @@
+from datetime import datetime
 from exceptions import exceptions
 from repository.users_repository_interface import UsersRepositoryInterface
 from models.user import User
@@ -21,20 +22,19 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
                 email, password, created_at, modified_at)
                 VALUES (%s, %s, %s, %s, %s, %s)'''
         values = (user.user_id, user.name, user.email, user.password,
-                  user.created_at, user.modified_at)
+                  user.created_at, datetime.now())
         curs.execute(query, values)
         conn.commit()
         curs.close()
         conn.close()
 
 
-    def edit(self, user: User):
+    def update(self, user: User):
         '''updates the user in db that has same id as the arg User'''
-        self.__ensure_unicity(user)
         conn = self.database.connect()
         curs = conn.cursor()
-        query = '''UPDATE users SET name=%s, password=%s, email=%s, modified_at=%s'''
-        values = (user.name, user.password, user.email, user.modified_at)
+        query = '''UPDATE users SET password=%s, email=%s, modified_at=%s WHERE id=%s'''
+        values = (user.password, user.email, user.modified_at, user.user_id)
         curs.execute(query, values)
         conn.commit()
         curs.close()

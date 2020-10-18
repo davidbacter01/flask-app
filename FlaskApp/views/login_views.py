@@ -20,6 +20,10 @@ def log_in():
     password = request.form.get('password')
     try:
         authentificator.login(name, email, password)
+    except ValueError:
+        message = 'You must complete user info before first login!'
+        user = Services.get_service(Services.users).get_by_name(name)
+        return render_template('legacy_user_setup.html', message=message, user=user)
     except exceptions.InvalidLoginError as error:
         return render_template('login.html', message=error.args)
     return redirect('/index')

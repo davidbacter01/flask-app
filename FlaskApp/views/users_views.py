@@ -9,6 +9,19 @@ from views.views_decorators.setup_required import setup_required
 
 users_views_blueprint = Blueprint('users_views', __name__, url_prefix='/users')
 
+
+@users_views_blueprint.route('/legacy_user_setup', methods=['POST'])
+def legacy_user_setup():
+    users = Services.get_service(Services.users)    
+    name = request.form.get('name')
+    user = users.get_by_name(name)
+    user.email = request.form.get('email')
+    user.password = PasswordManager.hash(request.form.get('password'))
+    users.update(user)
+    message = 'User {} is now ready for first login!'.format(user.name)
+    return render_template('login.html', message=message)
+
+
 @users_views_blueprint.route('/view/<int:user_id>')
 @setup_required
 @authorization.admin_or_owner_required
@@ -74,7 +87,7 @@ def edit_user(user_id):
         )
 
     try:
-        users.edit(user)
+        users.update(user)
     except exceptions.UserExistsError:
         message = 'Duplicate user!'
         return render_template('edit_user.html', user=user, message=message)

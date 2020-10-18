@@ -49,5 +49,5 @@ class UsersRepositoryInterface(abc.ABC):
 
 
     @abc.abstractmethod
-    def edit(self, user: User):
+    def update(self, user: User):
         pass

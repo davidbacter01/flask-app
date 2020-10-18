@@ -12,13 +12,10 @@ setup_views_blueprint = Blueprint('setup_views', __name__)
 def db_setup():
     database = Database(DbConfig('postgres'))
     if request.method == 'GET':
-        if not Services.TESTING:
-            database.update()
-            return redirect('/index')
         return render_template("db_setup.html")
 
     form_data = request.form
     setup = DatabaseSettings(form_data['dbname'], form_data['user'], form_data['password'])
-    Services.get_service(Services.config).save_dbsetup(setup)
+    Services.get_service(Services.config).save_dbsettings(setup)
     database.setup()
     return redirect('/index')

@@ -130,9 +130,6 @@
     <Compile Include="views\views_decorators\authorization.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="views\views_decorators\first_login_setup.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="views\views_decorators\setup_required.py">
       <SubType>Code</SubType>
     </Compile>
@@ -166,6 +163,7 @@
     <Content Include="templates\create_user.html" />
     <Content Include="templates\db_setup.html" />
     <Content Include="templates\edit_user.html" />
+    <Content Include="templates\legacy_user_setup.html" />
     <Content Include="templates\login.html" />
     <Content Include="templates\new_post.html" />
     <Content Include="templates\view_post.html" />

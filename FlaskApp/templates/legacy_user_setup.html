@@ -1,0 +1,13 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<form action="/users/legacy_user_setup" method="post" class="db-form">
+    <h1 style="color:red">{{message}}</h1>
+    <p>Please complete details for user: {{user.name}}</p>
+    <input name="name" type="text" value="{{user.name}}" style="display:none;"/>
+    <input name="email" id="email" type="text" required placeholder="email" /><br />
+    <input name="password" id="user" type="password" required placeholder="password" /><br />
+    <input name="confirm_password" id="confirm_password" type="password" required placeholder="confirm password" /><br />
+
+    <input type="submit" value="UPDATE" class="button green" />
+</form>
+{% endblock %}

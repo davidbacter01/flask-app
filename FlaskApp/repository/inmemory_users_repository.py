@@ -22,7 +22,7 @@ class InMemoryUsersRepository(UsersRepositoryInterface):
         self.users.insert(0, user)
 
 
-    def edit(self, user: User):
+    def update(self, user: User):
         self.__ensure_unicity(user)
         for usr in self.users:
             if usr.user_id == user.user_id:
