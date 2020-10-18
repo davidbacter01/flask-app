@@ -10,7 +10,7 @@ CREATE_TABLE_USERS = '''CREATE TABLE IF NOT EXISTS users
 (
     id SERIAL PRIMARY KEY UNIQUE NOT NULL,
     name text UNIQUE NOT NULL,
-    email text UNIQUE,
+    email text,
     password VARCHAR(30),
     created_at timestamp without time zone,
     modified_at timestamp without time zone
@@ -19,13 +19,17 @@ CREATE_TABLE_USERS = '''CREATE TABLE IF NOT EXISTS users
 ADD_OWNERS_AS_USERS = '''INSERT INTO users(name)
 SELECT DISTINCT owner FROM posts
 WHERE CAST(posts.owner AS TEXT) NOT IN (SELECT CAST(id AS TEXT) FROM users)
+ON CONFLICT DO NOTHING
 '''
 
-ADD_ADMIN = '''INSERT INTO users(name) VALUES(admin)'''
+ADD_ADMIN = '''
+INSERT INTO users (name, email, password, created_at, modified_at)
+VALUES ('admin','admin','admin',now()::timestamp(0),now()::timestamp(0))
+ON CONFLICT DO NOTHING'''
 
 INSERT_WHITESPACE_FOR_NOT_NULL = '''UPDATE users SET
-email="",
-password=""
+email=' ',
+password=' '
 '''
 
 SET_NOT_NULL_FIELDS_IN_USERS = '''
@@ -37,7 +41,7 @@ ALTER COLUMN password SET NOT NULL
 UPDATE_POST_OWNER = '''UPDATE posts
 SET owner=users.id
 FROM users 
-WHERE CAST(posts.owner AS TEXT)=users.name
+WHERE CAST(posts.owner AS TEXT)=users.name OR CAST(posts.owner AS TEXT)=CAST(users.id AS TEXT)
 '''
 
 ALTER_OWNER_TO_INT = '''ALTER TABLE posts ALTER COLUMN owner TYPE INTEGER USING owner::integer'''

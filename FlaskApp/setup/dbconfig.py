@@ -25,3 +25,7 @@ class DbConfig(Config):
 
     def get_version(self):
         return super().get_configuration()['version']
+
+
+    def update_current_version(self, new_version):
+        super().save_configuration(new_version)

@@ -9,7 +9,7 @@ class Database():
     def __init__(self, config: DbConfig):
         self.config = config
         self.credentials = None
-        self.version = '2'
+        self.latest_version = '2'
 
     def connect(self):
         self.credentials = self.config.get_database_settings()
@@ -29,16 +29,18 @@ class Database():
             )
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         curs = conn.cursor()
-
         curs.execute('''CREATE DATABASE {}'''.format(self.credentials.db_name))
-
         curs.close()
         conn.close()
 
 
     def update(self):
-        current_version = self.config.get_version()
-        if not current_version == self.version:
+        current_version = 0
+        try:
+            current_version = self.config.get_version()
+        except KeyError:
+            self.config.update_current_version(dict(version='1'))
+        if current_version != self.latest_version:
             conn = self.connect()
             conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
             curs = conn.cursor()
@@ -46,6 +48,7 @@ class Database():
                 curs.execute(query)
             curs.close()
             conn.close()
+            self.config.update_current_version(dict(version=self.latest_version))
 
 
     def setup(self):

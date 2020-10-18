@@ -18,7 +18,8 @@ class Config:
         if not self.is_configured:
             open(f'setup/{self.file_name}', 'w+').close()
 
-        self.config.add_section(self.section)
+        if not self.config.has_section(self.section):
+            self.config.add_section(self.section)
         for key in config_dict:
             self.config[self.section][key] = config_dict[key]
 
