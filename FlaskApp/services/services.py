@@ -8,13 +8,19 @@ from setup.dbconfig import DbConfig
 from services.authentification import Authentification
 
 
+def return_false():
+    return False
+
 class Services:
     posts = 'posts'
     config = 'config'
     users = 'users'
     authentification = 'authentification'
+    database = 'database'
     TESTING = False
     db = Database(DbConfig('postgres'))
+    test_db = Mock()
+    test_db.new_version_available = return_false
     production_users = DatabaseUsersRepository(db)
     test_users = InMemoryUsersRepository()
 
@@ -22,14 +28,16 @@ class Services:
         posts:InMemoryPostsRepository(),
         config:Mock(),
         users:test_users,
-        authentification:Authentification(test_users)
+        authentification:Authentification(test_users),
+        database:test_db
         }
 
     production_services = {
         posts:DatabasePostsRepository(db),
         config:DbConfig('postgres'),
         users:production_users,
-        authentification:Authentification(production_users)
+        authentification:Authentification(production_users),
+        database:db
         }
 
 

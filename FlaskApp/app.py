@@ -16,7 +16,7 @@ application.register_blueprint(users_views_blueprint)
 
 @application.before_first_request
 def update_to_latest_version():
-    database = Services.db
+    database = Services.get_service(Services.database)
     try:
         if database.new_version_available():
             database.update()

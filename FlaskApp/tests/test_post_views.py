@@ -10,7 +10,6 @@ def test_new_post_get_route(client):
     login_as_admin(client)
     response = client.get('/new', follow_redirects=True)
     assert b'Title' in response.data
-    assert b'Owner' in response.data
     assert b'Content' in response.data
 
 
@@ -23,12 +22,10 @@ def test_new_post_post_route_when_logged(client):
     login_as_admin(client)
     response = client.post('/new', data=dict(
         title='test_title',
-        contents='test_contents',
-        owner='test_owner'
+        contents='test_contents'
         ), follow_redirects=True)
 
     assert b'test_title' in response.data
-    assert b'test_owner' in response.data
 
 
 def test_new_post_post_route_when_not_logged(client):
@@ -52,8 +49,24 @@ def test_edit_post_when_not_loged_in(client):
     assert b'Login' in response.data
 
 
-def test_delete_post(client):
+def test_edit_post_when_logged_in_as_admin(client):
+    login_as_admin(client)
+    response = client.post('/edit/1', data=dict(
+        title='Red flowers',
+        contents='yes flowers'
+        ), follow_redirects=True)
+    assert b'yes flowers' in response.data
+
+
+def test_delete_post_not_logged_in(client):
     response = client.get('/delete/2', follow_redirects=True)
+    assert b'Login' in response.data
+
+
+def test_delete_post_logged_in_as_admin(client):
+    login_as_admin(client)
+    response = client.get('/delete/2', follow_redirects=True)
+    assert b'Red flowers' in response.data
     assert b'Yellow flowers' not in response.data
 
 
