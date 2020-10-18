@@ -4,8 +4,7 @@
     <h3>Add a new blog:</h3>
     <label for="title">Title:</label><br>
     <input type="text" id="title" name="title" }}><br>
-    <label for="owner">Owner:</label><br>
-    <input type="text" id="owner" name="owner" }}><br>
+    <p>By: {{session['username']}}</p>
     <label for="contents">Content:</label><br>
     <textarea rows="10" cols="60"  name="contents" id="contents"}}"></textarea><br>
     <input type="submit" class="button">

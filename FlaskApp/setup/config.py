@@ -1,3 +1,4 @@
+from exceptions.exceptions import SectionNotFoundError
 from configparser import ConfigParser
 from os import path
 
@@ -39,6 +40,7 @@ class Config:
             for param in params:
                 configuration[param[0]] = param[1]
         else:
-            raise Exception('Section {0} not found in the {1} file'.format(self.section, filename))
+            raise SectionNotFoundError(
+                'Section {0} not found in the {1} file'.format(self.section, filename))
 
         return configuration

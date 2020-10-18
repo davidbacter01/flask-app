@@ -29,6 +29,6 @@ class Authentification:
 
 
     def logout(self):
-        if self.logged_in:
+        if self.logged_in or ('username' in session):
             session.pop('username', None)
             session.pop('user_id', None)

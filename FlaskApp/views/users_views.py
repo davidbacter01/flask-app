@@ -12,7 +12,7 @@ users_views_blueprint = Blueprint('users_views', __name__, url_prefix='/users')
 
 @users_views_blueprint.route('/legacy_user_setup', methods=['POST'])
 def legacy_user_setup():
-    users = Services.get_service(Services.users)    
+    users = Services.get_service(Services.users)
     name = request.form.get('name')
     user = users.get_by_name(name)
     user.email = request.form.get('email')

@@ -1,7 +1,7 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 
-<form action="/create_user" method="post" class="db-form">
+<form action="/users/new" method="post" class="db-form">
     <h1>{{message}}</h1>
     <h1>Create new user:</h1>
     <input name="name" id="name" type="text" required placeholder="username" /><br />

@@ -18,11 +18,11 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         self.__ensure_unicity(user)
         conn = self.database.connect()
         curs = conn.cursor()
-        query = '''INSERT INTO users (id, name,
+        query = '''INSERT INTO users (name,
                 email, password, created_at, modified_at)
-                VALUES (%s, %s, %s, %s, %s, %s)'''
-        values = (user.user_id, user.name, user.email, user.password,
-                  user.created_at, datetime.now())
+                VALUES (%s, %s, %s, %s, %s)'''
+        values = (user.name, user.email, user.password,
+                  datetime.now(), user.modified_at)
         curs.execute(query, values)
         conn.commit()
         curs.close()

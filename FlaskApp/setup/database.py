@@ -58,3 +58,7 @@ class Database():
         except psycopg2.DatabaseError:
             pass
         self.update()
+
+
+    def new_version_available(self):
+        return self.latest_version != self.config.get_version()

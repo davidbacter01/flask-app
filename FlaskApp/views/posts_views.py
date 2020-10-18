@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, session
 from models.blog_post import BlogPost
 from services.services import Services
 from views.views_decorators.authorization import login_required
@@ -9,11 +9,6 @@ posts_views_blueprint = Blueprint('post_views', __name__)
 
 
 @posts_views_blueprint.route("/")
-@setup_required
-def check_updates():
-    return redirect('/setup')
-
-
 @posts_views_blueprint.route('/index')
 @setup_required
 def index():
@@ -30,7 +25,7 @@ def new_post():
 
     posts = Services.get_service(Services.posts)
     post = BlogPost(request.form.get('title'),
-                    request.form.get('contents'), request.form.get('owner')
+                    request.form.get('contents'), session['user_id']
                     )
     posts.add(post)
     return redirect('/index')

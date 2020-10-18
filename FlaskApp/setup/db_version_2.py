@@ -28,9 +28,9 @@ VALUES ('admin', 'admin', 'admin', now()::timestamp(0), now()::timestamp(0))
 ON CONFLICT DO NOTHING'''
 
 INSERT_WHITESPACE_FOR_NOT_NULL = '''UPDATE users SET
-email=' ',
-password=' '
-where email=null or password=null
+email='1',
+password='1'
+WHERE created_at is null
 '''
 
 SET_NOT_NULL_FIELDS_IN_USERS = '''

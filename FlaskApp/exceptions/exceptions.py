@@ -8,3 +8,7 @@ class EmailExistsError(BaseException):
 
 class InvalidLoginError(BaseException):
     pass
+
+
+class SectionNotFoundError(BaseException):
+    pass
