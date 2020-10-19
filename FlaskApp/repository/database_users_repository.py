@@ -85,6 +85,10 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         values = (name, )
         curs.execute(query, values)
         db_entry = curs.fetchone()
+        if db_entry is None:
+            curs.close()
+            conn.close()
+            return None
         user = User(db_entry[0], db_entry[1], db_entry[2], db_entry[3])
         user.created_at = db_entry[4]
         user.modified_at = db_entry[5]
@@ -92,6 +96,25 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         conn.close()
         return user
 
+
+    def get_by_email(self, email):
+        conn = self.database.connect()
+        conn.autocommit = True
+        curs = conn.cursor()
+        query = '''SELECT * FROM users WHERE email = %s'''
+        values = (email, )
+        curs.execute(query, values)
+        db_entry = curs.fetchone()
+        if db_entry is None:
+            curs.close()
+            conn.close()
+            return None
+        user = User(db_entry[0], db_entry[1], db_entry[2], db_entry[3])
+        user.created_at = db_entry[4]
+        user.modified_at = db_entry[5]
+        curs.close()
+        conn.close()
+        return user
 
     def remove(self, user_id):
         '''removes from db the user that has the specified id'''

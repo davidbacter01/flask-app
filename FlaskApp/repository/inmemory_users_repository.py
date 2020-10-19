@@ -48,6 +48,13 @@ class InMemoryUsersRepository(UsersRepositoryInterface):
                 return usr
         return None
 
+    def get_by_email(self, email):
+        for usr in self.users:
+            if usr.email == email:
+                return usr
+        return None
+
+
     def remove(self, user_id):
         for user in self.users:
             if user.user_id == user_id:

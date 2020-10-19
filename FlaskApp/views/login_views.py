@@ -16,10 +16,9 @@ def log_in():
 
     authentificator = Services.get_service(Services.authentification)
     name = request.form.get('name')
-    email = request.form.get('email')
     password = request.form.get('password')
     try:
-        authentificator.login(name, email, password)
+        authentificator.login(name, password)
     except ValueError:
         message = 'You must complete user info before first login!'
         user = Services.get_service(Services.users).get_by_name(name)

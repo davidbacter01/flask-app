@@ -25,7 +25,6 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
         for post in self.__posts:
             if post.blog_id == post_id:
                 return post
-
         return None
 
 

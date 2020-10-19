@@ -13,19 +13,18 @@ class Authentification:
         self.password_manager = PasswordManager
 
 
-    def login(self, name, email, password):
+    def login(self, name, password):
         user = self.users.get_by_name(name)
         message = 'Invalid username, email or password!'
+        if user is None:
+            user = self.users.get_by_email(name)
         if user is None:
             raise exceptions.InvalidLoginError(message)
         if not self.password_manager.verify(password, user.password):
             raise exceptions.InvalidLoginError(message)
-        if user.email == email:
-            session['username'] = name
-            session['user_id'] = user.user_id
-            self.logged_in = user
-        else:
-            raise exceptions.InvalidLoginError(message)
+        session['username'] = user.name
+        session['user_id'] = user.user_id
+        self.logged_in = user
 
 
     def logout(self):
