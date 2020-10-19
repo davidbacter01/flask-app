@@ -22,6 +22,11 @@ WHERE CAST(posts.owner AS TEXT) NOT IN (SELECT CAST(id AS TEXT) FROM users)
 ON CONFLICT DO NOTHING
 '''
 
+UPDATE_DATE_OF_CREATION = '''UPDATE users
+SET created_at=now()::timestamp(0), modified_at=now()::timestamp(0)
+WHERE users.created_at is null and users.name is not null
+'''
+
 ADD_ADMIN = '''
 INSERT INTO users (name, email, password, created_at, modified_at)
 VALUES ('admin', 'admin', 'admin', now()::timestamp(0), now()::timestamp(0))
@@ -55,6 +60,7 @@ updates = [
     CREATE_TABLE_POSTS,
     CREATE_TABLE_USERS,
     ADD_OWNERS_AS_USERS,
+    UPDATE_DATE_OF_CREATION,
     ADD_ADMIN,
     INSERT_WHITESPACE_FOR_NOT_NULL,
     SET_NOT_NULL_FIELDS_IN_USERS,
