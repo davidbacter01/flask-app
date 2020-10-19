@@ -73,7 +73,6 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         cursor.execute(query)
         entries = cursor.fetchall()
         for line in entries:
-            print(line)
             resulted_post = BlogPost(line[1], line[2], line[3])
             resulted_post.blog_id = line[0]
             resulted_post.created_at = line[4]

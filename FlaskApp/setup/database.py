@@ -1,3 +1,4 @@
+from exceptions.exceptions import SectionNotFoundError
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from setup.dbconfig import DbConfig
@@ -36,10 +37,7 @@ class Database():
 
     def update(self):
         current_version = 0
-        try:
-            current_version = self.config.get_version()
-        except KeyError:
-            self.config.update_current_version(dict(version='1'))
+        current_version = self.config.get_version()
         if current_version != self.latest_version:
             conn = self.connect()
             conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
@@ -61,4 +59,7 @@ class Database():
 
 
     def new_version_available(self):
-        return self.latest_version != self.config.get_version()
+        try:
+            return self.latest_version != self.config.get_version()
+        except SectionNotFoundError:
+            return False

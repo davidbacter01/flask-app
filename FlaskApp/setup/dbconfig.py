@@ -24,7 +24,10 @@ class DbConfig(Config):
 
 
     def get_version(self):
-        return super().get_configuration()['version']
+        try:
+            return super().get_configuration()['version']
+        except KeyError:
+            return '1'
 
 
     def update_current_version(self, new_version):
