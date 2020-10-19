@@ -1,3 +1,9 @@
+def login_as_test_user_2(client):
+    client.post('/login', data=dict(
+        name='test_user_2',
+        email='test_2@email.com',
+        password='test2'
+        ), follow_redirects=True)
 
 
 def login_as_admin(client):
@@ -8,9 +14,48 @@ def login_as_admin(client):
         ), follow_redirects=True)
 
 
+def test_redirect_to_legacy_user_setup_on_first_login_atempt_for_old_user_not_setup(client):
+    response = client.post('/login', data=dict(
+        name='user',
+        email='1',
+        password='1'
+        ), follow_redirects=True)
+    assert b'You must complete user info before first login!' in response.data
+
+
+def test_redirect_to_legacy_user_setup_unconfigured(unconfigured_client):
+    response = unconfigured_client.post('/login', data=dict(
+        name='user',
+        email='1',
+        password='1'
+        ), follow_redirects=True)
+    assert b'Database Setup' in response.data
+
+
+def test_legacy_user_setup_post_route(client):
+    client.post('/login', data=dict(
+        name='user',
+        email='1',
+        password='1'
+        ), follow_redirects=True)
+    response = client.post('/login', data=dict(
+        name='user',
+        email='user@email.com',
+        password='user',
+        confirm_password='user'
+        ), follow_redirects=True)
+    assert b'Login' in response.data
+
+
 def test_view_user_when_not_logged_in(client):
     response = client.get('/users/view/3', follow_redirects=True)
     assert b'Login' in response.data
+
+
+def test_view_user_when_logged_in_as_different_user(client):
+    login_as_test_user_2(client)
+    response = client.get('/users/view/1', follow_redirects=True)
+    assert b'403' in response.data
 
 
 def test_view_user_when_logged_in(client):
@@ -195,6 +240,37 @@ def test_edit_user_with_duplicate_email_unconfigured(unconfigured_client):
         confirm_password='test1'
         ), follow_redirects=True)
     assert b'Database Setup' in response.data
+
+
+def test_edit_user_logged_in_as_owner(client):
+    client.post('/login', data=dict(
+        name='edit',
+        email='edit@email.com',
+        password='edit'
+        ), follow_redirects=True)
+    response = client.post('/users/edit/6', data=dict(
+        name='edited',
+        email='edit@email.com',
+        password='edit',
+        confirm_password='edit'
+        ), follow_redirects=True)
+    assert b'edit' in response.data
+
+
+def test_edit_user_logged_in_as_different_user(client):
+    login_as_test_user_2(client)
+    response = client.post('/users/edit/6', data=dict(), follow_redirects=True)
+    assert b'403' in response.data
+
+
+def test_delete_user_logged_in_as_owner(client):
+    client.post('/login', data=dict(
+        name='delete',
+        email='delete',
+        password='delete'
+        ), follow_redirects=True)
+    response = client.get('/users/delete/7', follow_redirects=True)
+    assert b'403' in response.data
 
 
 def test_delete_user(client):

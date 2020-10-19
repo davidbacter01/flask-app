@@ -13,7 +13,10 @@ class InMemoryUsersRepository(UsersRepositoryInterface):
             User(1, 'admin', 'admin@email.com', sha256_crypt.hash('secret')),
             User(2, 'test_user_1', 'test_1@email.com', sha256_crypt.hash('test1')),
             User(3, 'test_user_2', 'test_2@email.com', sha256_crypt.hash('test2')),
-            User(4, 'deleted', 'del@email.com', 'delete')
+            User(4, 'deleted', 'del@email.com', 'delete'),
+            User(5, 'user', '1', '1'),
+            User(6, 'edit', 'edit@email.com', sha256_crypt.hash('edit')),
+            User(7, 'delete', 'delete', sha256_crypt.hash('delete'))
             ]
 
 

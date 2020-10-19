@@ -11,6 +11,7 @@ users_views_blueprint = Blueprint('users_views', __name__, url_prefix='/users')
 
 
 @users_views_blueprint.route('/legacy_user_setup', methods=['POST'])
+@setup_required
 def legacy_user_setup():
     users = Services.get_service(Services.users)
     name = request.form.get('name')
@@ -80,12 +81,11 @@ def edit_user(user_id):
 
     user_data = request.form
     user = User(
-        user_data.get('user_id'),
+        user_id,
         user_data.get('name'),
         user_data.get('email'),
         user_data.get('password')
         )
-
     try:
         users.update(user)
     except exceptions.UserExistsError:
@@ -94,8 +94,8 @@ def edit_user(user_id):
     except exceptions.EmailExistsError:
         message = 'Duplicate email!'
         return render_template('edit_user.html', user=user, message=message)
+    return redirect('/users/view/{}'.format(user_id))
 
-    return redirect(url_for('users_views.list_users'))
 
 @users_views_blueprint.route('/delete/<int:user_id>')
 @setup_required
