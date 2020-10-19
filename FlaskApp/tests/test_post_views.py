@@ -58,6 +58,32 @@ def test_edit_post_when_logged_in_as_admin(client):
     assert b'yes flowers' in response.data
 
 
+def test_edit_post_when_logged_in_as_owner(client):
+    client.post('/login', data=dict(
+        name='test_user_2',
+        email='test_2@email.com',
+        password='test2'
+        ), follow_redirects=True)
+    response = client.post('/edit/4', data=dict(
+        title='edited title',
+        contents='edited contents'
+        ), follow_redirects=True)
+    assert b'edited title' in response.data
+
+
+def test_edit_post_when_logged_in_as_other_user(client):
+    client.post('/login', data=dict(
+        name='test_user_1',
+        email='test_1@email.com',
+        password='test1'
+        ), follow_redirects=True)
+    response = client.post('/edit/4', data=dict(
+        title='edited title',
+        contents='edited contents'
+        ), follow_redirects=True)
+    assert b'403' in response.data
+
+
 def test_delete_post_not_logged_in(client):
     response = client.get('/delete/2', follow_redirects=True)
     assert b'Login' in response.data
@@ -68,6 +94,27 @@ def test_delete_post_logged_in_as_admin(client):
     response = client.get('/delete/2', follow_redirects=True)
     assert b'Red flowers' in response.data
     assert b'Yellow flowers' not in response.data
+
+
+def test_delete_post_when_logged_in_as_owner(client):
+    client.post('/login', data=dict(
+        name='test_user_2',
+        email='test_2@email.com',
+        password='test2'
+        ), follow_redirects=True)
+    response = client.get('/delete/5', follow_redirects=True)
+    assert b'Red flowers' in response.data
+    assert b'test delete' not in response.data
+
+
+def test_delete_post_when_logged_in_as_different_user(client):
+    client.post('/login', data=dict(
+        name='test_user_1',
+        email='test_1@email.com',
+        password='test1'
+        ), follow_redirects=True)
+    response = client.get('/delete/4', follow_redirects=True)
+    assert b'403' in response.data
 
 
 def test_index_with_setup_not_configured(unconfigured_client):

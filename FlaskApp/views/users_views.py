@@ -24,7 +24,7 @@ def legacy_user_setup():
 
 @users_views_blueprint.route('/view/<int:user_id>')
 @setup_required
-@authorization.admin_or_owner_required
+@authorization.admin_or_account_owner_required
 def view_user(user_id):
     user = Services.get_service(Services.users).get_by_id(user_id)
     return render_template('view_user.html', user=user)
@@ -71,7 +71,7 @@ def create_user():
 
 @users_views_blueprint.route('/edit/<int:user_id>', methods=['GET', 'POST'])
 @setup_required
-@authorization.admin_or_owner_required
+@authorization.admin_or_account_owner_required
 def edit_user(user_id):
     users = Services.get_service(Services.users)
     user = users.get_by_id(user_id)

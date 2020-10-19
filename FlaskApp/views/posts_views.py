@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, session
 from models.blog_post import BlogPost
 from services.services import Services
-from views.views_decorators.authorization import login_required, admin_or_owner_required
+from views.views_decorators.authorization import login_required, admin_or_post_owner_required
 from views.views_decorators.setup_required import setup_required
 
 posts_views_blueprint = Blueprint('post_views', __name__)
@@ -42,7 +42,7 @@ def view_post(post_id):
 @posts_views_blueprint.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 @setup_required
 @login_required
-@admin_or_owner_required
+@admin_or_post_owner_required
 def edit_post(post_id):
     posts = Services.get_service(Services.posts)
     blog_post = posts.get_by_id(post_id)
@@ -59,7 +59,7 @@ def edit_post(post_id):
 @posts_views_blueprint.route('/delete/<int:post_id>')
 @setup_required
 @login_required
-@admin_or_owner_required
+@admin_or_post_owner_required
 def delete_post(post_id):
     posts = Services.get_service(Services.posts)
     posts.remove(post_id)

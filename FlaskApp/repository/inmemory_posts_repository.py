@@ -8,11 +8,15 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
         self.__posts = [
             BlogPost('Red flowers', 'text about red flowers', 'User1'),
             BlogPost('Yellow flowers', 'text about yellow flowers', 'User2'),
-            BlogPost('Blue flowers', 'text about blue flowers', 'User3')
+            BlogPost('Blue flowers', 'text about blue flowers', 'User3'),
+            BlogPost('test edit', 'random', 'test_user_2'),
+            BlogPost('test delete', 'random', 'test_user_2')
             ]
         self.__posts[0].blog_id = 1
         self.__posts[1].blog_id = 2
         self.__posts[2].blog_id = 3
+        self.__posts[3].blog_id = 4
+        self.__posts[4].blog_id = 5
 
 
     def get_by_id(self, post_id: int):
