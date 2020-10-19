@@ -2,13 +2,9 @@
 {% block content %}
 <a href="/users/new" class="button">Add new user!</a>
 {% for user in users %}
-<div style="border:dashed 1px black;">
+<div style="border:dashed 1px black;padding-top:20px;">
     <h3>{{user.name}}</h3>
-    <h3>{{user.email}}</h3>
-    {% if session['username'] == 'admin' %}
-        <button>Edit</button>
-        <button>Delete</button>
-    {% endif %}
+    <a href="/users/view/{{user.user_id}}" class="button">View details</a>
 </div>
 {% endfor %}
 {% endblock %}

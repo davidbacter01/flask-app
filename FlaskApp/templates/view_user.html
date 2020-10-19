@@ -1,15 +1,17 @@
 ﻿{% extends 'base.html' %}
 {% block content %}
-<div>
-    <h1>{{user.name}}</h1>
-    <h2>{{user.id}}</h2>
-    <p>{{user.email}}</p>
+<div class="view-post">
+    <h1>username: {{user.name}}</h1>
+    <p>id: {{user.user_id}}</p>
+    <h2>email: {{user.email}}</h2>
+    <p>registered on: {{user.created_at.day}}/{{user.created_at.month}}/{{user.created_at.year}} <small>at {{user.created_at.hour}}:{{user.created_at.minute}}</small></p>
+    <p>last modified: {{user.modified_at.day}}/{{user.modified_at.month}}/{{user.modified_at.year}} <small>at {{user.modified_at.hour}}:{{user.modified_at.minute}}</small></p>
     {% if 'username' in session %}
         {% if session['username'] == user.name %}
         <a href="#">Edit</a>
         {% elif session['username'] == 'admin' %}
-        <a href="#">Edit</a>
-        <a href="#">Delete</a>
+        <a href="/users/edit/{{user.user_id}}" class="button">Edit</a>
+        <a href="/users/delete/{{user.user_id}}" onclick="return confirm('Are you sure you want to delete user?')" class="button red">Delete</a>
         {% endif %}
     {% endif %}
 </div>

@@ -33,8 +33,14 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         '''updates the user in db that has same id as the arg User'''
         conn = self.database.connect()
         curs = conn.cursor()
-        query = '''UPDATE users SET password=%s, email=%s, modified_at=%s WHERE id=%s'''
-        values = (user.password, user.email, user.modified_at, user.user_id)
+        query = ''
+        values = ()
+        if len(user.password) < 1:
+            query = '''UPDATE users SET name=%s, email=%s, modified_at=%s WHERE id=%s'''
+            values = (user.name, user.email, datetime.now(), user.user_id)
+        else:
+            query = '''UPDATE users SET name=%s,password=%s,email=%s,modified_at=%s WHERE id=%s'''
+            values = (user.name, user.password, user.email, datetime.now(), user.user_id)
         curs.execute(query, values)
         conn.commit()
         curs.close()

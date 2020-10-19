@@ -81,7 +81,7 @@ def edit_user(user_id):
 
     user_data = request.form
     user = User(
-        user_id,
+        user.user_id,
         user_data.get('name'),
         user_data.get('email'),
         user_data.get('password')
