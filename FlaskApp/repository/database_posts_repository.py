@@ -51,10 +51,12 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
         conn = self.database.connect()
         cursor = conn.cursor()
-        query = '''SELECT * FROM posts WHERE ID = %s'''
+        query = '''SELECT posts.id,title,contents,users.name,posts.created_at,posts.modified_at
+            FROM posts JOIN users on posts.owner=users.id
+            WHERE posts.id = %s'''
         cursor.execute(query, (post_id,))
         data = cursor.fetchone()
-        resulted_post = BlogPost(data[1], data[3], data[2])
+        resulted_post = BlogPost(data[1], data[2], data[3])
         resulted_post.blog_id = data[0]
         resulted_post.created_at = data[4]
         resulted_post.modified_at = data[5]
