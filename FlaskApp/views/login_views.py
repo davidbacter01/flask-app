@@ -1,5 +1,5 @@
 from exceptions import exceptions
-from flask import Blueprint, redirect, render_template, request
+from flask import Blueprint, redirect, render_template, request, session
 from services.services import Services
 from views.views_decorators.authorization import login_required
 from views.views_decorators.setup_required import setup_required
@@ -16,6 +16,7 @@ def log_in():
 
     authentificator = Services.get_service(Services.authentification)
     name = request.form.get('name')
+    session['atempt'] = name
     password = request.form.get('password')
     try:
         authentificator.login(name, password)

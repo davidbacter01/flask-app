@@ -14,37 +14,29 @@ def login_as_admin(client):
         ), follow_redirects=True)
 
 
-def test_redirect_to_legacy_user_setup_on_first_login_atempt_for_old_user_not_setup(client):
-    response = client.post('/login', data=dict(
-        name='user',
-        email='1',
-        password='1'
-        ), follow_redirects=True)
-    assert b'You must complete user info before first login!' in response.data
-
-
-def test_redirect_to_legacy_user_setup_unconfigured(unconfigured_client):
-    response = unconfigured_client.post('/login', data=dict(
-        name='user',
-        email='1',
-        password='1'
-        ), follow_redirects=True)
-    assert b'Database Setup' in response.data
-
-
 def test_legacy_user_setup_post_route(client):
     client.post('/login', data=dict(
         name='user',
         email='1',
         password='1'
         ), follow_redirects=True)
-    response = client.post('/login', data=dict(
+    response = client.post('/users/legacy_user_setup', data=dict(
         name='user',
         email='user@email.com',
         password='user',
         confirm_password='user'
         ), follow_redirects=True)
     assert b'Login' in response.data
+
+
+def test_legacy_user_setup_post_route_without_login_atempt(client):
+    response = client.post('/users/legacy_user_setup', data=dict(
+        name='user',
+        email='user@email.com',
+        password='user',
+        confirm_password='user'
+        ), follow_redirects=True)
+    assert b'403' in response.data
 
 
 def test_view_user_when_not_logged_in(client):

@@ -1,5 +1,5 @@
 from exceptions import exceptions
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, redirect, render_template, request, url_for, session, abort
 from services.password_manager import PasswordManager
 from services.services import Services
 from models.user import User
@@ -15,6 +15,11 @@ users_views_blueprint = Blueprint('users_views', __name__, url_prefix='/users')
 def legacy_user_setup():
     users = Services.get_service(Services.users)
     name = request.form.get('name')
+    if 'atempt' not in session:
+        return abort(403)
+    if session['atempt'] != name:
+        return abort(403)
+    session.pop('atempt', None)
     user = users.get_by_name(name)
     user.email = request.form.get('email')
     user.password = PasswordManager.hash(request.form.get('password'))
