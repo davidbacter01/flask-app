@@ -8,7 +8,7 @@
     <p>last modified: {{user.modified_at.day}}/{{user.modified_at.month}}/{{user.modified_at.year}} <small>at {{user.modified_at.hour}}:{{user.modified_at.minute}}</small></p>
     {% if 'username' in session %}
         {% if session['username'] == user.name %}
-        <a href="#">Edit</a>
+        <a href="/users/edit/{{user.user_id}}" class="button">Edit</a>
         {% elif session['username'] == 'admin' %}
         <a href="/users/edit/{{user.user_id}}" class="button">Edit</a>
         <a href="/users/delete/{{user.user_id}}" onclick="return confirm('Are you sure you want to delete user?')" class="button red">Delete</a>
