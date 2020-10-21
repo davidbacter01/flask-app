@@ -5,6 +5,17 @@
 {% endif %}
 <hr />
 <div id="posts_container">
+    <div id="filter">
+        <span>Filter by owner: </span>
+        <select id="username" name="username">
+            {% for user in users %}
+            <option value={{user.name}} >{{user.name}}</option>
+            {% endfor %}
+        </select>
+        <button class="button green" onclick="applyFilter()">Filter!</button>
+        <a href="/" class="button">Reset filter</a>
+    </div>
+    <hr />
     {% for post in blogs %}
     <div>
         <h1>{{post.title}}</h1>

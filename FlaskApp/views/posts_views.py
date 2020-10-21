@@ -12,8 +12,14 @@ posts_views_blueprint = Blueprint('post_views', __name__)
 @posts_views_blueprint.route('/index')
 @setup_required
 def index():
-    posts = Services.get_service(Services.posts)
-    return render_template('list_posts.html', blogs=posts.get_all())
+    posts = []
+    if request.args.get('filter'):
+        owner = request.args.get('owner')
+        posts = Services.get_service(Services.posts).get_by_owner(owner)
+    else:
+        posts = Services.get_service(Services.posts).get_all()
+    users = Services.get_service(Services.users).get_all()
+    return render_template('list_posts.html', blogs=posts, users=users)
 
 
 @posts_views_blueprint.route("/new", methods=['GET', 'POST'])

@@ -46,6 +46,29 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         conn.close()
 
 
+    def get_by_owner(self, owner):
+        conn = self.database.connect()
+        cursor = conn.cursor()
+        query = '''SELECT posts.id,title,contents,users.name,posts.created_at,posts.modified_at
+            FROM posts JOIN users ON posts.owner=users.id
+            WHERE users.name=%s
+            '''
+        value = (owner, )
+        posts = []
+        cursor.execute(query, value)
+        entries = cursor.fetchall()
+        for line in entries:
+            resulted_post = BlogPost(line[1], line[2], line[3])
+            resulted_post.blog_id = line[0]
+            resulted_post.created_at = line[4]
+            resulted_post.modified_at = line[5]
+            posts.insert(0, resulted_post)
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return posts
+
+
     def get_by_id(self, post_id):
         '''returns a post based on the id provided'''
 

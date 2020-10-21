@@ -28,6 +28,14 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
         return None
 
 
+    def get_by_owner(self, owner):
+        posts = []
+        for post in self.__posts:
+            if post.owner == owner:
+                posts.append(post)
+        return posts
+
+
     def get_all(self):
         return self.__posts
 

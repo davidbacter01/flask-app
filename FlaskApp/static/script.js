@@ -5,3 +5,8 @@ function promptUserForDeleteConfirmation() {
         document.getElementById("delete").setAttribute("href","#")
     }
 }
+
+function applyFilter() {
+    username = document.getElementById('username').value;
+    window.location.assign(`/?filter=True&owner=${username}`);
+}
