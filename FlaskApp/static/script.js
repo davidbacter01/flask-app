@@ -7,6 +7,14 @@ function promptUserForDeleteConfirmation() {
 }
 
 function applyFilter() {
-    username = document.getElementById('username').value;
-    window.location.assign(`/?filter=True&owner=${username}`);
+    let username = document.getElementById('username').value;
+    let link = '';
+    if (username == 'All') {
+        link = '/';
+    }
+    else {
+        link = `/?filter=True&owner=${username}`;
+    }
+
+    window.location.assign(link);
 }
