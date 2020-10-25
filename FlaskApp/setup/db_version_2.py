@@ -52,8 +52,45 @@ WHERE CAST(posts.owner AS TEXT)=users.name OR CAST(posts.owner AS TEXT)=CAST(use
 
 ALTER_OWNER_TO_INT = '''ALTER TABLE posts ALTER COLUMN owner TYPE INTEGER USING owner::integer'''
 
+
+CREATE_FUNCTION_TO_DROP_ALL_FOREIGN_KEYS = '''
+create or replace function remove_fk_by_table_and_column(p_table_name 
+varchar, p_column_name varchar) returns INTEGER as $$
+declare
+     v_fk_name varchar := NULL;
+     v_fk_num_removed INTEGER := 0;
+begin
+     FOR v_fk_name IN (SELECT ss2.conname
+         FROM pg_attribute af, pg_attribute a,
+             (SELECT conname, conrelid,confrelid,conkey[i] AS conkey, 
+confkey[i] AS confkey
+                 FROM (SELECT conname, conrelid,confrelid,conkey,confkey,
+                     generate_series(1,array_upper(conkey,1)) AS i
+                     FROM pg_constraint WHERE contype = 'f') ss) ss2
+         WHERE af.attnum = confkey
+             AND af.attrelid = confrelid
+             AND a.attnum = conkey
+             AND a.attrelid = conrelid
+             AND a.attrelid = p_table_name::regclass
+             AND a.attname = p_column_name) LOOP
+         execute 'alter table ' || quote_ident(p_table_name) || ' drop 
+constraint ' || quote_ident(v_fk_name);
+         v_fk_num_removed = v_fk_num_removed + 1;
+     END LOOP;
+     return v_fk_num_removed;
+end;
+$$ language plpgsql;
+'''
+
+
+DROP_ALL_FOREIGN_KEYS_ON_POST_OWNER = '''
+select remove_fk_by_table_and_column('posts', 'owner')
+'''
+
+
 ADD_FOREIGN_KEY = '''ALTER TABLE posts
 ADD FOREIGN KEY (owner) REFERENCES users (id)
+ON DELETE CASCADE
 '''
 
 updates = [
@@ -66,5 +103,7 @@ updates = [
     SET_NOT_NULL_FIELDS_IN_USERS,
     UPDATE_POST_OWNER,
     ALTER_OWNER_TO_INT,
+    CREATE_FUNCTION_TO_DROP_ALL_FOREIGN_KEYS,
+    DROP_ALL_FOREIGN_KEYS_ON_POST_OWNER,
     ADD_FOREIGN_KEY
     ]
