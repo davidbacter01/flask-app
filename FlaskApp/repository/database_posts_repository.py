@@ -46,29 +46,6 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         conn.close()
 
 
-    def get_by_owner(self, owner):
-        conn = self.database.connect()
-        cursor = conn.cursor()
-        query = '''SELECT posts.id,title,contents,users.name,posts.created_at,posts.modified_at
-            FROM posts JOIN users ON posts.owner=users.id
-            WHERE users.name=%s
-            '''
-        value = (owner, )
-        posts = []
-        cursor.execute(query, value)
-        entries = cursor.fetchall()
-        for line in entries:
-            resulted_post = BlogPost(line[1], line[2], line[3])
-            resulted_post.blog_id = line[0]
-            resulted_post.created_at = line[4]
-            resulted_post.modified_at = line[5]
-            posts.insert(0, resulted_post)
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return posts
-
-
     def get_by_id(self, post_id):
         '''returns a post based on the id provided'''
 
@@ -76,7 +53,9 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         cursor = conn.cursor()
         query = '''SELECT posts.id,title,contents,users.name,posts.created_at,posts.modified_at
             FROM posts JOIN users on posts.owner=users.id
-            WHERE posts.id = %s'''
+            WHERE posts.id = %s
+            
+            '''
         cursor.execute(query, (post_id,))
         data = cursor.fetchone()
         resulted_post = BlogPost(data[1], data[2], data[3])
@@ -89,11 +68,15 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         return resulted_post
 
 
-    def get_all(self):
+    def get_all(self, owner=None):
         conn = self.database.connect()
         cursor = conn.cursor()
-        query = '''SELECT posts.id,title,contents,users.name,posts.created_at,posts.modified_at
-            FROM posts JOIN users ON posts.owner=users.id'''
+        query = 'SELECT posts.id,title,contents,users.name,posts.created_at,posts.modified_at '
+        query += 'FROM posts JOIN users ON posts.owner=users.id '
+        if owner:
+            query += f"WHERE users.name='{owner}' "
+        query += 'ORDER BY id '
+        query += 'LIMIT 5 '
         posts = []
         cursor.execute(query)
         entries = cursor.fetchall()
@@ -103,7 +86,6 @@ class DatabasePostsRepository(PostsRepositoryInterface):
             resulted_post.created_at = line[4]
             resulted_post.modified_at = line[5]
             posts.insert(0, resulted_post)
-
         conn.commit()
         cursor.close()
         conn.close()

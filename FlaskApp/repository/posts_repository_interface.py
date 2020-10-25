@@ -25,7 +25,7 @@ class PostsRepositoryInterface(abc.ABC):
 
 
     @abc.abstractmethod
-    def get_all(self):
+    def get_all(self, owner=None):
         pass
 
 
