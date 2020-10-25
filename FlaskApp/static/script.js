@@ -13,7 +13,7 @@ function applyFilter() {
         link = '/';
     }
     else {
-        link = `/?filter=True&owner=${username}`;
+        link = `/?owner=${username}`;
     }
 
     window.location.assign(link);

@@ -1,6 +1,12 @@
 ﻿from tests.test_users_views import login_as_admin
 
 
+def test_index_routte_with_filter(client):
+    response = client.get('/?owner=User1', follow_redirects=True)
+    assert b'random' not in response.data
+    assert b'Red flowers' in response.data
+
+
 def test_index_route(client):
     response = client.get('/index', follow_redirects=True)
     assert b'Red flowers' in response.data
