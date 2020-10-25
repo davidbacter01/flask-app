@@ -15,7 +15,7 @@ def index():
     owner = request.args.get('owner')
     posts = Services.get_service(Services.posts).get_all(owner)
     users = Services.get_service(Services.users).get_all()
-    return render_template('list_posts.html', blogs=posts, users=users)
+    return render_template('list_posts.html', blogs=posts, users=users, filter=owner)
 
 
 @posts_views_blueprint.route("/new", methods=['GET', 'POST'])

@@ -8,7 +8,11 @@
     <div id="filter">
         <span>Filter by owner: </span>
         <select id="username" name="username">
-            <option value="All">All</option>
+            {% if filter %}
+                <option value="{{filter}}">{{filter}}</option>
+            {% else %}
+                <option value="All">All</option>
+            {% endif %}
             {% for user in users %}
             <option value={{user.name}} >{{user.name}}</option>
             {% endfor %}
