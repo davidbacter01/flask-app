@@ -89,7 +89,7 @@ def edit_user(user_id):
         user.user_id,
         user_data.get('name'),
         user_data.get('email'),
-        PasswordManager.hash(user_data.get('password'))
+        user_data.get('password')
         )
     try:
         users.update(user)

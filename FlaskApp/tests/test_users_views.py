@@ -1,3 +1,5 @@
+#TODO: test delete user deletes posts owned
+
 def login_as_test_user_2(client):
     client.post('/login', data=dict(
         name='test_user_2',

@@ -3,6 +3,7 @@ from exceptions import exceptions
 from repository.users_repository_interface import UsersRepositoryInterface
 from models.user import User
 from setup.database import Database
+from services.password_manager import PasswordManager
 
 
 
@@ -33,14 +34,17 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         '''updates the user in db that has same id as the arg User'''
         conn = self.database.connect()
         curs = conn.cursor()
-        query = ''
+        query = 'UPDATE users SET '
         values = ()
-        if len(user.password) < 1:
-            query = '''UPDATE users SET name=%s, email=%s, modified_at=%s WHERE id=%s'''
-            values = (user.name, user.email, datetime.now(), user.user_id)
+        invalid_passwords = ('', ' ', None)
+        if user.name is not None:
+            query += f'name={user.name} '
+        if user.password in invalid_passwords:
+            query += 'email=%s, modified_at=%s WHERE id=%s '
+            values = (user.email, datetime.now(), user.user_id)
         else:
-            query = '''UPDATE users SET name=%s,password=%s,email=%s,modified_at=%s WHERE id=%s'''
-            values = (user.name, user.password, user.email, datetime.now(), user.user_id)
+            query += 'password=%s,email=%s,modified_at=%s WHERE id=%s '
+            values = (PasswordManager.hash(user.password), user.email, datetime.now(), user.user_id)
         curs.execute(query, values)
         conn.commit()
         curs.close()
