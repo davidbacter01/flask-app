@@ -1,5 +1,17 @@
 ﻿from tests.test_users_views import login_as_admin
 
+def test_pagination_first_page(client):
+    response = client.get('/?owner=All&page=1', follow_redirects=True)
+    assert b'Next' in response.data
+    assert b'Prev' not in response.data
+    assert b'xyz' not in response.data
+
+
+def test_pagination_second_page(client):
+    response = client.get('/?owner=All&page=2', follow_redirects=True)
+    assert b'Prev' in response.data
+    assert b'Next' not in response.data
+
 
 def test_index_routte_with_filter(client):
     response = client.get('/?owner=User1', follow_redirects=True)

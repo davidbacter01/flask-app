@@ -10,17 +10,21 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
             BlogPost('Yellow flowers', 'text about yellow flowers', 'User2'),
             BlogPost('Blue flowers', 'text about blue flowers', 'User3'),
             BlogPost('test edit', 'random', 'test_user_2'),
-            BlogPost('test delete', 'random', 'test_user_2')
+            BlogPost('test delete', 'random', 'test_user_2'),
+            BlogPost('Red flowers', 'text about red flowers', 'User1'),
+            BlogPost('xyz', 'text about red flowers', 'User1')
             ]
         self.__posts[0].blog_id = 1
         self.__posts[1].blog_id = 2
         self.__posts[2].blog_id = 3
         self.__posts[3].blog_id = 4
         self.__posts[4].blog_id = 5
+        self.__posts[5].blog_id = 6
+        self.__posts[6].blog_id = 7
 
 
     def count(self, user):
-        if not user:
+        if user in ('All', None):
             return len(self.__posts)
         count = 0
         for post in self.__posts:
@@ -39,7 +43,7 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
 
 
     def get_all(self, owner, page_current):
-        offset = (page_current - 1) * 5
+        offset = (int(page_current) - 1) * 5
         if owner:
             posts = []
             for post in self.__posts:
