@@ -19,6 +19,16 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
         self.__posts[4].blog_id = 5
 
 
+    def count(self, user):
+        if not user:
+            return len(self.__posts)
+        count = 0
+        for post in self.__posts:
+            if post.owner == user:
+                count += 1
+        return count
+
+
     def get_by_id(self, post_id: int):
         '''returns a BlogPost object containing the provided post_id'''
 
@@ -28,14 +38,15 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
         return None
 
 
-    def get_all(self, owner=None):
+    def get_all(self, owner, page_current):
+        offset = (page_current - 1) * 5
         if owner:
             posts = []
             for post in self.__posts:
                 if post.owner == owner:
                     posts.append(post)
-            return posts
-        return self.__posts
+            return posts[offset:5]
+        return self.__posts[offset:5]
 
 
     def add(self, post):

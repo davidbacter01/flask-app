@@ -31,10 +31,18 @@
         <hr />
     </div>    
     {% endfor %}
+    {% if total > 1 %}
     <div>
-        <button class="button" id="prev">Prev</button>
-        <span>{{page}}</span>
-        <button class="button" id="next">Next</button>
+        {% if page > 1 %}
+        <button class="button" id="prev" onclick="goToPage('prev')">Prev</button>
+        {% endif %}
+        <span><span id="current">{{page}}</span>/<span id="total">{{total}}</span></span>
+        {% if page < total %}
+        <button class="button" id="next" onclick="goToPage('next')">Next</button>
+        {% endif %}
     </div>
+    {% else %}
+    <div><span>1/1</span></div>
+    {% endif %}
 </div>    
 {% endblock content %}

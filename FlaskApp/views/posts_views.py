@@ -1,9 +1,12 @@
 from datetime import datetime
+import math
 from flask import Blueprint, render_template, request, redirect, session
 from models.blog_post import BlogPost
 from services.services import Services
 from views.views_decorators.authorization import login_required, admin_or_post_owner_required
 from views.views_decorators.setup_required import setup_required
+
+
 
 posts_views_blueprint = Blueprint('post_views', __name__)
 
@@ -13,9 +16,24 @@ posts_views_blueprint = Blueprint('post_views', __name__)
 @setup_required
 def index():
     owner = request.args.get('owner')
-    posts = Services.get_service(Services.posts).get_all(owner)
+    page = request.args.get('page')
+    posts_service = Services.get_service(Services.posts)
+    total_pages = math.ceil(posts_service.count(owner)/5)
+    try:
+        if int(page) < 1 or int(page) > int(total_pages):
+            page = 1
+    except TypeError:
+        page = 1
+    except ValueError:
+        page = 1
+    posts = posts_service.get_all(owner, page)
     users = Services.get_service(Services.users).get_all()
-    return render_template('list_posts.html', blogs=posts, users=users, filter=owner)
+    return render_template('list_posts.html',
+                           blogs=posts,
+                           users=users,
+                           filter=owner,
+                           page=int(page),
+                           total=total_pages)
 
 
 @posts_views_blueprint.route("/new", methods=['GET', 'POST'])

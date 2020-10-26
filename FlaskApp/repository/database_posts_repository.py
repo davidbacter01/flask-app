@@ -9,6 +9,19 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         self.database = database
 
 
+    def count(self, user=None):
+        """counts posts owned by user (if None, counts all)"""
+
+        query = "SELECT COUNT(title) from posts "
+        if user is not None and user != 'All':
+            query += f"JOIN users ON posts.owner=users.id WHERE users.name='{user}'"
+        conn = self.database.connect()
+        cursor = conn.cursor()
+        cursor.execute(query)
+        count = cursor.fetchall()[0][0]
+        return count
+
+
     def add(self, post):
         '''adds a post to posts table in database'''
 
@@ -68,15 +81,17 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         return resulted_post
 
 
-    def get_all(self, owner=None):
+    def get_all(self, owner, page_current):
+        offset = (int(page_current) - 1) * 5
         conn = self.database.connect()
         cursor = conn.cursor()
         query = 'SELECT posts.id,title,contents,users.name,posts.created_at,posts.modified_at '
         query += 'FROM posts JOIN users ON posts.owner=users.id '
-        if owner:
+        if owner not in ('All', None):
             query += f"WHERE users.name='{owner}' "
-        query += 'ORDER BY id '
+        query += 'ORDER BY created_at desc '
         query += 'LIMIT 5 '
+        query += f'OFFSET {offset}'
         posts = []
         cursor.execute(query)
         entries = cursor.fetchall()
@@ -85,7 +100,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
             resulted_post.blog_id = line[0]
             resulted_post.created_at = line[4]
             resulted_post.modified_at = line[5]
-            posts.insert(0, resulted_post)
+            posts.append(resulted_post)
         conn.commit()
         cursor.close()
         conn.close()
