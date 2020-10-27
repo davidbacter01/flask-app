@@ -10,11 +10,12 @@
         <select id="username" name="username">
             {% if filter %}
                 <option value="{{filter}}">{{filter}}</option>
+                <option value="All">All</option>
             {% else %}
                 <option value="All">All</option>
             {% endif %}
             {% for user in users %}
-            <option value={{user.name}} >{{user.name}}</option>
+            <option value="{{user.name}}">{{user.name}}</option>
             {% endfor %}
         </select>
         <button class="button green" onclick="applyFilter()">Filter!</button>
