@@ -1,6 +1,5 @@
 from unittest.mock import Mock
 from repository.database_posts_repository import DatabasePostsRepository
-from repository.inmemory_posts_repository import InMemoryPostsRepository
 from repository.inmemory_users_repository import InMemoryUsersRepository
 from repository.database_users_repository import DatabaseUsersRepository
 from setup.database import Database
@@ -23,9 +22,11 @@ class Services:
     test_db.new_version_available = return_false
     production_users = DatabaseUsersRepository(db)
     test_users = InMemoryUsersRepository()
+    test_posts = test_users.posts
+
 
     testing_services = {
-        posts:InMemoryPostsRepository(),
+        posts:test_posts,
         config:Mock(),
         users:test_users,
         authentification:Authentification(test_users),

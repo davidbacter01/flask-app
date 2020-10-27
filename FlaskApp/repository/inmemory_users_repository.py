@@ -1,6 +1,7 @@
 from exceptions import exceptions
 from passlib.hash import sha256_crypt
 from repository.users_repository_interface import UsersRepositoryInterface
+from repository.inmemory_posts_repository import InMemoryPostsRepository
 from models.user import User
 
 
@@ -16,9 +17,10 @@ class InMemoryUsersRepository(UsersRepositoryInterface):
             User(4, 'deleted', 'del@email.com', 'delete'),
             User(5, 'user', '1', '1'),
             User(6, 'edit', 'edit@email.com', sha256_crypt.hash('edit')),
-            User(7, 'delete', 'delete', sha256_crypt.hash('delete'))
+            User(7, 'delete', 'delete', sha256_crypt.hash('delete')),
+            User(8, 'testdelete', '1', '1')
             ]
-
+        self.posts = InMemoryPostsRepository()
 
     def add(self, user: User):
         self.__ensure_unicity(user)
@@ -59,6 +61,9 @@ class InMemoryUsersRepository(UsersRepositoryInterface):
         for user in self.users:
             if user.user_id == user_id:
                 self.users.remove(user)
+        for post in self.posts.posts:
+            if post.owner == user_id:
+                self.posts.remove(post.blog_id)
 
 
     def __ensure_unicity(self, user: User):

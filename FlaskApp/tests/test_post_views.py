@@ -10,6 +10,18 @@ def test_pagination_first_page(client):
 def test_pagination_second_page(client):
     response = client.get('/?owner=All&page=2', follow_redirects=True)
     assert b'Prev' in response.data
+    assert b'Next' in response.data
+
+
+def test_pagination_third_page(client):
+    response = client.get('/?owner=All&page=3', follow_redirects=True)
+    assert b'Prev' in response.data
+    assert b'Next' not in response.data
+
+
+def test_pagination_less_than_five_posts(client):
+    response = client.get('/?owner=User1&page=1', follow_redirects=True)
+    assert b'Prev' not in response.data
     assert b'Next' not in response.data
 
 

@@ -273,6 +273,14 @@ def test_delete_user(client):
     assert b'deleted' not in response.data
 
 
+def test_delete_user_deletes_posts_owned(client):
+    response = login_as_admin(client)
+    response = client.get('/users/delete/8', follow_redirects=True)
+    assert b'testdelete' not in response.data
+    response = client.get('/?owner=8&page=1')
+    assert b'abc12' not in response.data
+
+
 def test_delete_user_unconfigured(unconfigured_client):
     response = unconfigured_client.get('/users/delete/4', follow_redirects=True)
     assert b'deleted' not in response.data
