@@ -22,7 +22,7 @@ def legacy_user_setup():
     session.pop('atempt', None)
     user = users.get_by_name(name)
     user.email = request.form.get('email')
-    user.password = PasswordManager.hash(request.form.get('password'))
+    user.password = request.form.get('password')
     users.update(user)
     message = 'User {} is now ready for first login!'.format(user.name)
     return render_template('login.html', message=message)
