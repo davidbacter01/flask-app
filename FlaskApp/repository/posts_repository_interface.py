@@ -1,6 +1,7 @@
 import abc
 from models.blog_post import BlogPost
 
+
 class PostsRepositoryInterface(abc.ABC):
     """interface for posts manipulation"""
 
@@ -18,26 +19,21 @@ class PostsRepositoryInterface(abc.ABC):
                 callable(subclass.edit_post) or
                 NotImplemented)
 
-
     @abc.abstractmethod
     def get_by_id(self, post_id: int):
         pass
-
 
     @abc.abstractmethod
     def get_all(self, owner, page_current):
         pass
 
-
     @abc.abstractmethod
     def add(self, post: BlogPost):
         pass
 
-
     @abc.abstractmethod
     def remove(self, post_id):
         pass
-
 
     @abc.abstractmethod
     def edit(self, post: BlogPost):

@@ -18,7 +18,7 @@ def admin_required(function):
     def wrapped_function(**kwargs):
         if 'username' not in session:
             return redirect('/login')
-        if  session['username'] != 'admin':
+        if session['username'] != 'admin':
             return abort(403)
         return function(**kwargs)
 
@@ -45,4 +45,5 @@ def admin_or_post_owner_required(function):
         if session['username'] != 'admin' and session['username'] != owner:
             return abort(403)
         return function(**kwargs)
+
     return wrapped_function

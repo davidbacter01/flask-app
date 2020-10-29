@@ -1,5 +1,4 @@
 from models.blog_post import BlogPost
-from repository.inmemory_users_repository import InMemoryUsersRepository
 from repository.posts_repository_interface import PostsRepositoryInterface
 
 

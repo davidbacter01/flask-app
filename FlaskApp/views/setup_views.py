@@ -2,9 +2,8 @@ from flask import Blueprint, redirect, request, abort
 from services.services import Services
 from models.database_settings import DatabaseSettings
 
-
-
 setup_views_blueprint = Blueprint('setup_views', __name__)
+
 
 @setup_views_blueprint.route("/setup", methods=['POST'])
 def db_setup():

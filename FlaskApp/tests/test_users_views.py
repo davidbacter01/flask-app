@@ -80,7 +80,7 @@ def test_view_all_users_when_logged_in_as_user(client):
 
 
 def test_create_user_get_route(client):
-    response = login_as_admin(client)
+    login_as_admin(client)
     response = client.get('/users/new')
     assert b'Create new user:' in response.data
 
@@ -96,7 +96,7 @@ def test_create_user_get_with_unconfigured_client(unconfigured_client):
 
 
 def test_create_user_when_user_doesnt_exist(client):
-    response = login_as_admin(client)
+    login_as_admin(client)
     response = client.post('/users/new', data=dict(
         name='david',
         email='david@email.com',
@@ -117,7 +117,7 @@ def test_create_user_when_user_doesnt_exist_with_unconfigured_client(unconfigure
 
 
 def test_create_user_when_name_is_duplicate(client):
-    response = login_as_admin(client)
+    login_as_admin(client)
     response = client.post('/users/new', data=dict(
         name='test_user_1',
         email='david@email.com',
@@ -138,7 +138,7 @@ def test_create_user_when_name_is_duplicate_with_unconfigured(unconfigured_clien
 
 
 def test_create_user_when_email_is_duplicate(client):
-    response = login_as_admin(client)
+    login_as_admin(client)
     response = client.post('/users/new', data=dict(
         name='david',
         email='test_1@email.com',
@@ -159,7 +159,7 @@ def test_create_user_when_email_is_duplicate_unconfigured(unconfigured_client):
 
 
 def test_create_user_when_password_and_confirm_dont_match(client):
-    response = login_as_admin(client)
+    login_as_admin(client)
     response = client.post('/users/new', data=dict(
         name='david',
         email='david@email.com',
@@ -180,7 +180,7 @@ def test_create_user_when_password_and_confirm_dont_match_unconfigured(unconfigu
 
 
 def test_edit_user_get_route(client):
-    response = login_as_admin(client)
+    login_as_admin(client)
     response = client.get('/users/edit/3')
     assert b'test_user_2' in response.data
 
@@ -191,7 +191,7 @@ def test_edit_user_get_route_unconfigured(unconfigured_client):
 
 
 def test_edit_user_with_valid_data(client):
-    response = login_as_admin(client)
+    login_as_admin(client)
     response = client.post('/users/edit/3', data=dict(
         user_id='3',
         name='test_user22',
@@ -214,7 +214,7 @@ def test_edit_user_with_valid_data_unconfigured(unconfigured_client):
 
 
 def test_edit_user_with_duplicate_email(client):
-    response = login_as_admin(client)
+    login_as_admin(client)
     response = client.post('/users/edit/3', data=dict(
         user_id='3',
         name='test_user22',
@@ -268,13 +268,13 @@ def test_delete_user_logged_in_as_owner(client):
 
 
 def test_delete_user(client):
-    response = login_as_admin(client)
+    login_as_admin(client)
     response = client.get('/users/delete/4')
     assert b'deleted' not in response.data
 
 
 def test_delete_user_deletes_posts_owned(client):
-    response = login_as_admin(client)
+    login_as_admin(client)
     response = client.get('/users/delete/8', follow_redirects=True)
     assert b'testdelete' not in response.data
     response = client.get('/?owner=8&page=1')

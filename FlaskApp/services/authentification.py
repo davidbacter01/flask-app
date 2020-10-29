@@ -12,7 +12,6 @@ class Authentification:
         self.logged_in = None
         self.password_manager = PasswordManager
 
-
     def login(self, name, password):
         user = self.users.get_by_name(name)
         message = 'Invalid username, email or password!'
@@ -25,7 +24,6 @@ class Authentification:
         session['username'] = user.name
         session['user_id'] = user.user_id
         self.logged_in = user
-
 
     def logout(self):
         if self.logged_in or ('username' in session):

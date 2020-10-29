@@ -73,7 +73,7 @@ def test_view_post(client):
     assert b'Red flowers' in res.data
 
 
-def test_edit_post_when_not_loged_in(client):
+def test_edit_post_when_not_logged_in(client):
     response = client.post('/edit/1', data=dict(
         title='Red flowers',
         contents='yes flowers'

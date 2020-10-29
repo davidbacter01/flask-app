@@ -13,7 +13,7 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         self.database = database
 
     def add(self, user: User):
-        '''adds user to database, raises error if email or name is duplicate'''
+        """adds user to database, raises error if email or name is duplicate"""
         self.__ensure_uniqueness(user)
         conn = self.database.connect()
         curs = conn.cursor()
@@ -28,7 +28,7 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         conn.close()
 
     def update(self, user: User):
-        '''updates the user in db that has same id as the arg User'''
+        """updates the user in db that has same id as the arg User"""
         conn = self.database.connect()
         curs = conn.cursor()
         query = 'UPDATE users SET '
@@ -48,7 +48,7 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         conn.close()
 
     def get_all(self):
-        '''returns a list of User objects from db'''
+        """returns a list of User objects from db"""
         conn = self.database.connect()
         conn.autocommit = True
         curs = conn.cursor()
@@ -65,7 +65,7 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         return users
 
     def get_by_id(self, user_id):
-        '''returns a User object from db that has the specified id'''
+        """returns a User object from db that has the specified id"""
         conn = self.database.connect()
         conn.autocommit = True
         curs = conn.cursor()
@@ -119,7 +119,7 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         return user
 
     def remove(self, user_id):
-        '''removes from db the user that has the specified id'''
+        """removes from db the user that has the specified id"""
         conn = self.database.connect()
         curs = conn.cursor()
         query = '''DELETE FROM users WHERE id = %s'''

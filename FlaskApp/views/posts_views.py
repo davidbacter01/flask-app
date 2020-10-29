@@ -6,8 +6,6 @@ from services.services import Services
 from views.views_decorators.authorization import login_required, admin_or_post_owner_required
 from views.views_decorators.setup_required import setup_required
 
-
-
 posts_views_blueprint = Blueprint('post_views', __name__)
 
 
@@ -18,7 +16,7 @@ def index():
     owner = request.args.get('owner')
     page = request.args.get('page')
     posts_service = Services.get_service(Services.posts)
-    total_pages = math.ceil(posts_service.count(owner)/5)
+    total_pages = math.ceil(posts_service.count(owner) / 5)
     try:
         if int(page) < 1 or int(page) > int(total_pages):
             page = 1

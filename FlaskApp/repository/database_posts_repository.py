@@ -2,12 +2,12 @@ from datetime import datetime
 from repository.posts_repository_interface import PostsRepositoryInterface
 from models.blog_post import BlogPost
 
+
 class DatabasePostsRepository(PostsRepositoryInterface):
-    ''' database management '''
+    """ database management """
 
     def __init__(self, database):
         self.database = database
-
 
     def count(self, user=None):
         """counts posts owned by user (if None, counts all)"""
@@ -21,9 +21,8 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         count = cursor.fetchall()[0][0]
         return count
 
-
     def add(self, post):
-        '''adds a post to posts table in database'''
+        """adds a post to posts table in database"""
 
         conn = self.database.connect()
         cursor = conn.cursor()
@@ -35,15 +34,14 @@ class DatabasePostsRepository(PostsRepositoryInterface):
             post.contents,
             post.created_at,
             post.modified_at
-            )
+        )
         cursor.execute(query, data)
         conn.commit()
         cursor.close()
         conn.close()
 
-
     def edit(self, post: BlogPost):
-        ''' updates a post with same id as provided post '''
+        """ updates a post with same id as provided post """
 
         old_post = self.get_by_id(post.blog_id)
         if post.title == old_post.title and post.contents == old_post.contents:
@@ -58,9 +56,8 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         cursor.close()
         conn.close()
 
-
     def get_by_id(self, post_id):
-        '''returns a post based on the id provided'''
+        """returns a post based on the id provided"""
 
         conn = self.database.connect()
         cursor = conn.cursor()
@@ -79,7 +76,6 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         cursor.close()
         conn.close()
         return resulted_post
-
 
     def get_all(self, owner, page_current):
         offset = (int(page_current) - 1) * 5
@@ -106,12 +102,11 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         conn.close()
         return posts
 
-
     def remove(self, post_id):
         conn = self.database.connect()
         cursor = conn.cursor()
         query = '''DELETE FROM posts WHERE ID = %s'''
-        cursor.execute(query, (post_id, ))
+        cursor.execute(query, (post_id,))
         conn.commit()
         cursor.close()
         conn.close()

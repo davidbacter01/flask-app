@@ -4,7 +4,7 @@ from os import path
 
 
 class Config:
-    '''used for managing database.ini file for configuring database'''
+    """used for managing database.ini file for configuring database"""
 
     def __init__(self, section: str):
         self.config = ConfigParser()
@@ -12,9 +12,8 @@ class Config:
         self.section = section
         self.is_configured = path.exists(f'setup/{self.file_name}')
 
-
     def save_configuration(self, config_dict: dict):
-        '''creates database.ini and saves configuration inside it'''
+        """creates database.ini and saves configuration inside it"""
 
         if not self.is_configured:
             open(f'setup/{self.file_name}', 'w+').close()
@@ -29,9 +28,8 @@ class Config:
 
         self.is_configured = True
 
-
     def get_configuration(self):
-        '''returns a dict with configuration from .ini file'''
+        """returns a dict with configuration from .ini file"""
         filename = f'setup/{self.file_name}'
         self.config.read(filename)
         configuration = {}

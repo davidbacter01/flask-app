@@ -1,7 +1,7 @@
 from tests.test_users_views import login_as_admin
 
 
-def test_redirect_to_legacy_user_setup_on_first_login_atempt_for_old_user_not_setup(client):
+def test_redirect_to_legacy_user_setup_on_first_login_attempt_for_old_user_not_setup(client):
     response = client.post('/login', data=dict(
         name='user',
         email='1',
@@ -31,7 +31,7 @@ def test_login_route_get_method_unconfigured(unconfigured_client):
 
 def test_login_route_post_method(client):
     login_as_admin(client)
-    response = client.post('/users/new', data=dict(
+    client.post('/users/new', data=dict(
         name='abc',
         email='abc@email.com',
         password='123',
