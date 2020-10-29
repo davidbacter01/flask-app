@@ -14,7 +14,7 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
 
     def add(self, user: User):
         '''adds user to database, raises error if email or name is duplicate'''
-        self.__ensure_unicity(user)
+        self.__ensure_uniqueness(user)
         conn = self.database.connect()
         curs = conn.cursor()
         query = '''INSERT INTO users (name,
@@ -60,7 +60,6 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
             user.created_at = entry[4]
             user.modified_at = entry[5]
             users.append(user)
-
         curs.close()
         conn.close()
         return users
@@ -129,13 +128,11 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         curs.close()
         conn.close()
 
-    def __ensure_unicity(self, user: User):
+    def __ensure_uniqueness(self, user: User):
         users = self.get_all()
         for usr in users:
             if usr.name == user.name and usr.user_id != user.user_id:
                 raise exceptions.UserExistsError('duplicate username')
-
             if usr.email == user.email and usr.user_id != user.user_id:
                 raise exceptions.EmailExistsError('duplicate email')
-
         return True

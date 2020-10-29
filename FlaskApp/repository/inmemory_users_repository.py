@@ -1,15 +1,14 @@
-from exceptions import exceptions
 from passlib.hash import sha256_crypt
-from repository.users_repository_interface import UsersRepositoryInterface
-from repository.inmemory_posts_repository import InMemoryPostsRepository
-from models.user import User
 
+from exceptions import exceptions
+from models.user import User
+from repository.users_repository_interface import UsersRepositoryInterface
 
 
 class InMemoryUsersRepository(UsersRepositoryInterface):
     """class containing users and specific methods"""
 
-    def __init__(self):
+    def __init__(self, posts_repository):
         self.users = [
             User(1, 'admin', 'admin@email.com', sha256_crypt.hash('secret')),
             User(2, 'test_user_1', 'test_1@email.com', sha256_crypt.hash('test1')),
@@ -18,25 +17,27 @@ class InMemoryUsersRepository(UsersRepositoryInterface):
             User(5, 'user', '1', '1'),
             User(6, 'edit', 'edit@email.com', sha256_crypt.hash('edit')),
             User(7, 'delete', 'delete', sha256_crypt.hash('delete')),
-            User(8, 'testdelete', '1', '1')
-            ]
-        self.posts = InMemoryPostsRepository()
+            User(8, 'testdelete', '1', '1'),
+            User(9, 'User1', 'user1', sha256_crypt.hash('secret')),
+            User(10, 'User2', 'ads', sha256_crypt.hash('secret')),
+            User(11, 'User3', 'asd', sha256_crypt.hash('secret')),
+            User(12, 'test_user_2', 'asf', sha256_crypt.hash('secret')),
+            User(13, 'are', 'qwe', sha256_crypt.hash('secret'))
+        ]
+        self.posts = posts_repository
 
     def add(self, user: User):
-        self.__ensure_unicity(user)
+        self.__ensure_uniqueness(user)
         self.users.insert(0, user)
 
-
     def update(self, user: User):
-        self.__ensure_unicity(user)
+        self.__ensure_uniqueness(user)
         for usr in self.users:
             if usr.user_id == user.user_id:
                 usr = user
 
-
     def get_all(self):
         return self.users
-
 
     def get_by_id(self, user_id):
         for usr in self.users:
@@ -56,7 +57,6 @@ class InMemoryUsersRepository(UsersRepositoryInterface):
                 return usr
         return None
 
-
     def remove(self, user_id):
         for user in self.users:
             if user.user_id == user_id:
@@ -65,8 +65,7 @@ class InMemoryUsersRepository(UsersRepositoryInterface):
             if post.owner == user_id:
                 self.posts.remove(post.blog_id)
 
-
-    def __ensure_unicity(self, user: User):
+    def __ensure_uniqueness(self, user: User):
         for usr in self.users:
             if usr.name == user.name and usr.user_id != user.user_id:
                 raise exceptions.UserExistsError

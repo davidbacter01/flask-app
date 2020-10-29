@@ -1,5 +1,6 @@
 ﻿from tests.test_users_views import login_as_admin
 
+
 def test_pagination_first_page(client):
     response = client.get('/?owner=All&page=1', follow_redirects=True)
     assert b'Next' in response.data
@@ -25,7 +26,7 @@ def test_pagination_less_than_five_posts(client):
     assert b'Next' not in response.data
 
 
-def test_index_routte_with_filter(client):
+def test_index_route_with_filter(client):
     response = client.get('/?owner=User1', follow_redirects=True)
     assert b'random' not in response.data
     assert b'Red flowers' in response.data
@@ -53,7 +54,7 @@ def test_new_post_post_route_when_logged(client):
     response = client.post('/new', data=dict(
         title='test_title',
         contents='test_contents'
-        ), follow_redirects=True)
+    ), follow_redirects=True)
 
     assert b'test_title' in response.data
 
@@ -63,19 +64,20 @@ def test_new_post_post_route_when_not_logged(client):
         title='test_title',
         contents='test_contents',
         owner='test_owner'
-        ), follow_redirects=True)
+    ), follow_redirects=True)
     assert b'Login' in response.data
 
 
 def test_view_post(client):
-    assert b'Red flowers' in client.get('/view/1', follow_redirects=True).data
+    res = client.get('/view/1', follow_redirects=True)
+    assert b'Red flowers' in res.data
 
 
 def test_edit_post_when_not_loged_in(client):
     response = client.post('/edit/1', data=dict(
         title='Red flowers',
         contents='yes flowers'
-        ), follow_redirects=True)
+    ), follow_redirects=True)
     assert b'Login' in response.data
 
 
@@ -84,7 +86,7 @@ def test_edit_post_when_logged_in_as_admin(client):
     response = client.post('/edit/1', data=dict(
         title='Red flowers',
         contents='yes flowers'
-        ), follow_redirects=True)
+    ), follow_redirects=True)
     assert b'yes flowers' in response.data
 
 
@@ -93,11 +95,11 @@ def test_edit_post_when_logged_in_as_owner(client):
         name='test_user_2',
         email='test_2@email.com',
         password='test2'
-        ), follow_redirects=True)
+    ), follow_redirects=True)
     response = client.post('/edit/4', data=dict(
         title='edited title',
         contents='edited contents'
-        ), follow_redirects=True)
+    ), follow_redirects=True)
     assert b'edited title' in response.data
 
 
@@ -106,11 +108,11 @@ def test_edit_post_when_logged_in_as_other_user(client):
         name='test_user_1',
         email='test_1@email.com',
         password='test1'
-        ), follow_redirects=True)
+    ), follow_redirects=True)
     response = client.post('/edit/4', data=dict(
         title='edited title',
         contents='edited contents'
-        ), follow_redirects=True)
+    ), follow_redirects=True)
     assert b'403' in response.data
 
 
@@ -131,7 +133,7 @@ def test_delete_post_when_logged_in_as_owner(client):
         name='test_user_2',
         email='test_2@email.com',
         password='test2'
-        ), follow_redirects=True)
+    ), follow_redirects=True)
     response = client.get('/delete/5', follow_redirects=True)
     assert b'Red flowers' in response.data
     assert b'test delete' not in response.data
@@ -142,7 +144,7 @@ def test_delete_post_when_logged_in_as_different_user(client):
         name='test_user_1',
         email='test_1@email.com',
         password='test1'
-        ), follow_redirects=True)
+    ), follow_redirects=True)
     response = client.get('/delete/4', follow_redirects=True)
     assert b'403' in response.data
 
@@ -166,7 +168,7 @@ def test_edit_post_with_unconfigured_client(unconfigured_client):
     response = unconfigured_client.get('/edit/1', data=dict(
         title='something',
         contents='something'
-        ), follow_redirects=True)
+    ), follow_redirects=True)
     assert b'Database Setup' in response.data
 
 

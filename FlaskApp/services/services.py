@@ -2,6 +2,7 @@ from unittest.mock import Mock
 from repository.database_posts_repository import DatabasePostsRepository
 from repository.inmemory_users_repository import InMemoryUsersRepository
 from repository.database_users_repository import DatabaseUsersRepository
+from repository.inmemory_posts_repository import InMemoryPostsRepository
 from setup.database import Database
 from setup.dbconfig import DbConfig
 from services.authentification import Authentification
@@ -10,37 +11,37 @@ from services.authentification import Authentification
 def return_false():
     return False
 
+
 class Services:
     posts = 'posts'
     config = 'config'
     users = 'users'
     authentification = 'authentification'
     database = 'database'
-    TESTING = False
+    TESTING = True
     db = Database(DbConfig('postgres'))
     test_db = Mock()
     test_db.new_version_available = return_false
     production_users = DatabaseUsersRepository(db)
-    test_users = InMemoryUsersRepository()
-    test_posts = test_users.posts
-
+    test_posts = InMemoryPostsRepository()
+    test_users = InMemoryUsersRepository(test_posts)
+    test_posts.users = test_users
 
     testing_services = {
-        posts:test_posts,
-        config:Mock(),
-        users:test_users,
-        authentification:Authentification(test_users),
-        database:test_db
-        }
+        posts: test_posts,
+        config: Mock(),
+        users: test_users,
+        authentification: Authentification(test_users),
+        database: test_db
+    }
 
     production_services = {
-        posts:DatabasePostsRepository(db),
-        config:DbConfig('postgres'),
-        users:production_users,
-        authentification:Authentification(production_users),
-        database:db
-        }
-
+        posts: DatabasePostsRepository(db),
+        config: DbConfig('postgres'),
+        users: production_users,
+        authentification: Authentification(production_users),
+        database: db
+    }
 
     @staticmethod
     def get_service(service_name):

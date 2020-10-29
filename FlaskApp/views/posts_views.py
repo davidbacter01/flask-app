@@ -67,6 +67,7 @@ def edit_post(post_id):
     posts = Services.get_service(Services.posts)
     blog_post = posts.get_by_id(post_id)
     if request.method == 'POST':
+        blog_post.owner = session['user_id']
         blog_post.title = request.form['title']
         blog_post.contents = request.form['contents']
         blog_post.modified_at = datetime.now()
