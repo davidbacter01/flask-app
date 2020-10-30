@@ -1,6 +1,5 @@
-from passlib.hash import sha256_crypt
-
 from exceptions import exceptions
+from services.password_manager import PasswordManager
 from models.user import User
 from repository.users_repository_interface import UsersRepositoryInterface
 
@@ -10,19 +9,19 @@ class InMemoryUsersRepository(UsersRepositoryInterface):
 
     def __init__(self, posts_repository):
         self.users = [
-            User(1, 'admin', 'admin@email.com', sha256_crypt.hash('secret')),
-            User(2, 'test_user_1', 'test_1@email.com', sha256_crypt.hash('test1')),
-            User(3, 'test_user_2', 'test_2@email.com', sha256_crypt.hash('test2')),
+            User(1, 'admin', 'admin@email.com', PasswordManager.hash('secret')),
+            User(2, 'test_user_1', 'test_1@email.com', PasswordManager.hash('test1')),
+            User(3, 'test_user_2', 'test_2@email.com', PasswordManager.hash('test2')),
             User(4, 'deleted', 'del@email.com', 'delete'),
             User(5, 'user', '1', '1'),
-            User(6, 'edit', 'edit@email.com', sha256_crypt.hash('edit')),
-            User(7, 'delete', 'delete', sha256_crypt.hash('delete')),
+            User(6, 'edit', 'edit@email.com', PasswordManager.hash('edit')),
+            User(7, 'delete', 'delete', PasswordManager.hash('delete')),
             User(8, 'testdelete', '1', '1'),
-            User(9, 'User1', 'user1', sha256_crypt.hash('secret')),
-            User(10, 'User2', 'ads', sha256_crypt.hash('secret')),
-            User(11, 'User3', 'asd', sha256_crypt.hash('secret')),
-            User(12, 'test_user_2', 'asf', sha256_crypt.hash('secret')),
-            User(13, 'are', 'qwe', sha256_crypt.hash('secret'))
+            User(9, 'User1', 'user1', PasswordManager.hash('secret')),
+            User(10, 'User2', 'ads', PasswordManager.hash('secret')),
+            User(11, 'User3', 'asd', PasswordManager.hash('secret')),
+            User(12, 'test_user_2', 'asf', PasswordManager.hash('secret')),
+            User(13, 'are', 'qwe', PasswordManager.hash('secret'))
         ]
         self.posts = posts_repository
 

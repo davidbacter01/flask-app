@@ -5,7 +5,7 @@ def test_pagination_first_page(client):
     response = client.get('/?owner=All&page=1', follow_redirects=True)
     assert b'Next' in response.data
     assert b'Prev' not in response.data
-    assert b'xyz' not in response.data
+    assert b'cactus' not in response.data
 
 
 def test_pagination_second_page(client):

@@ -46,5 +46,5 @@ class UsersRepositoryInterface(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_by_email(self, name):
+    def get_by_email(self, email):
         pass
