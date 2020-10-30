@@ -18,7 +18,7 @@ class Services:
     users = 'users'
     authentification = 'authentification'
     database = 'database'
-    TESTING = True
+    TESTING = False
     db = Database(DbConfig('postgres'))
     test_db = Mock()
     test_db.new_version_available = return_false
