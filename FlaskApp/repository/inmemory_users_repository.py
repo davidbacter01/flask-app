@@ -34,7 +34,8 @@ class InMemoryUsersRepository(UsersRepositoryInterface):
         self.__ensure_uniqueness(user)
         for usr in self.users:
             if usr.user_id == user.user_id:
-                usr = user
+                self.users.remove(usr)
+                self.users.append(user)
 
     def get_all(self):
         return self.users

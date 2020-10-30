@@ -19,7 +19,7 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
             BlogPost('ab', 'text about red flowers', 13),
             BlogPost('ab', 'text about red flowers', 13),
             BlogPost('ab', 'text about red flowers', 13),
-            BlogPost('ab', 'text about red flowers', 13)
+            BlogPost('cactus', 'text about red flowers', 13)
         ]
         self.posts[0].blog_id = 1
         self.posts[1].blog_id = 2
@@ -53,14 +53,16 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
     def get_all(self, owner, page_current):
         offset = (int(page_current) - 1) * 5
         last = offset * 5 if offset != 0 else 5
-        if owner and owner != 'All':
-            posts = []
+        posts = []
+        if owner in ('All', None):
             for post in self.posts:
                 posts.append(self.__get_post_with_true_owner(post))
             return posts[offset:last]
-        posts = []
         for post in self.posts:
-            posts.append(self.__get_post_with_true_owner(post))
+            for user in self.users.users:
+                if user.user_id == post.owner:
+                    if user.name == owner:
+                        posts.append(self.__get_post_with_true_owner(post))
         return posts[offset:last]
 
     def add(self, post):
