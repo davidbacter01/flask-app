@@ -6,6 +6,7 @@ __pycache__/
 *.pyproj.user
 *.suo
 # C extensions
+*.idea
 *.so
 TestResults/
 #Database setup
