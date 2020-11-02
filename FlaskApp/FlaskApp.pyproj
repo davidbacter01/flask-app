@@ -31,6 +31,18 @@
     <Compile Include="app.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="database\config.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="database\crud.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="database\models.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="database\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="exceptions\exceptions.py">
       <SubType>Code</SubType>
     </Compile>
@@ -143,6 +155,7 @@
   <ItemGroup>
     <Folder Include="models\" />
     <Folder Include="exceptions\" />
+    <Folder Include="database\" />
     <Folder Include="services\" />
     <Folder Include="setup\" />
     <Folder Include="tests\" />
