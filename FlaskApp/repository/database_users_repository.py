@@ -3,16 +3,16 @@ from exceptions import exceptions
 from repository.users_repository_interface import UsersRepositoryInterface
 from setup.database import Database
 from services.password_manager import PasswordManager
-from database.crud import Session
-from database.models import User
+from database.user import User
+from models import user
 
 
 class DatabaseUsersRepository(UsersRepositoryInterface):
     """class that can access the users table in db"""
 
-    def __init__(self, database: Database):
+    def __init__(self, database: Database, session):
         self.database = database
-        self.session = Session
+        self.session = session
 
     def add(self, user: User):
         """adds user to database, raises error if email or name is duplicate"""
@@ -49,30 +49,57 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         session = self.session()
         result = session.query(User).all()
         session.commit()
+        res = []
+        for usr in result:
+            entry = user.User(usr.id,
+                              usr.name,
+                              usr.email,
+                              usr.password)
+            entry.created_at = usr.created_at
+            entry.modified_at = usr.modified_at
+            res.append(entry)
         session.close()
-        return result
+        return res
 
     def get_by_id(self, user_id):
         """returns a User object from db that has the specified id"""
         session = self.session()
-        user = session.query(User).filter_by(id=user_id).first()
+        result = session.query(User).filter_by(id=user_id).first()
         session.commit()
+        entry = user.User(result.id,
+                          result.name,
+                          result.email,
+                          result.password)
+        entry.created_at = result.created_at
+        entry.modified_at = result.modified_at
         session.close()
-        return user
+        return entry
 
     def get_by_name(self, name):
         session = self.session()
-        user = session.query(User).filter_by(name=name).first()
+        result = session.query(User).filter_by(name=name).first()
         session.commit()
+        entry = user.User(result.id,
+                          result.name,
+                          result.email,
+                          result.password)
+        entry.created_at = result.created_at
+        entry.modified_at = result.modified_at
         session.close()
-        return user
+        return entry
 
     def get_by_email(self, email):
         session = self.session()
-        user = session.query(User).filter_by(email=email).first()
+        result = session.query(User).filter_by(email=email).first()
         session.commit()
+        entry = user.User(result.id,
+                          result.name,
+                          result.email,
+                          result.password)
+        entry.created_at = result.created_at
+        entry.modified_at = result.modified_at
         session.close()
-        return user
+        return entry
 
     def remove(self, user_id):
         """removes from db the user that has the specified id"""

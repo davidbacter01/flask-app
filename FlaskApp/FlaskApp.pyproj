@@ -31,13 +31,10 @@
     <Compile Include="app.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="database\config.py">
+    <Compile Include="database\post.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="database\crud.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="database\models.py">
+    <Compile Include="database\user.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="database\__init__.py">

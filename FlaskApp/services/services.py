@@ -1,4 +1,6 @@
 from unittest.mock import Mock
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from repository.database_posts_repository import DatabasePostsRepository
 from repository.inmemory_users_repository import InMemoryUsersRepository
 from repository.database_users_repository import DatabaseUsersRepository
@@ -6,6 +8,7 @@ from repository.inmemory_posts_repository import InMemoryPostsRepository
 from setup.database import Database
 from setup.dbconfig import DbConfig
 from services.authentification import Authentification
+from database.post import Base
 
 
 def return_false():
@@ -22,10 +25,13 @@ class Services:
     db = Database(DbConfig('postgres'))
     test_db = Mock()
     test_db.new_version_available = return_false
-    production_users = DatabaseUsersRepository(db)
+    engine = create_engine(db.config.get_uri())
+    Base.metadata.create_all(engine)
+    Session = sessionmaker(bind=engine)
+    production_users = DatabaseUsersRepository(db, Session)
     test_posts = InMemoryPostsRepository()
     test_users = InMemoryUsersRepository(test_posts)
-    test_posts.users = test_users
+    test_posts.users = test_users    
 
     testing_services = {
         posts: test_posts,
@@ -36,7 +42,7 @@ class Services:
     }
 
     production_services = {
-        posts: DatabasePostsRepository(db),
+        posts: DatabasePostsRepository(db, Session),
         config: DbConfig('postgres'),
         users: production_users,
         authentification: Authentification(production_users),

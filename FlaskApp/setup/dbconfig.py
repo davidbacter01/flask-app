@@ -21,6 +21,11 @@ class DbConfig(Config):
             credentials_dict['user'],
             credentials_dict['password'])
 
+    def get_uri(self):
+        creds = super().get_configuration()
+        return f"postgres+psycopg2://{creds['user']}:" +\
+            f"{creds['password']}@localhost:5432/{creds['dbname']}"
+
     def get_version(self):
         try:
             return super().get_configuration()['version']
