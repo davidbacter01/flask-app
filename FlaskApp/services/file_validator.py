@@ -17,7 +17,7 @@ class FileValidator:
         return image.name not in self.banned_names
 
     def __has_accepted_extensions(self, image):
-        name = image.name
+        name = image.filename
         if not "." in name:
             return False
         ext = name.rsplit(".", 1)[1]
