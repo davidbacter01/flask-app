@@ -12,3 +12,7 @@ class InvalidLoginError(BaseException):
 
 class SectionNotFoundError(BaseException):
     pass
+
+
+class FileFormatError(BaseException):
+    pass

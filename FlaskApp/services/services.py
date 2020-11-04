@@ -8,6 +8,7 @@ from repository.inmemory_posts_repository import InMemoryPostsRepository
 from setup.database import Database
 from setup.dbconfig import DbConfig
 from services.authentification import Authentification
+from services.file_validator import FileValidator
 from database.post import Base
 
 
@@ -21,6 +22,7 @@ class Services:
     users = 'users'
     authentification = 'authentification'
     database = 'database'
+    file_validator = 'validator'
     TESTING = False
     db = Database(DbConfig('postgres'))
     test_db = Mock()
@@ -38,7 +40,8 @@ class Services:
         config: Mock(),
         users: test_users,
         authentification: Authentification(test_users),
-        database: test_db
+        database: test_db,
+        file_validator: Mock()
     }
 
     production_services = {
@@ -46,7 +49,8 @@ class Services:
         config: DbConfig('postgres'),
         users: production_users,
         authentification: Authentification(production_users),
-        database: db
+        database: db,
+        file_validator: FileValidator(["JPEG", "JPG", "PNG", "GIF"])
     }
 
     @staticmethod

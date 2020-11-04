@@ -1,6 +1,8 @@
 from datetime import datetime
 import math
 import os
+from exceptions.exceptions import FileFormatError
+from werkzeug.utils import secure_filename
 from flask import Blueprint, render_template, request, redirect, session
 from models.blog_post import BlogPost
 from services.services import Services
@@ -40,13 +42,19 @@ def index():
 @login_required
 def new_post():
     if request.method == 'GET':
-        return render_template("new_post.html")
+        return render_template("new_post.html", post=None)
     posts = Services.get_service(Services.posts)
     post = BlogPost(request.form.get('title'),
                     request.form.get('contents'), session['user_id']
                     )
     if request.files['image']:
+        validator = Services.get_service(Services.file_validator)
         image = request.files['image']
+        try:
+            validator.validate_image(image)
+        except FileFormatError as error:
+            return render_template("new_post.html", post=post, err=error.args[0])
+        image.filename = secure_filename(image.filename)
         post.image = image.filename
         image.save(os.path.join('./static/img', image.filename))
     posts.add(post)
