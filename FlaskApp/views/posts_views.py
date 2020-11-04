@@ -1,5 +1,6 @@
 from datetime import datetime
 import math
+import os
 from flask import Blueprint, render_template, request, redirect, session
 from models.blog_post import BlogPost
 from services.services import Services
@@ -40,11 +41,14 @@ def index():
 def new_post():
     if request.method == 'GET':
         return render_template("new_post.html")
-
     posts = Services.get_service(Services.posts)
     post = BlogPost(request.form.get('title'),
                     request.form.get('contents'), session['user_id']
                     )
+    if request.files['image']:
+        image = request.files['image']
+        post.image = image.filename
+        image.save(os.path.join('./static/img', image.filename))
     posts.add(post)
     return redirect('/index')
 

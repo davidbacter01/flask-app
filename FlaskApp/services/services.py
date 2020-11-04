@@ -31,7 +31,7 @@ class Services:
     production_users = DatabaseUsersRepository(db, Session)
     test_posts = InMemoryPostsRepository()
     test_users = InMemoryUsersRepository(test_posts)
-    test_posts.users = test_users    
+    test_posts.users = test_users
 
     testing_services = {
         posts: test_posts,

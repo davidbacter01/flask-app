@@ -32,6 +32,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         new_post = Post(title=post.title,
                         owner=post.owner,
                         contents=post.contents,
+                        image=post.image,
                         created_at=post.created_at,
                         modified_at=datetime.now()
                         )
@@ -45,6 +46,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         to_edit = session.query(Post).filter_by(id=post.blog_id).first()
         to_edit.title = post.title
         to_edit.contents = post.contents
+        to_edit.image = post.image
         to_edit.modified_at = post.modified_at
         session.commit()
         session.close()
@@ -60,6 +62,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
             post.user.name
             )
         result.blog_id = post.id
+        result.image = post.image
         result.created_at = post.created_at
         result.modified_at = post.modified_at
         session.close()
@@ -82,6 +85,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
                 post.user.name
                 )
             res.blog_id = post.id
+            res.image = post.image
             res.created_at = post.created_at
             res.modified_at = post.modified_at
             posts.append(res)

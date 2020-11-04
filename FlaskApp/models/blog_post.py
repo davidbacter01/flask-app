@@ -8,4 +8,5 @@ class BlogPost:
         self.title = title
         self.contents = contents
         self.owner = owner
+        self.image = 'default_blog.png'
         self.created_at = self.modified_at = datetime.now()

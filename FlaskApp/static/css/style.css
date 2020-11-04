@@ -6,6 +6,10 @@
     font-family: sans-serif;
 }
 
+body {
+    background: #ebf5ff;
+}
+
 /*------navbar------*/
 .navbar {
     position: fixed;

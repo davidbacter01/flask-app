@@ -1,4 +1,5 @@
-﻿from tests.test_users_views import login_as_admin
+﻿import io
+from tests.test_users_views import login_as_admin
 
 
 def test_pagination_first_page(client):
@@ -53,7 +54,8 @@ def test_new_post_post_route_when_logged(client):
     login_as_admin(client)
     response = client.post('/new', data=dict(
         title='test_title',
-        contents='test_contents'
+        contents='test_contents',
+        image=(io.BytesIO(b"some random data"), 'img.png')
     ), follow_redirects=True)
 
     assert b'test_title' in response.data

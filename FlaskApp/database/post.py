@@ -11,6 +11,7 @@ class Post(Base):
     title = Column(String, nullable=False)
     owner = Column(Integer, ForeignKey('users.id'))
     contents = Column(Integer, nullable=False)
+    image = Column(String, nullable=False, default='default_blog.png')
     created_at = Column(Date)
     modified_at = Column(Date)
     user = relationship("User", back_populates="posts")

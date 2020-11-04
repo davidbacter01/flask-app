@@ -11,7 +11,7 @@ class Database:
     def __init__(self, config: DbConfig):
         self.config = config
         self.credentials = None
-        self.latest_version = '3'
+        self.latest_version = '4'
 
     def connect(self):
         self.credentials = self.config.get_database_settings()

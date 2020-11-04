@@ -1,12 +1,14 @@
 ﻿{% extends 'base.html' %}
 {% block content %}
-<form action={{url_for('post_views.new_post')}} , method="post">
+<form action={{url_for('post_views.new_post')}} method="post" enctype="multipart/form-data">
     <h3>Add a new blog:</h3>
     <label for="title">Title:</label><br>
     <input type="text" id="title" name="title" }}><br>
     <p>By: {{session['username']}}</p>
+    <label for="image">Select an image for your post!</label><br />
+    <input type="file" name="image" id="image" style="border:1px solid black;"><br />
     <label for="contents">Content:</label><br>
-    <textarea rows="10" cols="60"  name="contents" id="contents"}}"></textarea><br>
+    <textarea rows="10" cols="60" name="contents" id="contents" }}"></textarea><br>
     <input type="submit" class="button">
 </form>
 {% endblock %}
