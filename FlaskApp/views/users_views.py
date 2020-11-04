@@ -1,6 +1,5 @@
 from exceptions import exceptions
 from flask import Blueprint, redirect, render_template, request, url_for, session, abort
-from services.password_manager import PasswordManager
 from services.services import Services
 from models.user import User
 from views.views_decorators import authorization
@@ -56,8 +55,8 @@ def create_user():
     if user_data.get('password') != user_data.get('confirm_password'):
         message = 'Passwords do not match'
         return render_template('create_user.html', message=message)
-
-    password = PasswordManager.hash(user_data.get('password'))
+    pw_manager = Services.get_service(Services.pw_manager)
+    password = pw_manager.hash(user_data.get('password'))
     user = User(
         None,
         user_data.get('name'),

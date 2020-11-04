@@ -2,7 +2,6 @@ from datetime import datetime
 from exceptions import exceptions
 from repository.users_repository_interface import UsersRepositoryInterface
 from setup.database import Database
-from services.password_manager import PasswordManager
 from database.user import User
 from models import user
 
@@ -10,9 +9,10 @@ from models import user
 class DatabaseUsersRepository(UsersRepositoryInterface):
     """class that can access the users table in db"""
 
-    def __init__(self, database: Database, session):
+    def __init__(self, database: Database, session, pw_manager):
         self.database = database
         self.session = session
+        self.pw_manager = pw_manager
 
     def add(self, user: User):
         """adds user to database, raises error if email or name is duplicate"""
@@ -38,7 +38,7 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         if user.name is not None and user.name != 'admin':
             entry.name = user.name
         if user.password not in invalid_passwords:
-            entry.password = PasswordManager.hash(user.password)
+            entry.password = self.pw_manager.hash(user.password)
         entry.email = user.email
         entry.modified_at = datetime.now()
         session.commit()

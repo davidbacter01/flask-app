@@ -1,13 +1,15 @@
-from passlib.hash import sha256_crypt
 
 
 class PasswordManager:
 
-    @staticmethod
-    def hash(password):
-        hashed = sha256_crypt.hash(password)
+    def __init__(self, crypter):
+        self.crypter = crypter
+
+
+    def hash(self, password):
+        hashed = self.crypter.hash(password)
         return hashed
 
-    @staticmethod
-    def verify(password, hashed_password):
-        return sha256_crypt.verify(password, hashed_password)
+
+    def verify(self, password, hashed_password):
+        return self.crypter.verify(password, hashed_password)

@@ -1,6 +1,7 @@
 from unittest.mock import Mock
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from passlib.hash import sha256_crypt
 from repository.database_posts_repository import DatabasePostsRepository
 from repository.inmemory_users_repository import InMemoryUsersRepository
 from repository.database_users_repository import DatabaseUsersRepository
@@ -9,6 +10,7 @@ from setup.database import Database
 from setup.dbconfig import DbConfig
 from services.authentification import Authentification
 from services.file_validator import FileValidator
+from services.password_manager import PasswordManager
 from database.post import Base
 
 
@@ -23,6 +25,7 @@ class Services:
     authentification = 'authentification'
     database = 'database'
     file_validator = 'validator'
+    pw_manager = 'pw_manager'
     TESTING = False
     db = Database(DbConfig('postgres'))
     test_db = Mock()
@@ -30,27 +33,32 @@ class Services:
     engine = create_engine(db.config.get_uri())
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
-    production_users = DatabaseUsersRepository(db, Session)
+    pass_manager = PasswordManager(sha256_crypt)
+    production_users = DatabaseUsersRepository(db, Session, pass_manager)
     test_posts = InMemoryPostsRepository()
-    test_users = InMemoryUsersRepository(test_posts)
+    test_users = InMemoryUsersRepository(test_posts, pass_manager)
+    test_auth = Authentification(test_users, pass_manager)
+    prod_auth = Authentification(production_users, pass_manager)
     test_posts.users = test_users
 
     testing_services = {
         posts: test_posts,
         config: Mock(),
         users: test_users,
-        authentification: Authentification(test_users),
+        authentification: test_auth,
         database: test_db,
-        file_validator: Mock()
+        file_validator: Mock(),
+        pw_manager: pass_manager
     }
 
     production_services = {
         posts: DatabasePostsRepository(db, Session),
         config: DbConfig('postgres'),
         users: production_users,
-        authentification: Authentification(production_users),
+        authentification: prod_auth,
         database: db,
-        file_validator: FileValidator(["JPEG", "JPG", "PNG", "GIF"])
+        file_validator: FileValidator(["JPEG", "JPG", "PNG", "GIF"]),
+        pw_manager: pass_manager
     }
 
     @staticmethod

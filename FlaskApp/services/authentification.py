@@ -1,16 +1,15 @@
 from exceptions import exceptions
 from flask import session
-from services.password_manager import PasswordManager
 from repository.users_repository_interface import UsersRepositoryInterface
 
 
 class Authentification:
     """manages login operations"""
 
-    def __init__(self, user_repo: UsersRepositoryInterface):
+    def __init__(self, user_repo: UsersRepositoryInterface, pw_manager):
         self.users = user_repo
+        self.password_manager = pw_manager
         self.logged_in = None
-        self.password_manager = PasswordManager
 
     def login(self, name, password):
         user = self.users.get_by_name(name)
