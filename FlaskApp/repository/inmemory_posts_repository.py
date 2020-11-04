@@ -67,7 +67,9 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
 
     def add(self, post):
         post.blog_id = len(self.posts) + 1
-        self.posts.insert(0, post)
+        user = self.users.get_by_id(post.owner)
+        if user:
+            self.posts.insert(0, post)
 
     def remove(self, post_id):
         for post in self.posts:
