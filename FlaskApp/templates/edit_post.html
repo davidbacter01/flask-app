@@ -1,12 +1,14 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 
-<form action={{url_for('post_views.edit_post', post_id=post.blog_id)}} method="post" class="edit-form">
+<form action={{url_for('post_views.edit_post', post_id=post.blog_id)}} method="post" class="edit-form" enctype="multipart/form-data">
     <h1>Edit post:{{post.blog_id}}</h1>
     <div class="edit-title">
         <label for="title">Title: </label>
         <input name="title" id="title" type="text" value="{{post.title}}" />
     </div>
+    <label>Select new image:</label><br />
+    <input type="file" name="image" id="image" /><br />
     <label for="contents">Contents:</label>
     <textarea rows="100" cols="100" name="contents" id="contents">{{post.contents}}</textarea>
     <input type="submit" class="button green" value="Update" id="input" />

@@ -1,6 +1,5 @@
 from datetime import datetime
 import math
-import os
 from exceptions.exceptions import FileFormatError
 from werkzeug.utils import secure_filename
 from flask import Blueprint, render_template, request, redirect, session
@@ -55,8 +54,7 @@ def new_post():
         except FileFormatError as error:
             return render_template("new_post.html", post=post, err=error.args[0])
         image.filename = secure_filename(image.filename)
-        post.image = image.filename
-        image.save(os.path.join('./static/img', image.filename))
+        post.image = image
     posts.add(post)
     return redirect('/index')
 
@@ -81,6 +79,7 @@ def edit_post(post_id):
         blog_post.title = request.form['title']
         blog_post.contents = request.form['contents']
         blog_post.modified_at = datetime.now()
+        blog_post.image = request.files.get('image')
         posts.edit(blog_post)
         return redirect('/view/{}'.format(blog_post.blog_id))
 

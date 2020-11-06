@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 from sqlalchemy import desc
 from repository.posts_repository_interface import PostsRepositoryInterface
 from models.blog_post import BlogPost
@@ -29,19 +30,30 @@ class DatabasePostsRepository(PostsRepositoryInterface):
     def add(self, post):
         """adds a post to posts table in database"""
         session = self.session()
+        image = ''
+        if post.image.filename:
+            image = post.image.filename
+        else:
+            image = 'default_blog.png'
         new_post = Post(title=post.title,
                         owner=post.owner,
                         contents=post.contents,
-                        image=post.image,
+                        image=image,
                         created_at=post.created_at,
                         modified_at=datetime.now()
                         )
         session.add(new_post)
         session.commit()
+        post.image.name = str(new_post.id)
+        post.image.filename = str(new_post.id) + '.png'
+        new_post.image = post.image.filename
+        session.commit()
+        post.image.save(os.path.join('./static/img', post.image.filename))
         session.close()
 
     def edit(self, post: BlogPost):
         """ updates a post with same id as provided post """
+        #TODO: add suport for image edit
         session = self.session()
         to_edit = session.query(Post).filter_by(id=post.blog_id).first()
         to_edit.title = post.title
@@ -94,6 +106,11 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
     def remove(self, post_id):
         session = self.session()
-        session.query(Post).filter_by(id=post_id).delete()
+        post = session.query(Post).filter_by(id=post_id).first()
+        session.commit()
+        if os.path.exists("./static/img/" + str(post.image))\
+            and str(post.image) != 'default_blog.png':
+            os.remove("./static/img/" + str(post.image))
+        session.delete(post)
         session.commit()
         session.close()
