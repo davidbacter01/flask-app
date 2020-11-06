@@ -24,6 +24,7 @@
     <hr />
     {% for post in blogs %}
     <div>
+        <img src="{{url_for('static', filename='img/'+post.image)}}" alt="Alternate Text" style="width:30%;max-height:30%;"/>
         <h1>{{post.title}}</h1>
         <small>{{post.blog_id}}</small>
         <h2>By {{post.owner}}</h2>
