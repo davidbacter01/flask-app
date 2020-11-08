@@ -52,12 +52,18 @@ class DatabasePostsRepository(PostsRepositoryInterface):
 
     def edit(self, post: BlogPost):
         """ updates a post with same id as provided post """
-        #TODO: add suport for image edit
         session = self.session()
         to_edit = session.query(Post).filter_by(id=post.blog_id).first()
         to_edit.title = post.title
         to_edit.contents = post.contents
-        to_edit.image = post.image
+        if post.image:
+            post.image.name = str(post.blog_id)
+            post.image.filename = str(post.blog_id) + '.png'
+            to_edit.image = post.image.filename
+            if os.path.exists("./static/img/" + str(to_edit.image))\
+            and str(post.image) != 'default_blog.png':
+                os.remove("./static/img/" + str(to_edit.image))
+            post.image.save(os.path.join('./static/img', post.image.filename))
         to_edit.modified_at = post.modified_at
         session.commit()
         session.close()
