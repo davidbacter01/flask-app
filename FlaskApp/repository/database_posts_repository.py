@@ -30,11 +30,9 @@ class DatabasePostsRepository(PostsRepositoryInterface):
     def add(self, post):
         """adds a post to posts table in database"""
         session = self.session()
-        image = ''
-        if post.image.filename:
+        image = post.image
+        if not isinstance(post.image, str):
             image = post.image.filename
-        else:
-            image = 'default_blog.png'
         new_post = Post(title=post.title,
                         owner=post.owner,
                         contents=post.contents,
@@ -44,11 +42,12 @@ class DatabasePostsRepository(PostsRepositoryInterface):
                         )
         session.add(new_post)
         session.commit()
-        post.image.name = str(new_post.id)
-        post.image.filename = str(new_post.id) + '.png'
-        new_post.image = post.image.filename
-        session.commit()
-        post.image.save(os.path.join('./static/img', post.image.filename))
+        if not isinstance(post.image, str):
+            post.image.name = str(new_post.id)
+            post.image.filename = str(new_post.id) + '.png'
+            new_post.image = post.image.filename
+            session.commit()
+            post.image.save(os.path.join('./static/img', post.image.filename))
         session.close()
 
     def edit(self, post: BlogPost):
