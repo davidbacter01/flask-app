@@ -3,6 +3,7 @@ document.getElementById('prev').value = parseInt(currentPage.innerText) - 1;
 document.getElementById('next').value = parseInt(currentPage.innerText) + 1;
 
 
+
 function promptUserForDeleteConfirmation() {
     if (confirm("Are you sure you want to delete this post?")) {
         document.getElementById("delete").setAttribute("href", "/delete/" + document.getElementById("id_number").innerText)

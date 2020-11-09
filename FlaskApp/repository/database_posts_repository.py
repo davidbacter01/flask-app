@@ -43,7 +43,6 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         session.add(new_post)
         session.commit()
         if not isinstance(post.image, str):
-            post.image.name = str(new_post.id)
             post.image.filename = str(new_post.id) + '.png'
             new_post.image = post.image.filename
             session.commit()
@@ -57,12 +56,14 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         to_edit.title = post.title
         to_edit.contents = post.contents
         if post.image:
-            post.image.name = str(post.blog_id)
-            post.image.filename = str(post.blog_id) + '.png'
-            to_edit.image = post.image.filename
+            if to_edit.image == 'default_blog.png':
+                post.image.filename = str(to_edit.id) + '.png'
+            else:
+                post.image.filename = '0'+ str(to_edit.image)
             if os.path.exists("./static/img/" + str(to_edit.image))\
-            and str(post.image) != 'default_blog.png':
+            and str(to_edit.image) != 'default_blog.png':
                 os.remove("./static/img/" + str(to_edit.image))
+            to_edit.image = post.image.filename
             post.image.save(os.path.join('./static/img', post.image.filename))
         to_edit.modified_at = post.modified_at
         session.commit()
