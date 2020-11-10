@@ -9,7 +9,11 @@
         <small>last edited: {{post.modified_at.day}}/{{post.modified_at.month}}/{{post.modified_at.year}}</small>
     </div>
     <div class="post-content">
-        <img src="{{url_for('static', filename='img/'+ post.image)}}?nocache="+randomNumber() alt="{{post.image}}" style="max-width:80%; max-height:100%;"/>
+        {% if services.TESTING %}
+        <img src="{{post.image}}" alt="{{post.image}}" style="max-width:80%; max-height:100%;" />
+        {% else %}
+        <img src="{{url_for('static', filename='img/'+ post.image)}}" alt="{{post.image}}" style="max-width:80%; max-height:100%;" />
+        {% endif %}
     </div>
     <div class="post-content">
         <p style="white-space: pre-wrap; margin-bottom: 30px;">{{post.contents}}</p>

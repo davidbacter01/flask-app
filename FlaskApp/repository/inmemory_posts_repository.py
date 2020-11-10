@@ -1,3 +1,4 @@
+import base64
 from models.blog_post import BlogPost
 from repository.posts_repository_interface import PostsRepositoryInterface
 
@@ -33,6 +34,7 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
         self.posts[9].blog_id = 10
         self.posts[10].blog_id = 11
         self.posts[11].blog_id = 12
+        self.__set_img()
 
     def count(self, user):
         if user in ('All', None):
@@ -68,6 +70,9 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
     def add(self, post):
         post.blog_id = len(self.posts) + 1
         user = self.users.get_by_id(post.owner)
+        img = post.image.read()
+        img = base64.b64encode(img).decode('ascii')
+        post.image = "data:image/png;base64, " + img
         if user:
             self.posts.insert(0, post)
 
@@ -81,6 +86,9 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
         for blog_post in self.posts:
             if blog_post.blog_id == post.blog_id:
                 self.posts.remove(blog_post)
+                img = post.image.read()
+                img = base64.b64encode(img).decode('ascii')
+                post.image = "data:image/png;base64, " + img
                 self.posts.append(post)
                 break
 
@@ -95,5 +103,10 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
                 updated_post.blog_id = post.blog_id
                 updated_post.created_at = post.created_at
                 updated_post.modified_at = post.modified_at
+                updated_post.image = post.image
                 return updated_post
         return None
+
+    def __set_img(self):
+        for post in self.posts:
+            post.image = './static/img/default_blog.png'

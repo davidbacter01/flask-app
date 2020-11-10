@@ -73,6 +73,7 @@ def test_new_post_post_route_when_not_logged(client):
 def test_view_post(client):
     res = client.get('/view/1', follow_redirects=True)
     assert b'Red flowers' in res.data
+    assert b'img' in res.data
 
 
 def test_edit_post_when_not_logged_in(client):
@@ -87,7 +88,8 @@ def test_edit_post_when_logged_in_as_admin(client):
     login_as_admin(client)
     response = client.post('/edit/1', data=dict(
         title='Red flowers',
-        contents='yes flowers'
+        contents='yes flowers',
+        image=(io.BytesIO(b"some random data"), 'img.png')
     ), follow_redirects=True)
     assert b'yes flowers' in response.data
 
@@ -100,7 +102,8 @@ def test_edit_post_when_logged_in_as_owner(client):
     ), follow_redirects=True)
     response = client.post('/edit/4', data=dict(
         title='edited title',
-        contents='edited contents'
+        contents='edited contents',
+        image=(io.BytesIO(b"some random data"), 'img.png')
     ), follow_redirects=True)
     assert b'edited title' in response.data
 
