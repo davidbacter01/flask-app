@@ -53,6 +53,9 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
         return None
 
     def get_all(self, owner, page_current):
+        def get_id(post):
+            return post.blog_id
+        self.posts.sort(reverse=True, key=get_id)
         offset = (int(page_current) - 1) * 5
         last = offset + 5 if offset != 0 else 5
         posts = []

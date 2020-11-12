@@ -26,7 +26,7 @@ class Services:
     database = 'database'
     file_validator = 'validator'
     pw_manager = 'pw_manager'
-    TESTING = False
+    TESTING = True
     db = Database(DbConfig('postgres'))
     test_db = Mock()
     test_db.new_version_available = return_false

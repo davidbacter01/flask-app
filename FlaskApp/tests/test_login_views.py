@@ -44,7 +44,7 @@ def test_login_route_post_method(client):
         password='123'
         ), follow_redirects=True)
 
-    assert b'Red flowers' in response.data
+    assert b'cactus' in response.data
 
 
 def test_login_route_post_method_unconfigured(unconfigured_client):

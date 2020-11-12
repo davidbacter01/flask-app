@@ -6,7 +6,8 @@ def test_pagination_first_page(client):
     response = client.get('/?owner=All&page=1', follow_redirects=True)
     assert b'Next' in response.data
     assert b'Prev' not in response.data
-    assert b'cactus' not in response.data
+    assert b'cactus' in response.data
+    assert b'Red Flowers' not in response.data
 
 
 def test_pagination_second_page(client):
@@ -35,7 +36,7 @@ def test_index_route_with_filter(client):
 
 def test_index_route(client):
     response = client.get('/index', follow_redirects=True)
-    assert b'Red flowers' in response.data
+    assert b'ab' in response.data
 
 
 def test_new_post_get_route(client):
@@ -129,7 +130,7 @@ def test_delete_post_not_logged_in(client):
 def test_delete_post_logged_in_as_admin(client):
     login_as_admin(client)
     response = client.get('/delete/2', follow_redirects=True)
-    assert b'Red flowers' in response.data
+    assert b'ab' in response.data
     assert b'Yellow flowers' not in response.data
 
 
@@ -140,7 +141,7 @@ def test_delete_post_when_logged_in_as_owner(client):
         password='test2'
     ), follow_redirects=True)
     response = client.get('/delete/5', follow_redirects=True)
-    assert b'Red flowers' in response.data
+    assert b'ab' in response.data
     assert b'test delete' not in response.data
 
 
