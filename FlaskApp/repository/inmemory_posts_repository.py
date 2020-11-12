@@ -54,7 +54,7 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
 
     def get_all(self, owner, page_current):
         offset = (int(page_current) - 1) * 5
-        last = offset * 5 if offset != 0 else 5
+        last = offset + 5 if offset != 0 else 5
         posts = []
         if owner in ('All', None):
             for post in self.posts:
