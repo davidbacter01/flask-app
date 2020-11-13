@@ -6,7 +6,8 @@ from repository.posts_repository_interface import PostsRepositoryInterface
 class InMemoryPostsRepository(PostsRepositoryInterface):
     """implements CRUD operations"""
 
-    def __init__(self, users_repository=None):
+    def __init__(self, users_repository=None, img_repo=None):
+        self.img_repo = img_repo
         self.users = users_repository
         self.posts = [
             BlogPost('Red flowers', 'text about red flowers', 9),
@@ -73,9 +74,7 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
     def add(self, post):
         post.blog_id = len(self.posts) + 1
         user = self.users.get_by_id(post.owner)
-        img = post.image.read()
-        img = base64.b64encode(img).decode('ascii')
-        post.image = "data:image/png;base64, " + img
+        self.img_repo.add(post.image, post)
         if user:
             self.posts.insert(0, post)
 
@@ -89,9 +88,7 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
         for blog_post in self.posts:
             if blog_post.blog_id == post.blog_id:
                 self.posts.remove(blog_post)
-                img = post.image.read()
-                img = base64.b64encode(img).decode('ascii')
-                post.image = "data:image/png;base64, " + img
+                self.img_repo.update(post.image, post)
                 self.posts.append(post)
                 break
 

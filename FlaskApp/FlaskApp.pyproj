@@ -64,6 +64,15 @@
     <Compile Include="repository\database_users_repository.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="repository\disk_image_repository.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="repository\image_repository_interface.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="repository\inmemory_image_repository.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="repository\inmemory_posts_repository.py">
       <SubType>Code</SubType>
     </Compile>

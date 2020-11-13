@@ -1,5 +1,4 @@
 from datetime import datetime
-import os
 from sqlalchemy import desc
 from repository.posts_repository_interface import PostsRepositoryInterface
 from models.blog_post import BlogPost
@@ -10,9 +9,10 @@ from database.user import User
 class DatabasePostsRepository(PostsRepositoryInterface):
     """ database management """
 
-    def __init__(self, database, session):
+    def __init__(self, database, session, img_repo):
         self.database = database
         self.session = session
+        self.img_repo = img_repo
 
     def count(self, user=None):
         """counts posts owned by user (if None, counts all)"""
@@ -30,23 +30,18 @@ class DatabasePostsRepository(PostsRepositoryInterface):
     def add(self, post):
         """adds a post to posts table in database"""
         session = self.session()
-        image = post.image
-        if not isinstance(post.image, str):
-            image = post.image.filename
         new_post = Post(title=post.title,
                         owner=post.owner,
                         contents=post.contents,
-                        image=image,
+                        image='default_blog.png',
                         created_at=post.created_at,
                         modified_at=datetime.now()
                         )
         session.add(new_post)
         session.commit()
         if not isinstance(post.image, str):
-            post.image.filename = str(new_post.id) + '.png'
-            new_post.image = post.image.filename
+            self.img_repo.add(post.image, new_post)
             session.commit()
-            post.image.save(os.path.join('./static/img', post.image.filename))
         session.close()
 
     def edit(self, post: BlogPost):
@@ -56,15 +51,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         to_edit.title = post.title
         to_edit.contents = post.contents
         if post.image:
-            if to_edit.image == 'default_blog.png':
-                post.image.filename = str(to_edit.id) + '.png'
-            else:
-                post.image.filename = '0'+ str(to_edit.image)
-            if os.path.exists("./static/img/" + str(to_edit.image))\
-            and str(to_edit.image) != 'default_blog.png':
-                os.remove("./static/img/" + str(to_edit.image))
-            to_edit.image = post.image.filename
-            post.image.save(os.path.join('./static/img', post.image.filename))
+            self.img_repo.update(post.image, to_edit)
         to_edit.modified_at = post.modified_at
         session.commit()
         session.close()
@@ -114,9 +101,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         session = self.session()
         post = session.query(Post).filter_by(id=post_id).first()
         session.commit()
-        if os.path.exists("./static/img/" + str(post.image))\
-            and str(post.image) != 'default_blog.png':
-            os.remove("./static/img/" + str(post.image))
+        self.img_repo.delete(post.image)
         session.delete(post)
         session.commit()
         session.close()
