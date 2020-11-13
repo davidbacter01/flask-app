@@ -52,6 +52,14 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
                 return self.__get_post_with_true_owner(post)
         return None
 
+    def get_all_by_user(self, name):
+        user = self.users.get_by_name(name)
+        result = []
+        for post in self.posts:
+            if post.owner == user.user_id:
+                result.append(post)
+        return result
+
     def get_all(self, owner, page_current):
         def get_id(post):
             return post.blog_id

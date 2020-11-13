@@ -5,6 +5,7 @@
 <div style="border:dashed 1px black;padding-top:20px;">
     <h3>{{user.name}}</h3>
     <a href="/users/view/{{user.user_id}}" class="button">View details</a>
+    <a href="/statistics/{{user.name}}" class="button green">Statistics</a>
 </div>
 {% endfor %}
 {% endblock %}

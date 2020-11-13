@@ -100,6 +100,9 @@
     <Compile Include="services\services.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="services\statistics.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="services\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -130,6 +133,9 @@
     <Compile Include="tests\test_setup_views.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test_statistics.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\test_users_views.py">
       <SubType>Code</SubType>
     </Compile>
@@ -143,6 +149,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\setup_views.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="views\users_statistics.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\users_views.py">
@@ -189,6 +198,7 @@
     <Content Include="templates\legacy_user_setup.html" />
     <Content Include="templates\login.html" />
     <Content Include="templates\new_post.html" />
+    <Content Include="templates\user_statistics.html" />
     <Content Include="templates\view_post.html" />
     <Content Include="templates\edit_post.html" />
     <Content Include="templates\list_posts.html" />

@@ -107,6 +107,11 @@ li a{
 }
 /*-------end edit form---------*/
 
+table, th, td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
 /*--------start post_view style--------*/
 .list-post {
     max-width: 80%;

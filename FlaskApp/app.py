@@ -1,4 +1,5 @@
 from flask import Flask
+from views.users_statistics import users_statistics_blueprint
 from views.posts_views import posts_views_blueprint
 from views.setup_views import setup_views_blueprint
 from views.login_views import login_views_blueprint
@@ -11,6 +12,7 @@ application.register_blueprint(posts_views_blueprint)
 application.register_blueprint(setup_views_blueprint)
 application.register_blueprint(login_views_blueprint)
 application.register_blueprint(users_views_blueprint)
+application.register_blueprint(users_statistics_blueprint)
 
 
 @application.before_first_request
