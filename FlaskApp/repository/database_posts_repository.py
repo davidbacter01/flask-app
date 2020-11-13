@@ -1,5 +1,6 @@
 from datetime import datetime
 from sqlalchemy import desc
+from flask import url_for
 from repository.posts_repository_interface import PostsRepositoryInterface
 from models.blog_post import BlogPost
 from database.post import Post
@@ -67,7 +68,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
             post.user.name
             )
         result.blog_id = post.id
-        result.image = post.image
+        result.image = url_for('static', filename=f"img/{post.image}")
         result.created_at = post.created_at
         result.modified_at = post.modified_at
         session.close()
@@ -90,7 +91,7 @@ class DatabasePostsRepository(PostsRepositoryInterface):
                 post.user.name
                 )
             res.blog_id = post.id
-            res.image = post.image
+            res.image = url_for('static', filename=f"img/{post.image}")
             res.created_at = post.created_at
             res.modified_at = post.modified_at
             posts.append(res)

@@ -23,11 +23,7 @@
     </div>
     {% for post in blogs %}
     <div class="list-post">
-        {% if services.TESTING %}
         <img src="{{post.image}}" alt="Alternate Text" style="width:30%;max-height:30%;" />
-        {% else %}
-        <img src="{{url_for('static', filename='img/'+post.image)}}" alt="Alternate Text" style="width:30%;max-height:30%;" />
-        {% endif %}
         <h1>{{post.title}}</h1>
         <small>{{post.blog_id}}</small>
         <h2>By {{post.owner}}</h2>

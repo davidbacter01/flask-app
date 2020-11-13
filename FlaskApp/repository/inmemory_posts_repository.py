@@ -1,4 +1,3 @@
-import base64
 from models.blog_post import BlogPost
 from repository.posts_repository_interface import PostsRepositoryInterface
 

@@ -33,8 +33,7 @@ def index():
                            users=users,
                            filter=owner,
                            page=int(page),
-                           total=total_pages,
-                           services=Services)
+                           total=total_pages)
 
 
 @posts_views_blueprint.route("/new", methods=['GET', 'POST'])
@@ -65,7 +64,7 @@ def new_post():
 def view_post(post_id):
     posts = Services.get_service(Services.posts)
     post = posts.get_by_id(post_id)
-    return render_template('view_post.html', post=post, services=Services)
+    return render_template('view_post.html', post=post)
 
 
 @posts_views_blueprint.route('/edit/<int:post_id>', methods=['GET', 'POST'])
