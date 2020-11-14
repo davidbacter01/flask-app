@@ -1,9 +1,10 @@
-from exceptions import exceptions
 from flask import Blueprint, redirect, render_template, request, url_for, session, abort
 from services.services import Services
 from models.user import User
 from views.views_decorators import authorization
 from views.views_decorators.setup_required import setup_required
+from exceptions import exceptions
+
 
 
 users_views_blueprint = Blueprint('users_views', __name__, url_prefix='/users')

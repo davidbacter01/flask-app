@@ -74,20 +74,17 @@ class DatabasePostsRepository(PostsRepositoryInterface):
         session.close()
         return result
 
-    def get_all_by_user(self, name):
-        session = self.session()
-        result = session.query(User).filter_by(name=name).first().posts
-        session.commit()
-        return result
-
     def get_all(self, owner, page_current):
         offset = (int(page_current) - 1) * 5
         session = self.session()
         result = None
-        if owner in ('All', None):
-            result = session.query(Post).order_by(desc(Post.id)).limit(5).offset(offset).all()
+        if page_current == -1:
+            result = session.query(User).filter_by(name=owner).first().posts
         else:
-            result = session.query(User).filter_by(name=owner).first().posts[offset:offset+5]
+            if owner in ('All', None):
+                result = session.query(Post).order_by(desc(Post.id)).limit(5).offset(offset).all()
+            else:
+                result = session.query(User).filter_by(name=owner).first().posts[offset:offset+5]
         session.commit()
         posts = []
         for post in result:

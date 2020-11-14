@@ -31,7 +31,7 @@ class Services:
     pw_manager = 'pw_manager'
     image_repo = 'image_repo'
     statistics = 'statistics'
-    TESTING = True
+    TESTING = False
     db = Database(DbConfig('postgres'))
     test_db = Mock()
     test_db.new_version_available = return_false

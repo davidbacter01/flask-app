@@ -1,6 +1,6 @@
-from exceptions.exceptions import SectionNotFoundError
 from configparser import ConfigParser
 from os import path
+from exceptions.exceptions import SectionNotFoundError
 
 
 class Config:

@@ -1,8 +1,8 @@
-from exceptions.exceptions import SectionNotFoundError
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from setup.dbconfig import DbConfig
 from setup.db_version_2 import updates
+from exceptions.exceptions import SectionNotFoundError
 
 
 class Database:

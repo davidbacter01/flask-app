@@ -16,7 +16,6 @@
                 <li><a href="/users/list">USERS</a></li>
             {% endif %}
             <li><a href="/">Home</a></li>
-            <li><a href="#">Contact</a></li>
             {% if 'username' in session %}
             <li style="display:inline"><a href="/users/view/{{session['user_id']}}">{{session['username']}}</a> | <a href="/logout">Logout</a></li>            
             {% else %}

@@ -10,7 +10,7 @@ class Statistics:
 
     def get_user_statistics(self, username):
         user = self.users.get_by_name(username)
-        user_posts = self.posts.get_all_by_user(user.name)
+        user_posts = self.posts.get_all(user.name, -1)
         months_dict = dict()
         for i in range(1, 13):
             months_dict[i] = 0
