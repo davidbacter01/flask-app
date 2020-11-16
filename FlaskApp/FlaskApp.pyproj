@@ -18,6 +18,7 @@
     <RootNamespace>FlaskApp</RootNamespace>
     <WebBrowserPort>4449</WebBrowserPort>
     <TestFramework>Pytest</TestFramework>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -122,6 +123,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tests\conftest.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests\test_api.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tests\test_login_views.py">

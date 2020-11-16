@@ -1,5 +1,5 @@
-from flask import session
 from exceptions import exceptions
+from flask import session
 from repository.users_repository_interface import UsersRepositoryInterface
 
 

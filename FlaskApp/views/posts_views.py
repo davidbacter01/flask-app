@@ -1,12 +1,12 @@
 from datetime import datetime
 import math
+from exceptions.exceptions import FileFormatError
 from werkzeug.utils import secure_filename
 from flask import Blueprint, render_template, request, redirect, session
 from models.blog_post import BlogPost
 from services.services import Services
 from views.views_decorators.authorization import login_required, admin_or_post_owner_required
 from views.views_decorators.setup_required import setup_required
-from exceptions.exceptions import FileFormatError
 
 
 posts_views_blueprint = Blueprint('post_views', __name__)
