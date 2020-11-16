@@ -65,25 +65,30 @@ function renderPost(postId, username) {
             container.appendChild(details);
             let image = document.createElement("img");
             image.src = post.image;
+            image.classList.add("image-view");
             container.appendChild(image);
             let contents = document.createElement("div");
             contents.classList.add("post-content");
             let text = document.createElement("pre");
             text.innerText = post.contents;
+            text.classList.add("post-text");
             contents.appendChild(text);            
             if (username == post.owner || username == "admin") {
+                let btnContainer = document.createElement("div");
+                btnContainer.classList.add("post-text")
                 let editBtn = document.createElement("a");
                 editBtn.href = `/edit/${postId}`;
                 editBtn.classList.add("button");
-                editBtn.innerText="Edit"
-                contents.appendChild(editBtn);
+                editBtn.innerText = "Edit"
+                btnContainer.appendChild(editBtn);
                 let deleteBtn = document.createElement("a");
                 deleteBtn.href = `/delete/${postId}`;
                 deleteBtn.classList.add("button");
                 deleteBtn.classList.add("red");
                 deleteBtn.setAttribute("onclick", "promptUserForDeleteConfirmation()");
                 deleteBtn.innerText = "Delete";
-                contents.appendChild(deleteBtn);
+                btnContainer.appendChild(deleteBtn);
+                contents.appendChild(btnContainer);
             }
             container.appendChild(contents);
             document.body.append(container);
