@@ -142,6 +142,9 @@
     <Compile Include="tests\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="views\api.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="views\login_views.py">
       <SubType>Code</SubType>
     </Compile>

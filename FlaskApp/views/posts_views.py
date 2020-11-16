@@ -63,9 +63,7 @@ def new_post():
 @posts_views_blueprint.route("/view/<int:post_id>")
 @setup_required
 def view_post(post_id):
-    posts = Services.get_service(Services.posts)
-    post = posts.get_by_id(post_id)
-    return render_template('view_post.html', post=post)
+    return render_template('view_post.html', post_id=post_id)
 
 
 @posts_views_blueprint.route('/edit/<int:post_id>', methods=['GET', 'POST'])

@@ -3,7 +3,9 @@ from views.users_statistics import users_statistics_blueprint
 from views.posts_views import posts_views_blueprint
 from views.setup_views import setup_views_blueprint
 from views.login_views import login_views_blueprint
+from views.api import api_blueprint
 from views.users_views import users_views_blueprint, Services
+
 
 application = Flask(__name__)
 application.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -13,6 +15,7 @@ application.register_blueprint(setup_views_blueprint)
 application.register_blueprint(login_views_blueprint)
 application.register_blueprint(users_views_blueprint)
 application.register_blueprint(users_statistics_blueprint)
+application.register_blueprint(api_blueprint)
 
 
 @application.before_first_request

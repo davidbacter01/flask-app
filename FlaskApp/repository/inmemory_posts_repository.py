@@ -76,6 +76,8 @@ class InMemoryPostsRepository(PostsRepositoryInterface):
                 if user.user_id == post.owner:
                     if user.name == owner:
                         posts.append(self.__get_post_with_true_owner(post))
+        if page_current == -1:
+            return posts
         return posts[offset:last]
 
     def add(self, post):

@@ -1,27 +1,7 @@
 ﻿{% extends "base.html" %}
 {% block content %}
-<div class="view-post">
-    <h1>{{post.title}}</h1>
-    <!--id_number is used in js for reseting the delete route-->
-    <div class="post-info">
-        <small>Post: <span id="id_number">{{post.blog_id}}</span> by {{post.owner}}</small>
-        <small>Added on: {{post.created_at.day}}/{{post.created_at.month}}/{{post.created_at.year}} at {{post.created_at.hour}}:{{post.created_at.minute}}</small>
-        <small>last edited: {{post.modified_at.day}}/{{post.modified_at.month}}/{{post.modified_at.year}}</small>
-    </div>
-    <div class="post-content">
-        <img src="{{post.image}}" alt="{{post.image}}" style="max-width:80%; max-height:100%;" />
-    </div>
-    <div class="post-content">
-        <p style="white-space: pre-wrap; margin-bottom: 30px;">{{post.contents}}</p>
-        <hr class="style-two" />
-        {% if 'username' in session %}
-            {% if (session['username'] == 'admin') or  (session['username'] == post.owner) %}
-                <a href="/edit/{{post.blog_id}}" class="button">Edit</a>
-                <a href="/delete/{{post.blog_id}}" class="button red" id="delete" onclick="promptUserForDeleteConfirmation()">Delete</a>
-            {% endif %}
-        {% endif %}
-    </div>
-    
-</div>
-
+<script src="{{url_for('static', filename='script.js')}}" type="text/javascript"></script>
+<script type="text/javascript">
+    renderPost("{{ post_id}}", "{{session['username']}}");
+</script>
 {% endblock %}
