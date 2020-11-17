@@ -10,7 +10,7 @@ api_blueprint = Blueprint("api_blueprint", __name__)
 @setup_required
 def get_post(post_id):
     posts = Services.get_service(Services.posts)
-    post = posts.get_by_id(post_id)
+    post = posts.get_by_id(int(post_id))
     if post is None:
         return abort(404)
     return jsonify({
