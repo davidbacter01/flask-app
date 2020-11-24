@@ -21,7 +21,7 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
         new_entry = User(
             id=user.user_id,
             name=user.name,
-            email=user.emal,
+            email=user.email,
             password=user.password,
             created_at=user.created_at,
             modified_at=user.modified_at

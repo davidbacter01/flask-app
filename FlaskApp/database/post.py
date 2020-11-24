@@ -7,10 +7,11 @@ Base = declarative_base()
 
 class Post(Base):
     __tablename__ = 'posts'
+
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
     owner = Column(Integer, ForeignKey('users.id'))
-    contents = Column(Integer, nullable=False)
+    contents = Column(String, nullable=False)
     image = Column(String, nullable=False, default='default_blog.png')
     created_at = Column(Date)
     modified_at = Column(Date)
