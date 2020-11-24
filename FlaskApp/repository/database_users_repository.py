@@ -104,7 +104,9 @@ class DatabaseUsersRepository(UsersRepositoryInterface):
     def remove(self, user_id):
         """removes from db the user that has the specified id"""
         session = self.session()
-        session.query(User).filter_by(id=user_id).first().delete()
+        user = session.query(User).filter_by(id=user_id).first()
+        session.commit()
+        session.delete(user)
         session.commit()
         session.close()
 
